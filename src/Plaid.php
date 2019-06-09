@@ -9,10 +9,12 @@ use Shuttle\Shuttle;
 
 final class Plaid
 {
+    const DEFAULT_PLAID_VERSION = "2018-05-22";
+
     /**
      * Plaid API version.
      */
-    const PLAID_VERSION = "2018-05-22";
+    public $plaid_version = "2018-05-22";
 
     /**
      * Plaid API host environment.
@@ -66,11 +68,13 @@ final class Plaid
      * @param string $public_key
      * @param string $environment
      */
-    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production")
+    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $plaid_version = "2018-05-22")
     {
         $this->client_id = $client_id;
         $this->secret = $secret;
         $this->public_key = $public_key;
+
+        $this->plaid_version = $plaid_version;
 
         $this->setEnvironment($environment);
     }
@@ -171,7 +175,7 @@ final class Plaid
             ($this->getHostname($this->environment) ?? "") . $path,
             \json_encode($params),
             [
-                "Plaid-Version" => self::PLAID_VERSION,
+                "Plaid-Version" => $this->plaid_version,
                 "Content-Type" => "application/json"
             ]
         );

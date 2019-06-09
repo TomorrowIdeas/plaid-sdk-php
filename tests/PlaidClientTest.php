@@ -65,6 +65,22 @@ class PlaidClientTest extends TestCase
         $this->assertEquals("sandbox.plaid.com", $response->host);
     }
 
+    public function test_default_plaid_version()
+    {
+        $plaidClient = $this->getPlaidClient();
+
+        $this->assertEquals("2018-05-22", $plaidClient->plaid_version);
+    }
+
+    public function test_plaid_version_set_in_constructor()
+    {
+        $version = "2019-05-29";
+
+        $plaid = new Plaid("client_id", "secret", "public_key", "production", $version);
+
+        $this->assertEquals($version, $plaid->plaid_version);
+    }
+
     public function test_1xx_responses_throw_exception()
     {
         $httpClient = new Shuttle([
