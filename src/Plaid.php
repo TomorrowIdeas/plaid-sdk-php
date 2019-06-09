@@ -14,7 +14,7 @@ final class Plaid
     /**
      * Plaid API version.
      */
-    public $plaid_version = "2018-05-22";
+    private $plaid_version = "2018-05-22";
 
     /**
      * Plaid API host environment.
@@ -30,6 +30,12 @@ final class Plaid
         "production" => "https://production.plaid.com/",
         "development" => "https://development.plaid.com/",
         "sandbox" => "https://sandbox.plaid.com/",
+    ];
+
+    private $plaidVersion = [
+        "2017-03-08" => "2017-03-08",
+        "2018-05-22" => "2018-05-22",
+        "2019-05-29" => "2019-05-29"
     ];
 
     /**
@@ -67,6 +73,7 @@ final class Plaid
      * @param string $secret
      * @param string $public_key
      * @param string $environment
+     * @param string $plaid_version
      */
     public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $plaid_version = "2018-05-22")
     {
@@ -140,6 +147,33 @@ final class Plaid
         }
 
         return $this->httpClient;
+    }
+
+    /**
+     * Set the Plaid version to use
+     *
+     * Possible values: "2017-03-08", "2018-05-22", "2019-05-29"
+     *
+     * @param string $plaid_version
+     */
+    public function setPlaidVersion(string $plaid_version): void
+    {
+        if( !\array_key_exists($plaid_version, $this->plaidVersion) ){
+            throw new PlaidException("Unknown or unsupported version \"{$plaid_version}\".");
+        }
+
+
+        $this->plaid_version = $plaid_version;
+    }
+
+    /**
+     * Get the current plaid version
+     *
+     * @return string
+     */
+    public function getPlaidVersion(): string
+    {
+        return $this->plaid_version;
     }
 
     /**
