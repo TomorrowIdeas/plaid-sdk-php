@@ -149,7 +149,6 @@ final class Plaid
         $response = $this->getHttpClient()->sendRequest($request);
 
         if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
-            //dd($response->getBody()->getContents());
             throw new PlaidRequestException($response);
         }
 
