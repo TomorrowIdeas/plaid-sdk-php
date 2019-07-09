@@ -77,7 +77,7 @@ final class Plaid
 
     /**
      * Set the Plaid API environment.
-     * 
+     *
      * Possible values: "production", "development", "sandbox"
      *
      * @param string $environment
@@ -226,7 +226,7 @@ final class Plaid
     public function getAuth(string $access_token, array $options = []): object
     {
         return $this->doRequest(
-            $this->buildRequest("post", "auth/get", $this->clientCredentials(["access_token" => $access_token, "options" => $options]))
+            $this->buildRequest("post", "auth/get", $this->clientCredentials(["access_token" => $access_token, "options" => empty($options) ? new \stdClass : $options]))
         );
     }
 
@@ -333,7 +333,7 @@ final class Plaid
     {
         $params = [
             "institution_id" => $institution_id,
-            "options" => $options
+            "options" => empty($options) ? new \stdClass : $options
         ];
 
         return $this->doRequest(
@@ -354,14 +354,14 @@ final class Plaid
         $params = [
             "count" => $count,
             "offset" => $offset,
-            "options" => $options
+            "options" => empty($options) ? new \stdClass : $options
         ];
 
         return $this->doRequest(
             $this->buildRequest("post", "institutions/get", $this->clientCredentials($params))
         );
     }
-    
+
     /**
      * Find an Institution by a search query.
      *
@@ -375,7 +375,7 @@ final class Plaid
         $params = [
             "query" => $query,
             "products" => $products,
-            "options" => $options
+            "options" => empty($options) ? new \stdClass : $options
         ];
 
         return $this->doRequest(
@@ -398,7 +398,7 @@ final class Plaid
             "access_token" => $access_token,
             "start_date" => $start_date->format("Y-m-d"),
             "end_date" => $end_date->format("Y-m-d"),
-            "options" => $options
+            "options" => empty($options) ? new \stdClass : $options
         ];
 
         return $this->doRequest(
