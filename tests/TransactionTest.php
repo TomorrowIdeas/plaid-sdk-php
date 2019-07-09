@@ -22,6 +22,6 @@ class TransactionTest extends TestCase
         $this->assertEquals("access_token", $response->params->access_token);
         $this->assertEquals("2019-01-01", $response->params->start_date);
         $this->assertEquals("2019-03-31", $response->params->end_date);
-        $this->assertEquals([], $response->params->options);
+        $this->assertEquals(new \StdClass, $response->params->options);
     }
 }

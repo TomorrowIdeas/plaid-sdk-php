@@ -19,7 +19,7 @@ class InstitutionTest extends TestCase
         $this->assertEquals("secret", $response->params->secret);
         $this->assertEquals(100, $response->params->count);
         $this->assertEquals(200, $response->params->offset);
-        $this->assertEquals([], $response->params->options);
+        $this->assertEquals(new \StdClass, $response->params->options);
     }
 
     public function test_get_institution()
@@ -32,7 +32,7 @@ class InstitutionTest extends TestCase
         $this->assertEquals("/institutions/get_by_id", $response->path);
         $this->assertEquals("public_key", $response->params->public_key);
         $this->assertEquals("ins_12345", $response->params->institution_id);
-        $this->assertEquals([], $response->params->options);
+        $this->assertEquals(new \StdClass, $response->params->options);
     }
 
     public function test_find_institution()
@@ -46,6 +46,6 @@ class InstitutionTest extends TestCase
         $this->assertEquals("public_key", $response->params->public_key);
         $this->assertEquals("boeing", $response->params->query);
         $this->assertEquals(["transactions", "mfa"], $response->params->products);
-        $this->assertEquals([], $response->params->options);
+        $this->assertEquals(new \StdClass, $response->params->options);
     }
 }

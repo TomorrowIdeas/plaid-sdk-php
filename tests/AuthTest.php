@@ -18,6 +18,6 @@ class AuthTest extends TestCase
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
         $this->assertEquals("access_token", $response->params->access_token);
-        $this->assertEquals([], $response->params->options);
+        $this->assertEquals(new \StdClass, $response->params->options);
     }
 }

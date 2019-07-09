@@ -226,7 +226,7 @@ final class Plaid
     public function getAuth(string $access_token, array $options = []): object
     {
         return $this->doRequest(
-            $this->buildRequest("post", "auth/get", $this->clientCredentials(["access_token" => $access_token, "options" => empty($options) ? new \stdClass : $options]))
+            $this->buildRequest("post", "auth/get", $this->clientCredentials(["access_token" => $access_token, "options" => (object) $options]))
         );
     }
 
@@ -333,7 +333,7 @@ final class Plaid
     {
         $params = [
             "institution_id" => $institution_id,
-            "options" => empty($options) ? new \stdClass : $options
+            "options" => (object) $options
         ];
 
         return $this->doRequest(
@@ -354,7 +354,7 @@ final class Plaid
         $params = [
             "count" => $count,
             "offset" => $offset,
-            "options" => empty($options) ? new \stdClass : $options
+            "options" => (object) $options
         ];
 
         return $this->doRequest(
@@ -375,7 +375,7 @@ final class Plaid
         $params = [
             "query" => $query,
             "products" => $products,
-            "options" => empty($options) ? new \stdClass : $options
+            "options" => (object) $options
         ];
 
         return $this->doRequest(
@@ -398,7 +398,7 @@ final class Plaid
             "access_token" => $access_token,
             "start_date" => $start_date->format("Y-m-d"),
             "end_date" => $end_date->format("Y-m-d"),
-            "options" => empty($options) ? new \stdClass : $options
+            "options" => (object) $options
         ];
 
         return $this->doRequest(
