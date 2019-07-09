@@ -35,6 +35,22 @@ $client = new Plaid("your-client-id", "your-secret", "your-public-key");
 
 $client->setEnvironment("sandbox");
 ```
+
+### API Versions
+The Plaid client by default uses API version **2018-05-22**.
+
+Possible API versions:
+* 2019-05-29
+* 2018-05-22
+* 2017-03-08
+
+```php
+$client = new Plaid("your-client-id", "your-secret", "your-public-key");
+
+
+$client->setPlaidVersion("2019-05-29");
+```
+
 ## Methods
 
 For a full description of the response payload, please see the [official Plaid API docs](https://plaid.com/docs/).

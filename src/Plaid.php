@@ -9,10 +9,12 @@ use Shuttle\Shuttle;
 
 final class Plaid
 {
+    const DEFAULT_PLAID_VERSION = "2018-05-22";
+
     /**
      * Plaid API version.
      */
-    const PLAID_VERSION = "2018-05-22";
+    private $plaid_version = "2018-05-22";
 
     /**
      * Plaid API host environment.
@@ -28,6 +30,12 @@ final class Plaid
         "production" => "https://production.plaid.com/",
         "development" => "https://development.plaid.com/",
         "sandbox" => "https://sandbox.plaid.com/",
+    ];
+
+    private $plaidVersion = [
+        "2017-03-08" => "2017-03-08",
+        "2018-05-22" => "2018-05-22",
+        "2019-05-29" => "2019-05-29"
     ];
 
     /**
@@ -65,12 +73,15 @@ final class Plaid
      * @param string $secret
      * @param string $public_key
      * @param string $environment
+     * @param string $plaid_version
      */
-    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production")
+    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $plaid_version = "2018-05-22")
     {
         $this->client_id = $client_id;
         $this->secret = $secret;
         $this->public_key = $public_key;
+
+        $this->plaid_version = $plaid_version;
 
         $this->setEnvironment($environment);
     }
@@ -139,6 +150,33 @@ final class Plaid
     }
 
     /**
+     * Set the Plaid version to use
+     *
+     * Possible values: "2017-03-08", "2018-05-22", "2019-05-29"
+     *
+     * @param string $plaid_version
+     */
+    public function setPlaidVersion(string $plaid_version): void
+    {
+        if( !\array_key_exists($plaid_version, $this->plaidVersion) ){
+            throw new PlaidException("Unknown or unsupported version \"{$plaid_version}\".");
+        }
+
+
+        $this->plaid_version = $plaid_version;
+    }
+
+    /**
+     * Get the current plaid version
+     *
+     * @return string
+     */
+    public function getPlaidVersion(): string
+    {
+        return $this->plaid_version;
+    }
+
+    /**
      * Process the request and decode response as JSON.
      *
      * @param Request $request
@@ -170,7 +208,7 @@ final class Plaid
             ($this->getHostname($this->environment) ?? "") . $path,
             \json_encode($params),
             [
-                "Plaid-Version" => self::PLAID_VERSION,
+                "Plaid-Version" => $this->plaid_version,
                 "Content-Type" => "application/json"
             ]
         );
