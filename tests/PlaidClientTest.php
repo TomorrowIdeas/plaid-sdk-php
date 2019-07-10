@@ -69,7 +69,7 @@ class PlaidClientTest extends TestCase
     {
         $plaidClient = $this->getPlaidClient();
 
-        $this->assertEquals("2018-05-22", $plaidClient->getPlaidVersion());
+        $this->assertEquals("2018-05-22", $plaidClient->getVersion());
     }
 
     public function test_plaid_version_set_in_constructor()
@@ -78,7 +78,7 @@ class PlaidClientTest extends TestCase
 
         $plaid = new Plaid("client_id", "secret", "public_key", "production", $version);
 
-        $this->assertEquals($version, $plaid->getPlaidVersion());
+        $this->assertEquals($version, $plaid->getVersion());
     }
 
     public function test_set_plaid_version()
@@ -86,10 +86,9 @@ class PlaidClientTest extends TestCase
         $version = "2019-05-29";
 
         $plaidClient = $this->getPlaidClient();
+        $plaidClient->setVersion($version);
 
-        $plaidClient->setPlaidVersion($version);
-
-        $this->assertEquals($version, $plaidClient->getPlaidVersion());
+        $this->assertEquals($version, $plaidClient->getVersion());
     }
 
     public function test_setting_invalid_version_throws()
@@ -97,7 +96,7 @@ class PlaidClientTest extends TestCase
         $plaid = new Plaid("client_id", "secret", "public_key");
 
         $this->expectException(PlaidException::class);
-        $plaid->setPlaidVersion("foo");
+        $plaid->setVersion("foo");
     }
 
 
