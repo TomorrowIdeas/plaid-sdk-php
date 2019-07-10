@@ -11,6 +11,8 @@ final class Plaid
 {
     /**
      * Plaid API version.
+     * 
+     * @var string
      */
     private $version = "2018-05-22";
 
@@ -23,6 +25,8 @@ final class Plaid
 
     /**
      * Plaid API host name.
+     * 
+     * @var array<string, string>
      */
     private $plaidHost = [
         "production" => "https://production.plaid.com/",
@@ -30,6 +34,11 @@ final class Plaid
         "sandbox" => "https://sandbox.plaid.com/",
     ];
 
+    /**
+     * Plaid API versions.
+     *
+     * @var array<string>
+     */
     private $plaidVersions = [
         "2017-03-08",
         "2018-05-22",
@@ -449,7 +458,7 @@ final class Plaid
     public function getBalance(string $access_token, array $options = []): object
     {
         return $this->doRequest(
-            $this->buildRequest("post", "accounts/balance/get", $this->clientCredentials(["access_token" => $access_token, "options" => $options]))
+            $this->buildRequest("post", "accounts/balance/get", $this->clientCredentials(["access_token" => $access_token, "options" => (object) $options]))
         );
     }
 
