@@ -40,6 +40,7 @@ $client->setEnvironment("sandbox");
 The Plaid client by default uses API version **2018-05-22**.
 
 Possible API versions:
+
 * 2019-05-29
 * 2018-05-22
 * 2017-03-08
@@ -48,7 +49,7 @@ Possible API versions:
 $client = new Plaid("your-client-id", "your-secret", "your-public-key");
 
 
-$client->setPlaidVersion("2019-05-29");
+$client->setVersion("2019-05-29");
 ```
 
 ## Methods
