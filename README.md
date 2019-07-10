@@ -1,4 +1,8 @@
 # Plaid SDK
+[![Latest Stable Version](https://img.shields.io/packagist/v/tomorrow-ideas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
+[![Build Status](https://img.shields.io/travis/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://travis-ci.org/TomorrowIdeas/plaid-sdk-php)
+[![License](https://img.shields.io/github/license/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
+
 Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, and Balance.
 
 ## Official Plaid API docs
