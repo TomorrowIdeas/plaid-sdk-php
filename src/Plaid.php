@@ -10,13 +10,6 @@ use Shuttle\Shuttle;
 final class Plaid
 {
     /**
-     * Plaid API version.
-     * 
-     * @var string
-     */
-    private $version = "2018-05-22";
-
-    /**
      * Plaid API host environment.
      *
      * @var string
@@ -24,11 +17,18 @@ final class Plaid
     private $environment = "production";
 
     /**
-     * Plaid API host name.
-     * 
+     * Plaid API version.
+     *
+     * @var string
+     */
+    private $version = "2018-05-22";
+
+    /**
+     * Plaid API environments and matching hostname.
+     *
      * @var array<string, string>
      */
-    private $plaidHost = [
+    private $plaidEnvironments = [
         "production" => "https://production.plaid.com/",
         "development" => "https://development.plaid.com/",
         "sandbox" => "https://sandbox.plaid.com/",
@@ -88,8 +88,8 @@ final class Plaid
         $this->secret = $secret;
         $this->public_key = $public_key;
 
-        $this->setVersion($version);
         $this->setEnvironment($environment);
+        $this->setVersion($version);
     }
 
     /**
@@ -102,7 +102,7 @@ final class Plaid
      */
     public function setEnvironment(string $environment): void
     {
-        if( !\array_key_exists($environment, $this->plaidHost) ){
+        if( !\array_key_exists($environment, $this->plaidEnvironments) ){
             throw new PlaidException("Unknown or unsupported environment \"{$environment}\".");
         }
 
@@ -120,7 +120,7 @@ final class Plaid
     }
 
     /**
-     * Set the Plaid version to use
+     * Set the Plaid API version to use.
      *
      * Possible values: "2017-03-08", "2018-05-22", "2019-05-29"
      *
@@ -136,7 +136,7 @@ final class Plaid
     }
 
     /**
-     * Get the current Plaid version
+     * Get the current Plaid version.
      *
      * @return string
      */
@@ -153,7 +153,7 @@ final class Plaid
      */
     private function getHostname(string $environment): ?string
     {
-        return $this->plaidHost[$environment] ?? null;
+        return $this->plaidEnvironments[$environment] ?? null;
     }
 
     /**
