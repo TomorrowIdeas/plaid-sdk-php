@@ -1,6 +1,10 @@
 {
     "name": "tomorrow-ideas/plaid-sdk-php",
     "description": "PHP implementation of Plaid's API as an SDK.",
+    "keywords": [
+        "plaid",
+        "sdk"
+    ],
     "type": "library",
     "require": {
         "php": "~7.2",
