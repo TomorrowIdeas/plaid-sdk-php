@@ -8,7 +8,7 @@
 Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, and Balance.
 
 ## Official Plaid API docs
-For full description of request and response payloads and properties, please see the [Plaid API docs](https://plaid.com/docs/).
+For full description of request and response payloads and properties, please see the [offiial Plaid API docs](https://plaid.com/docs/).
 
 ## Requirements
 * PHP 7.2+
@@ -37,8 +37,6 @@ Possible environments:
 * sandbox
 
 ```php
-$client = new Plaid("your-client-id", "your-secret", "your-public-key");
-
 $client->setEnvironment("sandbox");
 ```
 
@@ -52,9 +50,6 @@ Possible API versions:
 * 2017-03-08
 
 ```php
-$client = new Plaid("your-client-id", "your-secret", "your-public-key");
-
-
 $client->setVersion("2019-05-29");
 ```
 
@@ -94,4 +89,4 @@ For a full description of the response payload, please see the [official Plaid A
 * ```getIncome(string $access_token): object```
 
 ## Errors
-All unsuccessfull (non 2xx) responses will throw a ```PlaidRequestException```. The full response object is available via ```getResponse()``` method.
+All unsuccessfull (non 2xx) responses will throw a ```PlaidRequestException```. The full response object is available via the ```getResponse()``` method.
