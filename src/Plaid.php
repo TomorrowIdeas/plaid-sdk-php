@@ -267,8 +267,13 @@ final class Plaid
      */
     public function getAuth(string $access_token, array $options = []): object
     {
+		$params = [
+			"access_token" => $access_token,
+			"options" => (object) $options
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "auth/get", $this->clientCredentials(["access_token" => $access_token, "options" => (object) $options]))
+            $this->buildRequest("post", "auth/get", $this->clientCredentials($params))
         );
     }
 
@@ -280,8 +285,12 @@ final class Plaid
      */
     public function getItem(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/get", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "item/get", $this->clientCredentials($params))
         );
     }
 
@@ -293,8 +302,12 @@ final class Plaid
      */
     public function removeItem(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/remove", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "item/remove", $this->clientCredentials($params))
         );
     }
 
@@ -306,8 +319,12 @@ final class Plaid
      */
     public function createPublicToken(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/public_token/create", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "item/public_token/create", $this->clientCredentials($params))
         );
     }
 
@@ -319,8 +336,12 @@ final class Plaid
      */
     public function exchangeToken(string $public_token): object
     {
+		$params = [
+			"public_token" => $public_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/public_token/exchange", $this->clientCredentials(["public_token" => $public_token]))
+            $this->buildRequest("post", "item/public_token/exchange", $this->clientCredentials($params))
         );
     }
 
@@ -332,8 +353,12 @@ final class Plaid
      */
     public function rotateAccessToken(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/access_token/invalidate", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "item/access_token/invalidate", $this->clientCredentials($params))
         );
     }
 
@@ -346,8 +371,13 @@ final class Plaid
      */
     public function updateWebhook(string $access_token, string $webhook): object
     {
+		$params = [
+			"access_token" => $access_token,
+			"webhook" => $webhook
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "item/webhook/update", $this->clientCredentials(["access_token" => $access_token, "webhook" => $webhook]))
+            $this->buildRequest("post", "item/webhook/update", $this->clientCredentials($params))
         );
     }
 
@@ -359,8 +389,12 @@ final class Plaid
      */
     public function getAccounts(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "accounts/get", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "accounts/get", $this->clientCredentials($params))
         );
     }
 
@@ -457,8 +491,13 @@ final class Plaid
      */
     public function getBalance(string $access_token, array $options = []): object
     {
+		$params = [
+			"access_token" => $access_token,
+			"options" => (object) $options
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "accounts/balance/get", $this->clientCredentials(["access_token" => $access_token, "options" => (object) $options]))
+            $this->buildRequest("post", "accounts/balance/get", $this->clientCredentials($params))
         );
     }
 
@@ -470,8 +509,12 @@ final class Plaid
      */
     public function getIdentity(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "identity/get", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "identity/get", $this->clientCredentials($params))
         );
     }
 
@@ -483,8 +526,12 @@ final class Plaid
      */
     public function getIncome(string $access_token): object
     {
+		$params = [
+			"access_token" => $access_token
+		];
+
         return $this->doRequest(
-            $this->buildRequest("post", "income/get", $this->clientCredentials(["access_token" => $access_token]))
+            $this->buildRequest("post", "income/get", $this->clientCredentials($params))
         );
     }
 }
