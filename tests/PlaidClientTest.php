@@ -99,7 +99,6 @@ class PlaidClientTest extends TestCase
         $plaid->setVersion("foo");
     }
 
-
     public function test_1xx_responses_throw_exception()
     {
         $httpClient = new Shuttle([
@@ -129,7 +128,7 @@ class PlaidClientTest extends TestCase
         $plaid->getItem("access_token");
     }
 
-    public function test_3xx_responses_an_above_throw_exception()
+    public function test_3xx_responses_and_above_throw_exception()
     {
         $httpClient = new Shuttle([
             'handler' => new MockHandler([
@@ -208,5 +207,34 @@ class PlaidClientTest extends TestCase
             $this->assertEquals(300, $plaidRequestException->getCode());
 
         }
-    }
+	}
+
+	public function test_setting_http_client()
+	{
+		$httpClient = new Shuttle;
+
+		$plaid = new Plaid("client_id", "secret", "public_key");
+		$plaid->setHttpClient($httpClient);
+
+		$reflection = new \ReflectionClass($plaid);
+
+        $method = $reflection->getMethod('getHttpClient');
+        $method->setAccessible(true);
+
+		$this->assertSame($httpClient, $method->invoke($plaid));
+	}
+
+	public function test_getting_http_client_creates_default_client_if_none_set()
+	{
+		$httpClient = new Shuttle;
+
+		$plaid = new Plaid("client_id", "secret", "public_key");
+
+		$reflection = new \ReflectionClass($plaid);
+
+        $method = $reflection->getMethod('getHttpClient');
+        $method->setAccessible(true);
+
+		$this->assertTrue($method->invoke($plaid) instanceof Shuttle);
+	}
 }
