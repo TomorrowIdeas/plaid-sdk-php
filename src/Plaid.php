@@ -3,6 +3,7 @@
 namespace TomorrowIdeas\Plaid;
 
 use Capsule\Request;
+use Capsule\Response;
 use DateTime;
 use Psr\Http\Client\ClientInterface;
 use Shuttle\Shuttle;
@@ -620,18 +621,24 @@ final class Plaid
 	 *
 	 * @param string $report_token
 	 * @param boolean $include_insights
-	 * @return object
+	 * @return Response
 	 */
-	public function getAssetReportPdf(string $asset_report_token, bool $include_insights = false): object
+	public function getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response
 	{
 		$params = [
 			"asset_report_token" => $asset_report_token,
 			"include_insights" => $include_insights
 		];
 
-		return $this->doRequest(
+		$response = $this->getHttpClient()->sendRequest(
 			$this->buildRequest("post", "asset_report/pdf/get", $this->clientCredentials($params))
 		);
+
+        if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
+            throw new PlaidRequestException($response);
+		}
+
+        return $response;
 	}
 
 	/**

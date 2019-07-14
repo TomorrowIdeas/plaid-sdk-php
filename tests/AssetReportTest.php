@@ -68,6 +68,7 @@ class AssetReportTest extends TestCase
 	public function test_get_asset_report_pdf()
 	{
 		$response = $this->getPlaidClient()->getAssetReportPdf('asset_report_token', true);
+		$response = \json_decode($response->getBody()->getContents());
 
         $this->assertEquals("POST", $response->method);
         $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
