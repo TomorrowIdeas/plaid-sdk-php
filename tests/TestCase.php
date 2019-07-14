@@ -10,7 +10,7 @@ use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Plaid;
 
 
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     protected function getPlaidClient(): Plaid
     {
