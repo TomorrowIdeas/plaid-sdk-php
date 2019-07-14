@@ -5,7 +5,7 @@
 [![Code Coverage](https://img.shields.io/coveralls/github/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://coveralls.io/github/TomorrowIdeas/plaid-sdk-php)
 [![License](https://img.shields.io/github/license/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
 
-Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, and Balance.
+Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, Assets, and Balance.
 
 ## Official Plaid API docs
 For full description of request and response payloads and properties, please see the [offiial Plaid API docs](https://plaid.com/docs/).
@@ -87,6 +87,18 @@ For a full description of the response payload, please see the [official Plaid A
 
 ### Income
 * ```getIncome(string $access_token): object```
+
+### Assets
+* ```createAssetReport(array $access_tokens, int $days_requested, array $options = []): object```
+* ```refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object``
+* ```filterAssetReport(string $asset_report_token, array $exclude_accounts): object```
+* ```getAssetReport(string $asset_report_token, bool $include_insights = false): object```
+* ```getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response``` **Note:** Because this endpoint returns PDF content in the repsponse body, this method returns an instance of a ```Response``` object. You may leverage the Response object to stream the PDF back to the requesting client. See [offiial Plaid API docs](https://plaid.com/docs/) for more information.
+* ```removeAssetReport(string $asset_report_token): object```
+* ```createAssetReportAuditCopy(string $asset_report_token, string $auditor_id): object```
+* ```removeAssetReportAuditCopy(string $audit_copy_token): object```
+
+
 
 ## Errors
 All unsuccessfull (non 2xx) responses will throw a ```PlaidRequestException```. The full response object is available via the ```getResponse()``` method.
