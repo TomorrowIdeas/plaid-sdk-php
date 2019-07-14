@@ -90,10 +90,10 @@ For a full description of the response payload, please see the [official Plaid A
 
 ### Assets
 * ```createAssetReport(array $access_tokens, int $days_requested, array $options = []): object```
-* ```refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object``
+* ```refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object```
 * ```filterAssetReport(string $asset_report_token, array $exclude_accounts): object```
 * ```getAssetReport(string $asset_report_token, bool $include_insights = false): object```
-* ```getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response``` **Note:** Because this endpoint returns PDF content in the repsponse body, this method returns an instance of a ```Response``` object. You may leverage the Response object to stream the PDF back to the requesting client. See [offiial Plaid API docs](https://plaid.com/docs/) for more information.
+* ```getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response``` **Note:** Because this endpoint returns PDF content in the repsponse body, this method returns an instance of a ```Response``` object. You may leverage the ```Response``` object to stream the PDF back to the requesting client and access response headers. See [offiial Plaid API docs](https://plaid.com/docs/) for more information.
 * ```removeAssetReport(string $asset_report_token): object```
 * ```createAssetReportAuditCopy(string $asset_report_token, string $auditor_id): object```
 * ```removeAssetReportAuditCopy(string $audit_copy_token): object```
