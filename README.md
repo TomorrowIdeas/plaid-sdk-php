@@ -8,7 +8,7 @@
 Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, Assets, and Balance.
 
 ## Official Plaid API docs
-For full description of request and response payloads and properties, please see the [offiial Plaid API docs](https://plaid.com/docs/).
+For full description of request and response payloads and properties, please see the [official Plaid API docs](https://plaid.com/docs/).
 
 ## Requirements
 * PHP 7.2+
