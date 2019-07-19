@@ -12,7 +12,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->createAssetReport(["access_token1", "access_token2"], 30);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/create", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -27,7 +27,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->refreshAssetReport('asset_report_token', 30);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/refresh", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -42,7 +42,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->filterAssetReport('asset_report_token', ['account1', 'account2']);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/filter", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -56,7 +56,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->getAssetReport('asset_report_token', true);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -71,7 +71,7 @@ class AssetReportTest extends TestCase
 		$response = \json_decode($response->getBody()->getContents());
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/pdf/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -85,7 +85,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->removeAssetReport('asset_report_token');
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/remove", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -98,7 +98,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->createAssetReportAuditCopy('asset_report_token', 'auditor_id');
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/audit_copy/create", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -112,7 +112,7 @@ class AssetReportTest extends TestCase
 		$response = $this->getPlaidClient()->removeAssetReportAuditCopy('audit_copy_token');
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/asset_report/audit_copy/remove", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);

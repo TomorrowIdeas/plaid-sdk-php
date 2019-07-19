@@ -12,7 +12,7 @@ class CategoryTest extends TestCase
         $response = $this->getPlaidClient()->getCategories();
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/categories/get", $response->path);
     }

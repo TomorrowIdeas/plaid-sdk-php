@@ -69,7 +69,7 @@ class PlaidClientTest extends TestCase
     {
         $plaidClient = $this->getPlaidClient();
 
-        $this->assertEquals("2018-05-22", $plaidClient->getVersion());
+        $this->assertEquals("2019-05-29", $plaidClient->getVersion());
     }
 
     public function test_plaid_version_set_in_constructor()

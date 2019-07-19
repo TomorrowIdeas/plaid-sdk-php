@@ -12,7 +12,7 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->getInstitutions(100, 200);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/institutions/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
@@ -27,7 +27,7 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->getInstitution("ins_12345");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/institutions/get_by_id", $response->path);
         $this->assertEquals("public_key", $response->params->public_key);
@@ -40,7 +40,7 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->findInstitution("boeing", ["transactions", "mfa"]);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/institutions/search", $response->path);
         $this->assertEquals("public_key", $response->params->public_key);

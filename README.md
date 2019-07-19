@@ -41,7 +41,7 @@ $client->setEnvironment("sandbox");
 ```
 
 ### API Versions
-The Plaid client by default uses API version **2018-05-22**. You can update the version by using the ```setVersion``` method.
+The Plaid client by default uses API version **2019-05-29**. You can update the version by using the ```setVersion``` method.
 
 Possible API versions:
 
@@ -59,6 +59,9 @@ For a full description of the response payload, please see the [official Plaid A
 
 ### Auth
 * ```getAuth(string $access_token, array $options = []): object```
+
+### Liabilities
+* ```getLiabilities(string $access_token, array $options = []): object```
 
 ### Items
 * ```getItem(string $access_token): object```
