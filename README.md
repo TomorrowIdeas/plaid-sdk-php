@@ -5,7 +5,17 @@
 [![Code Coverage](https://img.shields.io/coveralls/github/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://coveralls.io/github/TomorrowIdeas/plaid-sdk-php)
 [![License](https://img.shields.io/github/license/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
 
-Plaid PHP SDK supporting Auth, Items, Accounts, Institutions, Webhooks, Identity, Income, Assets, and Balance.
+Plaid PHP SDK supporting:
+* Auth
+* Items
+* Accounts
+* Institutions
+* Webhooks
+* Identity
+* Income
+* Assets
+* Balance
+* Liabilities
 
 ## Official Plaid API docs
 For full description of request and response payloads and properties, please see the [official Plaid API docs](https://plaid.com/docs/).
