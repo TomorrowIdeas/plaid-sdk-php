@@ -12,7 +12,7 @@ class IdentityTest extends TestCase
         $response = $this->getPlaidClient()->getIdentity("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2018-05-22", $response->version);
+        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
         $this->assertEquals("Content-Type: application/json", $response->content);
         $this->assertEquals("/identity/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
