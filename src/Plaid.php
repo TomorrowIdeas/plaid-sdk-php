@@ -22,7 +22,7 @@ final class Plaid
      *
      * @var string
      */
-    private $version = "2018-05-22";
+    private $version = "2019-05-29";
 
     /**
      * Plaid API environments and matching hostname.
@@ -83,7 +83,7 @@ final class Plaid
      * @param string $environment
      * @param string $version
      */
-    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $version = "2018-05-22")
+    public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $version = "2019-05-29")
     {
         $this->client_id = $client_id;
         $this->secret = $secret;
@@ -275,6 +275,25 @@ final class Plaid
 
         return $this->doRequest(
             $this->buildRequest("post", "auth/get", $this->clientCredentials($params))
+        );
+	}
+
+	/**
+     * Get Liabilities request.
+     *
+     * @param string $access_token
+     * @param array $options
+     * @return object
+     */
+    public function getLiabilities(string $access_token, array $options = []): object
+    {
+		$params = [
+			"access_token" => $access_token,
+			"options" => (object) $options
+		];
+
+        return $this->doRequest(
+            $this->buildRequest("post", "liabilities/get", $this->clientCredentials($params))
         );
     }
 
