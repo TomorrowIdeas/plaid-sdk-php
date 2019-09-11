@@ -51,7 +51,7 @@ $client->setEnvironment("sandbox");
 ```
 
 ### API Versions
-The Plaid client by default uses API version **2019-05-29**. You can update the version by using the ```setVersion``` method.
+The Plaid client by default uses API version **2019-05-29**. You can change the version to use by calling the ```setVersion``` method.
 
 Possible API versions:
 
@@ -106,12 +106,10 @@ For a full description of the response payload, please see the [official Plaid A
 * ```refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object```
 * ```filterAssetReport(string $asset_report_token, array $exclude_accounts): object```
 * ```getAssetReport(string $asset_report_token, bool $include_insights = false): object```
-* ```getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response``` **Note:** Because this endpoint returns PDF content in the repsponse body, this method returns an instance of a ```Response``` object. You may leverage the ```Response``` object to stream the PDF back to the requesting client and access response headers. See [official Plaid API docs](https://plaid.com/docs/) for more information.
+* ```getAssetReportPdf(string $asset_report_token, bool $include_insights = false): ResponseInterface``` **Note:** Because this endpoint returns PDF content in the repsponse body, this method returns an instance of a PSR-7 ```ResponseInterface```. You may leverage the ```Response``` object to stream the PDF back to the requesting client and access response headers. See [official Plaid API docs](https://plaid.com/docs/) for more information.
 * ```removeAssetReport(string $asset_report_token): object```
 * ```createAssetReportAuditCopy(string $asset_report_token, string $auditor_id): object```
 * ```removeAssetReportAuditCopy(string $audit_copy_token): object```
-
-
 
 ## Errors
 All unsuccessfull (non 2xx) responses will throw a ```PlaidRequestException```. The full response object is available via the ```getResponse()``` method.

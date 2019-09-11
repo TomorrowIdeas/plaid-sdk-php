@@ -2,8 +2,15 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
+use Capsule\Response;
+use Shuttle\Handler\MockHandler;
+use Shuttle\Shuttle;
+use TomorrowIdeas\Plaid\Plaid;
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 /**
  * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\PlaidRequestException
  */
 class AssetReportTest extends TestCase
 {
@@ -78,6 +85,21 @@ class AssetReportTest extends TestCase
         $this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("asset_report_token", $response->params->asset_report_token);
 		$this->assertEquals(true, $response->params->include_insights);
+	}
+
+	public function test_get_asset_report_pdf_throws_on_fail()
+	{
+		$httpClient = new Shuttle([
+            'handler' => new MockHandler([
+				new Response(400, "Bad Request")
+			])
+        ]);
+
+        $plaid = new Plaid("client_id", "secret", "public_key");
+        $plaid->setHttpClient($httpClient);
+
+		$this->expectException(PlaidRequestException::class);
+		$plaid->getAssetReportPdf('asset_report_token', true);
 	}
 
 	public function test_remove_asset_report()

@@ -6,6 +6,7 @@ use Capsule\Request;
 use Capsule\Response;
 use DateTime;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
 
 final class Plaid
@@ -640,9 +641,9 @@ final class Plaid
 	 *
 	 * @param string $report_token
 	 * @param boolean $include_insights
-	 * @return Response
+	 * @return ResponseInterface
 	 */
-	public function getAssetReportPdf(string $asset_report_token, bool $include_insights = false): Response
+	public function getAssetReportPdf(string $asset_report_token, bool $include_insights = false): ResponseInterface
 	{
 		$params = [
 			"asset_report_token" => $asset_report_token,
