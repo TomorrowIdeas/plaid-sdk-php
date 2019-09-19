@@ -14,8 +14,8 @@ class TransactionTest extends TestCase
         $response = $this->getPlaidClient()->getTransactions("access_token", new DateTime("2019-01-01 12:00:00"), new DateTime("2019-03-31 12:00:00"));
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/transactions/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);

@@ -12,8 +12,8 @@ class BalanceTest extends TestCase
         $response = $this->getPlaidClient()->getBalance("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/accounts/balance/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);

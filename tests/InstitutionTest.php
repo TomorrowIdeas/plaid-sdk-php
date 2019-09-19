@@ -12,8 +12,8 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->getInstitutions(100, 200);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/institutions/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -27,8 +27,8 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->getInstitution("ins_12345");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/institutions/get_by_id", $response->path);
         $this->assertEquals("public_key", $response->params->public_key);
         $this->assertEquals("ins_12345", $response->params->institution_id);
@@ -40,8 +40,8 @@ class InstitutionTest extends TestCase
         $response = $this->getPlaidClient()->findInstitution("boeing", ["transactions", "mfa"]);
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/institutions/search", $response->path);
         $this->assertEquals("public_key", $response->params->public_key);
         $this->assertEquals("boeing", $response->params->query);

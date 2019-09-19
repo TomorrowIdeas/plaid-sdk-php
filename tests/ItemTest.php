@@ -12,8 +12,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->getItem("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/get", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -25,8 +25,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->removeItem("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/remove", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -38,8 +38,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->createPublicToken("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/public_token/create", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -51,8 +51,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->exchangeToken("public_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/public_token/exchange", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -64,8 +64,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->rotateAccessToken("access_token");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/access_token/invalidate", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
@@ -77,8 +77,8 @@ class ItemTest extends TestCase
         $response = $this->getPlaidClient()->updateWebhook("access_token", "webhook_url");
 
         $this->assertEquals("POST", $response->method);
-        $this->assertEquals("Plaid-Version: 2019-05-29", $response->version);
-        $this->assertEquals("Content-Type: application/json", $response->content);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/item/webhook/update", $response->path);
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);

@@ -3,14 +3,15 @@
     "description": "PHP implementation of Plaid's API as an SDK.",
     "keywords": [
         "plaid",
-        "sdk"
+        "sdk",
+        "php"
     ],
     "type": "library",
     "require": {
         "php": "~7.2",
         "ext-json": "*",
         "ext-curl": "*",
-        "nimbly/shuttle": "^0.2.0"
+        "nimbly/shuttle": "^0.3"
     },
     "autoload": {
         "psr-4": {
