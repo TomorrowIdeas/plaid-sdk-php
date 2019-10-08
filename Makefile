@@ -1,5 +1,3 @@
-.PHONY: install release
-
 test:
 	vendor/bin/phpunit
 
@@ -8,6 +6,3 @@ coverage:
 
 analyze:
 	vendor/bin/psalm
-
-release:
-	php release
