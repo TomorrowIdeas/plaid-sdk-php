@@ -382,7 +382,7 @@ final class Plaid
             $this->buildRequest("post", "item/access_token/invalidate", $this->clientCredentials($params))
         );
     }
-    
+
     /**
      * Create Stripe token.
      *
@@ -398,7 +398,7 @@ final class Plaid
             ];
 
         return $this->doRequest(
-            $this->buildRequest("post", "/processor/stripe/bank_account_token/create", $this->clientCredentials($params))
+            $this->buildRequest("post", "processor/stripe/bank_account_token/create", $this->clientCredentials($params))
         );
     }
 
