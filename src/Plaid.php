@@ -382,6 +382,25 @@ final class Plaid
             $this->buildRequest("post", "item/access_token/invalidate", $this->clientCredentials($params))
         );
     }
+    
+    /**
+     * Create Stripe token.
+     *
+     * @param string $access_token
+     * @param string $account_id
+     * @return object
+     */
+    public function createStripeToken(string $access_token, string $account_id): object
+    {
+            $params = [
+                    "access_token" => $access_token,
+                    "account_id" => $account_id
+            ];
+
+        return $this->doRequest(
+            $this->buildRequest("post", "/processor/stripe/bank_account_token/create", $this->clientCredentials($params))
+        );
+    }
 
     /**
      * Update an Item webhook.
