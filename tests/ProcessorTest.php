@@ -20,4 +20,18 @@ class ProcessorTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("account_id", $response->params->account_id);
 	}
+
+	public function test_create_dwolla_token()
+	{
+		$response = $this->getPlaidClient()->createDwollaToken("access_token", "account_id");
+
+        $this->assertEquals("POST", $response->method);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
+        $this->assertEquals("/processor/dwolla/processor_token/create", $response->path);
+        $this->assertEquals("client_id", $response->params->client_id);
+        $this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals("account_id", $response->params->account_id);
+	}
 }

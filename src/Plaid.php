@@ -3,9 +3,9 @@
 namespace TomorrowIdeas\Plaid;
 
 use Capsule\Request;
-use Capsule\Response;
 use DateTime;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
 
@@ -186,10 +186,10 @@ final class Plaid
     /**
      * Process the request and decode response as JSON.
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return object
      */
-    private function doRequest(Request $request): object
+    private function doRequest(RequestInterface $request): object
     {
         $response = $this->getHttpClient()->sendRequest($request);
 
@@ -206,9 +206,9 @@ final class Plaid
      * @param string $method
      * @param string $path
      * @param array $params
-     * @return Request
+     * @return RequestInterface
      */
-    private function buildRequest(string $method, string $path, array $params = []): Request
+    private function buildRequest(string $method, string $path, array $params = []): RequestInterface
     {
         return new Request(
             $method,
@@ -392,13 +392,32 @@ final class Plaid
      */
     public function createStripeToken(string $access_token, string $account_id): object
     {
-            $params = [
-                    "access_token" => $access_token,
-                    "account_id" => $account_id
-            ];
+		$params = [
+			"access_token" => $access_token,
+			"account_id" => $account_id
+		];
 
         return $this->doRequest(
             $this->buildRequest("post", "processor/stripe/bank_account_token/create", $this->clientCredentials($params))
+        );
+    }
+
+    /**
+     * Create Dwolla token.
+     *
+     * @param string $access_token
+     * @param string $account_id
+     * @return object
+     */
+    public function createDwollaToken(string $access_token, string $account_id): object
+    {
+        $params = [
+            "access_token" => $access_token,
+			"account_id" => $account_id
+        ];
+
+        return $this->doRequest(
+            $this->buildRequest("post", "processor/dwolla/processor_token/create", $this->clientCredentials($params))
         );
     }
 
