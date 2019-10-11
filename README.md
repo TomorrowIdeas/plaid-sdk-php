@@ -131,6 +131,7 @@ For a full description of the response payload, please see the [official Plaid A
 ### Processors
 
 * ```createStripeToken(string $access_token, string $account_id): object```
+* ```createDwollaToken(string $access_token, string $account_id): object```
 
 ## Errors
 
