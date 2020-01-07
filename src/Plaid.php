@@ -100,6 +100,7 @@ final class Plaid
      * Possible values: "production", "development", "sandbox"
      *
      * @param string $environment
+	 * @throws PlaidException
      * @return void
      */
     public function setEnvironment(string $environment): void
@@ -127,6 +128,8 @@ final class Plaid
      * Possible values: "2017-03-08", "2018-05-22", "2019-05-29"
      *
      * @param string $version
+	 * @throws PlaidException
+	 * @return void
      */
     public function setVersion(string $version): void
     {
@@ -187,6 +190,7 @@ final class Plaid
      * Process the request and decode response as JSON.
      *
      * @param RequestInterface $request
+	 * @throws PlaidRequestException
      * @return object
      */
     private function doRequest(RequestInterface $request): object
@@ -224,7 +228,7 @@ final class Plaid
     /**
      * Build request body with client credentials.
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return array
      */
     private function clientCredentials(array $params = []): array
@@ -238,7 +242,7 @@ final class Plaid
     /**
      * Build request body with public credentials.
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return array
      */
     private function publicCredentials(array $params = []): array
@@ -264,7 +268,7 @@ final class Plaid
      * Get Auth request.
      *
      * @param string $access_token
-     * @param array $options
+     * @param array<string, string> $options
      * @return object
      */
     public function getAuth(string $access_token, array $options = []): object
@@ -283,7 +287,7 @@ final class Plaid
      * Get Liabilities request.
      *
      * @param string $access_token
-     * @param array $options
+     * @param array<string, string> $options
      * @return object
      */
     public function getLiabilities(string $access_token, array $options = []): object
@@ -756,7 +760,7 @@ final class Plaid
 	 * Get investment holdings.
 	 *
 	 * @param string $access_token
-	 * @param array $options
+	 * @param array<string, string> $options
 	 * @return object
 	 */
 	public function getInvestmentHoldings(string $access_token, array $options = []): object
@@ -777,7 +781,7 @@ final class Plaid
 	 * @param string $access_token
 	 * @param DateTime $start_date
 	 * @param DateTime $end_date
-	 * @param array $options
+	 * @param array<string, string> $options
 	 * @return object
 	 */
 	public function getInvestmentTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object
