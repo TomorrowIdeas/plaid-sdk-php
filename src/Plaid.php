@@ -411,10 +411,10 @@ final class Plaid
      */
     public function createDwollaToken(string $access_token, string $account_id): object
     {
-        $params = [
-            "access_token" => $access_token,
+		$params = [
+			"access_token" => $access_token,
 			"account_id" => $account_id
-        ];
+		];
 
         return $this->doRequest(
             $this->buildRequest("post", "processor/dwolla/processor_token/create", $this->clientCredentials($params))
@@ -751,4 +751,47 @@ final class Plaid
 			$this->buildRequest("post", "asset_report/audit_copy/remove", $this->clientCredentials($params))
 		);
 	}
+
+	/**
+	 * Get investment holdings.
+	 *
+	 * @param string $access_token
+	 * @param array $options
+	 * @return object
+	 */
+	public function getInvestmentHoldings(string $access_token, array $options = []): object
+	{
+		$params = [
+			"access_token" => $access_token,
+			"options" => (object) $options
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "investments/holdings/get", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * Get investment transactions.
+	 *
+	 * @param string $access_token
+	 * @param DateTime $start_date
+	 * @param DateTime $end_date
+	 * @param array $options
+	 * @return object
+	 */
+	public function getInvestmentTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object
+	{
+		$params = [
+			"access_token" => $access_token,
+			"start_date" => $start_date->format("Y-m-d"),
+            "end_date" => $end_date->format("Y-m-d"),
+            "options" => (object) $options
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "investments/transactions/get", $this->clientCredentials($params))
+		);
+	}
+
 }
