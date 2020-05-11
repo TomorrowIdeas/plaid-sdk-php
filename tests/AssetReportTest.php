@@ -74,7 +74,7 @@ class AssetReportTest extends TestCase
 
 	public function test_get_asset_report_pdf()
 	{
-		$response = $this->getPlaidClient()->getAssetReportPdf('asset_report_token', true);
+		$response = $this->getPlaidClient()->getAssetReportPdf('asset_report_token');
 		$response = \json_decode($response->getBody()->getContents());
 
         $this->assertEquals("POST", $response->method);
@@ -84,7 +84,6 @@ class AssetReportTest extends TestCase
         $this->assertEquals("client_id", $response->params->client_id);
         $this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("asset_report_token", $response->params->asset_report_token);
-		$this->assertEquals(true, $response->params->include_insights);
 	}
 
 	public function test_get_asset_report_pdf_throws_on_fail()

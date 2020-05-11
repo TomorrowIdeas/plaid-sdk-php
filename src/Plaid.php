@@ -682,14 +682,12 @@ final class Plaid
 	 * Get an Asset report in PDF format.
 	 *
 	 * @param string $report_token
-	 * @param boolean $include_insights
 	 * @return ResponseInterface
 	 */
-	public function getAssetReportPdf(string $asset_report_token, bool $include_insights = false): ResponseInterface
+	public function getAssetReportPdf(string $asset_report_token): ResponseInterface
 	{
 		$params = [
-			"asset_report_token" => $asset_report_token,
-			"include_insights" => $include_insights
+			"asset_report_token" => $asset_report_token
 		];
 
 		$response = $this->getHttpClient()->sendRequest(
