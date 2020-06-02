@@ -1,7 +1,7 @@
 # Plaid SDK
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/tomorrow-ideas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
-[![Build Status](https://img.shields.io/travis/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://travis-ci.org/TomorrowIdeas/plaid-sdk-php)
+[![Build Status](https://img.shields.io/travis/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://travis-ci.com/TomorrowIdeas/plaid-sdk-php)
 [![Code Coverage](https://img.shields.io/coveralls/github/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://coveralls.io/github/TomorrowIdeas/plaid-sdk-php)
 [![License](https://img.shields.io/github/license/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
 
@@ -40,7 +40,7 @@ composer require tomorrow-ideas/plaid-sdk-php
 Instantiate the Plaid client class with your credentials.
 
 ```php
-$client = new Plaid("your-client-id", "your-secret", "your-public-key");
+$client = new \TomorrowIdeas\Plaid\Plaid("your-client-id", "your-secret", "your-public-key");
 ```
 
 ### Environments
@@ -73,13 +73,32 @@ $client->setVersion("2019-05-29");
 
 ### Options
 
-Many methods allow the passing of options to the Plaid endoint. These options should be an associative array of key/value pairs. The exact options supported are dependent on the endpoint being called. Please refer to the official Plaid documentation for more information.
+Many methods allow the passing of options to the Plaid endpoint. These options should be an associative array of key/value pairs. The exact options supported are dependent on the endpoint being called. Please refer to the official Plaid documentation for more information.
 
 ```php
 $options = [
 	"foo" => "bar",
 	"baz" => "bat"
 ];
+```
+
+## Example
+```php
+use TomorrowIdeas\Plaid\Plaid;
+
+require __DIR__ . "/vendor/autoload.php";
+
+$plaid = new Plaid(
+	\getenv("PLAID_CLIENT_ID"),
+	\getenv("PLAID_CLIENT_SECRET"),
+	\getevv("PLAID_PUBLIC_KEY")
+);
+
+$plaid->setEnvironment(
+	\getenv("PLAID_ENVIRONMENT")
+);
+
+$item = $plaid->getItem("itm_1234");
 ```
 
 ## Methods
