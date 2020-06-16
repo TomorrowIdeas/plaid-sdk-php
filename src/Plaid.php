@@ -209,10 +209,10 @@ final class Plaid
      *
      * @param string $method
      * @param string $path
-     * @param array $params
+     * @param array|object $params
      * @return RequestInterface
      */
-    private function buildRequest(string $method, string $path, array $params = []): RequestInterface
+    private function buildRequest(string $method, string $path, $params = []): RequestInterface
     {
         return new Request(
             $method,
@@ -259,8 +259,13 @@ final class Plaid
      */
     public function getCategories(): object
     {
+    	// 2020-06-20: Plaid (at least from my testing) never supported sending '[]' in body for this endpoint. This
+	    //             suggest that this code was never tested by author of this library, or that plaid introduced
+	    //             backward incompatible change in their api without documenting it anywhere. All versions of
+	    //             API - as of writing this - return Internal Server Error when I try to fetch them, to fix
+	    //             this we need to send empty object '{}' instead of empty array '[]'.
         return $this->doRequest(
-            $this->buildRequest("post", "categories/get")
+            $this->buildRequest("post", "categories/get", new \stdClass())
         );
     }
 
