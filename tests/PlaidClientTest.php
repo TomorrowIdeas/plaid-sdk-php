@@ -226,8 +226,6 @@ class PlaidClientTest extends TestCase
 
 	public function test_getting_http_client_creates_default_client_if_none_set()
 	{
-		$httpClient = new Shuttle;
-
 		$plaid = new Plaid("client_id", "secret", "public_key");
 
 		$reflection = new \ReflectionClass($plaid);
@@ -235,6 +233,23 @@ class PlaidClientTest extends TestCase
         $method = $reflection->getMethod('getHttpClient');
         $method->setAccessible(true);
 
-		$this->assertTrue($method->invoke($plaid) instanceof Shuttle);
+		$this->assertInstanceOf(Shuttle::class, $method->invoke($plaid));
+	}
+
+	public function test_build_request_with_no_params_sends_empty_object_in_body()
+	{
+		$plaid = new Plaid("client_id", "secret", "public_key");
+
+		$reflection = new \ReflectionClass($plaid);
+
+        $method = $reflection->getMethod('buildRequest');
+		$method->setAccessible(true);
+
+		$request = $method->invokeArgs($plaid, ["post", "/endpoint"]);
+
+		$this->assertEquals(
+			new \stdClass,
+			\json_decode($request->getBody()->getContents())
+		);
 	}
 }
