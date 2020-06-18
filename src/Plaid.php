@@ -795,4 +795,21 @@ final class Plaid
 			$this->buildRequest("post", "investments/transactions/get", $this->clientCredentials($params))
 		);
 	}
+
+	/**
+	 * Get public key corresponding to key id inside webhook request.
+	 *
+	 * @param string $key_id
+	 * @return object
+	 */
+	public function getWebhookVerificationKey(string $key_id): object
+	{
+		$params = [
+			'key_id' => $key_id,
+		];
+
+		return $this->doRequest(
+			$this->buildRequest('post', 'webhook_verification_key/get', $this->clientCredentials($params))
+		);
+	}
 }
