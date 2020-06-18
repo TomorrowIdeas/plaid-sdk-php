@@ -120,7 +120,10 @@ For a full description of the response payload, please see the [official Plaid A
 * ```createPublicToken(string $access_token): object``` [[?]](https://plaid.com/docs/#creating-public-tokens)
 * ```exchangeToken(string $public_token): object``` [[?]](https://plaid.com/docs/#exchange-token-flow)
 * ```rotateAccessToken(string $access_token): object``` [[?]](https://plaid.com/docs/#rotate-access-token)
-* ```updateWebhook(string $access_token, string $webook): object``` [[?]](https://plaid.com/docs/#update-webhook)
+
+### Webhooks
+* ```getWebhookVerificationKey(string $key_id): object``` [[?]](https://plaid.com/docs/#steps-for-verification)
+* ```updateWebhook(string $access_token, string $webhook): object``` [[?]](https://plaid.com/docs/#update-webhook)
 
 ### Accounts
 
