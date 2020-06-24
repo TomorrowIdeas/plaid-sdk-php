@@ -812,4 +812,130 @@ final class Plaid
 			$this->buildRequest('post', 'webhook_verification_key/get', $this->clientCredentials($params))
 		);
 	}
+
+	/**
+	 * Create a recipient request for payment initiation.
+	 *
+	 * @param string $name
+	 * @param string $iban
+	 * @param array $address
+	 * @return object
+	 */
+	public function createRecipient(string $name, string $iban, array $address): object
+	{
+		$params = [
+			"name" => $name,
+			"iban" => $iban,
+			"address" => (object) $address
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/recipient/create", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * Get a recipient request from a payment inititiation.
+	 *
+	 * @param string $recipient_id
+	 * @return object
+	 */
+	public function getRecipient(string $recipient_id): object
+	{
+		$params = [
+			"recipient_id" => $recipient_id
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/recipient/get", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * List out all recipients for payment initiations.
+	 *
+	 * @return object
+	 */
+	public function listRecipients(): object
+	{
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/recipient/list", $this->clientCredentials())
+		);
+	}
+
+	/**
+	 * Create a payment request.
+	 *
+	 * @param string $recipient_id
+	 * @param string $reference
+	 * @param float $amount
+	 * @param string $currency
+	 * @return object
+	 */
+	public function createPayment(string $recipient_id, string $reference, float $amount, string $currency): object
+	{
+		$params = [
+			"recipient_id" => $recipient_id,
+			"reference" => $reference,
+			"amount" => [
+				"value" => (float) $amount,
+				"currency" => $currency
+			]
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/payment/create", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * Create a payment token.
+	 *
+	 * @param string $payment_id
+	 * @return object
+	 */
+	public function createPaymentToken(string $payment_id): object
+	{
+		$params = [
+			"payment_id" => $payment_id
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/payment/token/create", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * Get payment details.
+	 *
+	 * @param string $payment_id
+	 * @return object
+	 */
+	public function getPayment(string $payment_id): object
+	{
+		$params = [
+			"payment_id" => $payment_id
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/payment/get", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * List all payments.
+	 *
+	 * @param array $options
+	 * @return object
+	 */
+	public function listPayments(array $options = []): object
+	{
+		$params = [
+			"options" => (object) $options
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "payment_initiation/payment/list", $this->clientCredentials($params))
+		);
+	}
 }
