@@ -8,6 +8,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
+use TomorrowIdeas\Plaid\Entities\Address;
 
 final class Plaid
 {
@@ -818,15 +819,15 @@ final class Plaid
 	 *
 	 * @param string $name
 	 * @param string $iban
-	 * @param array $address
+	 * @param Address $address
 	 * @return object
 	 */
-	public function createRecipient(string $name, string $iban, array $address): object
+	public function createRecipient(string $name, string $iban, Address $address): object
 	{
 		$params = [
 			"name" => $name,
 			"iban" => $iban,
-			"address" => (object) $address
+			"address" => (object) $address->toArray()
 		];
 
 		return $this->doRequest(

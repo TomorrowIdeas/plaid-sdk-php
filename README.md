@@ -123,6 +123,7 @@ For a full description of the response payload, please see the [official Plaid A
 * `rotateAccessToken(string $access_token): object` [[?]](https://plaid.com/docs/#rotate-access-token)
 
 ### Webhooks
+
 * `getWebhookVerificationKey(string $key_id): object` [[?]](https://plaid.com/docs/#steps-for-verification)
 * `updateWebhook(string $access_token, string $webhook): object` [[?]](https://plaid.com/docs/#update-webhook)
 
@@ -171,7 +172,7 @@ For a full description of the response payload, please see the [official Plaid A
 
 ### Payment Initiation (UK only)
 
-* `createRecipient(string $name, string $iban, array $address): object` [[?]](https://plaid.com/docs/#payment-initiation)
+* `createRecipient(string $name, string $iban, Address $address): object` [[?]](https://plaid.com/docs/#payment-initiation) **Note:** See the **Entities** section for details about the `Address` entity needed for this method.
 * `getRecipient(string $recipient_id): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `listRecipients(): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `createPayment(string $recipient_id, string $reference, float $amount, string $currency): object` [[?]](https://plaid.com/docs/#payment-initiation)
@@ -183,6 +184,18 @@ For a full description of the response payload, please see the [official Plaid A
 
 * `createStripeToken(string $access_token, string $account_id): object` [[?]](https://plaid.com/docs/stripe)
 * `createDwollaToken(string $access_token, string $account_id): object` [[?]](https://plaid.com/docs/dwolla)
+
+## Entities
+
+### Address
+
+The `TomorrowIdeas\Plaid\Entities\Address` entity is used to represent an address object for endpoints that require it. Currently, only the `createRecipient` method uses this entity.
+
+Example:
+
+```php
+$address = new TomorrowIdeas\Plaid\Entities\Address("123 Elm St.", "Apt 1", "Anytown", "ABC 123", "GB");
+```
 
 ## Errors
 

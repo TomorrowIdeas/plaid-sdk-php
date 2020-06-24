@@ -2,19 +2,17 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
+use TomorrowIdeas\Plaid\Entities\Address;
+
 /**
  * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Entities\Address
  */
 class PaymentInitiationTest extends TestCase
 {
 	public function test_create_recipient(): void
 	{
-		$response = $this->getPlaidClient()->createRecipient("name", "iban", [
-			"street" => "139 The Esplanade",
-			"city" => "Weymouth",
-			"postal_code" => "DT4 7NR",
-			"country" => "GB"
-		]);
+		$response = $this->getPlaidClient()->createRecipient("name", "iban", new Address("139 The Esplanade", null, "Weymouth", "DT4 7NR", "GB"));
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2019-05-29", $response->version);
@@ -26,7 +24,7 @@ class PaymentInitiationTest extends TestCase
 		$this->assertEquals("iban", $response->params->iban);
 		$this->assertEquals(
 			(object) [
-				"street" => "139 The Esplanade",
+				"street" => ["139 The Esplanade"],
 				"city" => "Weymouth",
 				"postal_code" => "DT4 7NR",
 				"country" => "GB"
