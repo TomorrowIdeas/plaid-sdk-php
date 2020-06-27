@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Entities\Address;
 
-final class Plaid
+class Plaid
 {
 	/**
 	 * Plaid API host environment.
