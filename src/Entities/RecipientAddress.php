@@ -2,7 +2,7 @@
 
 namespace TomorrowIdeas\Plaid\Entities;
 
-class PaymentAddress
+class RecipientAddress
 {
 	/**
 	 * Street address.
