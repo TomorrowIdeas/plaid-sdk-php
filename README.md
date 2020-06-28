@@ -172,7 +172,7 @@ For a full description of the response payload, please see the [official Plaid A
 
 ### Payment Initiation (UK only)
 
-* `createRecipient(string $name, string $iban, PaymentAddress $address): object` [[?]](https://plaid.com/docs/#payment-initiation) **Note:** See the **Entities** section for details about the `PaymentAddress` entity needed for this method.
+* `createRecipient(string $name, string $iban, RecipientAddress $address): object` [[?]](https://plaid.com/docs/#payment-initiation) **Note:** See the **Entities** section for details about the `RecipientAddress` entity needed for this method.
 * `getRecipient(string $recipient_id): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `listRecipients(): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `createPayment(string $recipient_id, string $reference, float $amount, string $currency): object` [[?]](https://plaid.com/docs/#payment-initiation)
@@ -187,14 +187,14 @@ For a full description of the response payload, please see the [official Plaid A
 
 ## Entities
 
-### PaymentAddress
+### RecipientAddress
 
-The `TomorrowIdeas\Plaid\Entities\PaymentAddress` entity is used to represent an address object for the recipient of a payment request.
+The `TomorrowIdeas\Plaid\Entities\RecipientAddress` entity is used to represent an address object for the recipient of a payment request.
 
 Example:
 
 ```php
-$address = new TomorrowIdeas\Plaid\Entities\PaymentAddress("123 Elm St.", "Apt 1", "Anytown", "ABC 123", "GB");
+$address = new TomorrowIdeas\Plaid\Entities\RecipientAddress("123 Elm St.", "Apt 1", "Anytown", "ABC 123", "GB");
 ```
 
 ## Errors
