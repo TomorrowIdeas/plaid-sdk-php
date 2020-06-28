@@ -2,16 +2,16 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
-use TomorrowIdeas\Plaid\Entities\Address;
+use TomorrowIdeas\Plaid\Entities\PaymentAddress;
 
 /**
- * @covers TomorrowIdeas\Plaid\Entities\Address
+ * @covers TomorrowIdeas\Plaid\Entities\PaymentAddress
  */
-class AddressEntityTest extends TestCase
+class PaymentAddressEntityTest extends TestCase
 {
 	public function test_to_array_with_single_street(): void
 	{
-		$address = new Address("123 Elm St", null, "Anytown", "ABC 123", "US");
+		$address = new PaymentAddress("123 Elm St", null, "Anytown", "ABC 123", "US");
 
 		$this->assertEquals(
 			[
@@ -26,7 +26,7 @@ class AddressEntityTest extends TestCase
 
 	public function test_to_array_with_additional_street(): void
 	{
-		$address = new Address("123 Elm St", "Apt A", "Anytown", "ABC 123", "US");
+		$address = new PaymentAddress("123 Elm St", "Apt A", "Anytown", "ABC 123", "US");
 
 		$this->assertEquals(
 			[

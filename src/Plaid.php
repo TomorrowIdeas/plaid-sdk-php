@@ -8,7 +8,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
-use TomorrowIdeas\Plaid\Entities\Address;
+use TomorrowIdeas\Plaid\Entities\PaymentAddress;
 
 class Plaid
 {
@@ -819,10 +819,10 @@ class Plaid
 	 *
 	 * @param string $name
 	 * @param string $iban
-	 * @param Address $address
+	 * @param PaymentAddress $address
 	 * @return object
 	 */
-	public function createRecipient(string $name, string $iban, Address $address): object
+	public function createRecipient(string $name, string $iban, PaymentAddress $address): object
 	{
 		$params = [
 			"name" => $name,
@@ -879,7 +879,7 @@ class Plaid
 			"recipient_id" => $recipient_id,
 			"reference" => $reference,
 			"amount" => [
-				"value" => (float) $amount,
+				"value" => $amount,
 				"currency" => $currency
 			]
 		];
