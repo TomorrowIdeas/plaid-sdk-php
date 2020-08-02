@@ -30,7 +30,8 @@ class InstitutionTest extends TestCase
         $this->assertEquals("2019-05-29", $response->version);
         $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/institutions/get_by_id", $response->path);
-        $this->assertEquals("public_key", $response->params->public_key);
+        $this->assertEquals("client_id", $response->params->client_id);
+        $this->assertEquals("secret", $response->params->secret);
         $this->assertEquals("ins_12345", $response->params->institution_id);
         $this->assertEquals(new \StdClass, $response->params->options);
     }
@@ -43,7 +44,8 @@ class InstitutionTest extends TestCase
         $this->assertEquals("2019-05-29", $response->version);
         $this->assertEquals("application/json", $response->content);
         $this->assertEquals("/institutions/search", $response->path);
-        $this->assertEquals("public_key", $response->params->public_key);
+        $this->assertEquals("client_id", $response->params->client_id);
+        $this->assertEquals("secret", $response->params->secret);
         $this->assertEquals("boeing", $response->params->query);
         $this->assertEquals(["transactions", "mfa"], $response->params->products);
         $this->assertEquals(new \StdClass, $response->params->options);

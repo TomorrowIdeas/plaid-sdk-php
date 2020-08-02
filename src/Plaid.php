@@ -8,6 +8,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
+use TomorrowIdeas\Plaid\Entities\AccountFilters;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
 
 class Plaid
@@ -65,7 +66,8 @@ class Plaid
 	/**
 	 * Plaid public key.
 	 *
-	 * @var string
+	 * @deprecated 1.0
+	 * @var string|null
 	 */
 	private $public_key;
 
@@ -81,11 +83,11 @@ class Plaid
 	 *
 	 * @param string $client_id
 	 * @param string $secret
-	 * @param string $public_key
+	 * @param string|null $public_key
 	 * @param string $environment
 	 * @param string $version
 	 */
-	public function __construct(string $client_id, string $secret, string $public_key, string $environment = "production", string $version = "2019-05-29")
+	public function __construct(string $client_id, string $secret, ?string $public_key = null, string $environment = "production", string $version = "2019-05-29")
 	{
 		$this->client_id = $client_id;
 		$this->secret = $secret;
@@ -241,16 +243,79 @@ class Plaid
 	}
 
 	/**
-	 * Build request body with public credentials.
+	 * Create a Link Token.
 	 *
-	 * @param array<string, mixed> $params
-	 * @return array
+	 * @param string $client_name
+	 * @param string $language Possible values are: en, fr, es, nl
+	 * @param array<string> $country_codes Possible values are: CA, FR, IE, NL, ES, GB, US
+	 * @param string $client_user_id
+	 * @param array<string> $products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
+	 * @param string|null $webhook
+	 * @param string|null $link_customization_name
+	 * @param AccountFilters|null $account_filters
+	 * @param string|null $access_token
+	 * @param string|null $redirect_url
+	 * @param string|null $android_package_name
+	 * @param string|null $payment_id
+	 * @return object
 	 */
-	private function publicCredentials(array $params = []): array
-	{
-		return \array_merge([
-			"public_key" => $this->public_key
-		], $params);
+	public function createLinkToken(
+		string $client_name,
+		string $language,
+		array $country_codes,
+		string $client_user_id,
+		array $products = [],
+		?string $webhook = null,
+		?string $link_customization_name = null,
+		?AccountFilters $account_filters = null,
+		?string $access_token = null,
+		?string $redirect_url = null,
+		?string $android_package_name = null,
+		?string $payment_id = null): object {
+
+		$params = [
+			"client_name" => $client_name,
+			"language" => $language,
+			"country_codes" => $country_codes,
+			"user" => [
+				"client_user_id" => $client_user_id
+			],
+			"products" => $products
+		];
+
+		if( $webhook ){
+			$params["webhook"] = $webhook;
+		}
+
+		if( $link_customization_name ){
+			$params["link_customization_name"] = $link_customization_name;
+		}
+
+		if( $account_filters ){
+			$params["account_filters"] = $account_filters->toArray();
+		}
+
+		if( $access_token ){
+			$params["access_token"] = $access_token;
+		}
+
+		if( $redirect_url ){
+			$params["redirect_url"] = $redirect_url;
+		}
+
+		if( $android_package_name ){
+			$params["android_package_name"] = $android_package_name;
+		}
+
+		if( $payment_id ){
+			$params["payment_initiation"] = [
+				"payment_id" => $payment_id
+			];
+		}
+
+		return $this->doRequest(
+			$this->buildRequest("post", "link/token/create", $this->clientCredentials($params))
+		);
 	}
 
 	/**
@@ -477,7 +542,7 @@ class Plaid
 		];
 
 		return $this->doRequest(
-			$this->buildRequest("post", "institutions/get_by_id", $this->publicCredentials($params))
+			$this->buildRequest("post", "institutions/get_by_id", $this->clientCredentials($params))
 		);
 	}
 
@@ -519,7 +584,7 @@ class Plaid
 		];
 
 		return $this->doRequest(
-			$this->buildRequest("post", "institutions/search", $this->publicCredentials($params))
+			$this->buildRequest("post", "institutions/search", $this->clientCredentials($params))
 		);
 	}
 
