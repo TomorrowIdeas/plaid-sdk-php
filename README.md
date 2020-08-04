@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/github/license/TomorrowIdeas/plaid-sdk-php.svg?style=flat-square)](https://packagist.org/packages/tomorrow-ideas/plaid-sdk-php)
 
 Plaid PHP SDK supporting:
+* Link tokens
 * Auth
 * Items
 * Accounts
@@ -105,6 +106,24 @@ $item = $plaid->getItem("itm_1234");
 ## Methods
 
 For a full description of the response payload, please see the [official Plaid API docs](https://plaid.com/docs/).
+
+### Link Tokens
+
+```php
+createLinkToken(
+	string $client_name,
+	string $language,
+	array $country_codes,
+	string $client_user_id,
+	array $products = [],
+	?string $webhook = null,
+	?string $link_customization_name = null,
+	?AccountFilters $account_filters = null,
+	?string $access_token = null,
+	?string $redirect_url = null,
+	?string $android_package_name = null,
+	?string $payment_id = null): object
+```
 
 ### Auth
 
