@@ -10,14 +10,19 @@ class AccountFiltersEntityTest extends TestCase
 {
 	public function test_constructor_sets_filters(): void
 	{
-		$filters = [
+		$inputFilters = [
 			"depository" => ["auth", "identity"]
 		];
+		$expectedOutputFilters = [
+			"depository" => [
+				"account_subtypes" => ["auth", "identity"]
+			]
+		];
 
-		$accountFilters = new AccountFilters($filters);
+		$accountFilters = new AccountFilters($inputFilters);
 
 		$this->assertEquals(
-			$filters,
+			$expectedOutputFilters,
 			$accountFilters->toArray()
 		);
 	}
@@ -45,7 +50,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"depository" => [
-					"auth", "transactions", "identity", "income", "assets"
+					"account_subtypes" => ["auth", "transactions", "identity", "income", "assets"]
 				]
 			],
 			$accountFilters->toArray()
@@ -60,7 +65,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"credit" => [
-					"transactions", "identity", "liabilities"
+					"account_subtypes" => ["transactions", "identity", "liabilities"]
 				]
 			],
 			$accountFilters->toArray()
@@ -75,7 +80,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"investment" => [
-					"investments"
+					"account_subtypes" => ["investments"]
 				]
 			],
 			$accountFilters->toArray()
@@ -90,7 +95,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"loan" => [
-					"transactions", "liabilities"
+					"account_subtypes" => ["transactions", "liabilities"]
 				]
 			],
 			$accountFilters->toArray()
@@ -105,7 +110,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"other" => [
-					"auth", "transactions", "identity", "assets"
+					"account_subtypes" => ["auth", "transactions", "identity", "assets"]
 				]
 			],
 			$accountFilters->toArray()

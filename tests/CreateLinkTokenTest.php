@@ -79,7 +79,9 @@ class CreateLinkTokenTest extends TestCase
 
 		$this->assertEquals(
 			(object) [
-				"depository" => ["auth", "transactions"]
+				"depository" => (object) [
+					"account_subtypes" => ["auth", "transactions"]
+				]
 			],
 			$response->params->account_filters
 		);
@@ -117,7 +119,7 @@ class CreateLinkTokenTest extends TestCase
 			"http://redirect.uri"
 		);
 
-		$this->assertEquals("http://redirect.url", $response->params->redirect_uri);
+		$this->assertEquals("http://redirect.uri", $response->params->redirect_uri);
 	}
 
 	public function test_android_package_name(): void
