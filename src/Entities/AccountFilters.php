@@ -37,7 +37,7 @@ class AccountFilters
 			return;
 		}
 
-		$this->filters[$type] = $subtypes;
+		$this->filters[$type] = ["account_subtypes" => $subtypes];
 	}
 
 	/**

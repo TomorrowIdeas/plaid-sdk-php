@@ -102,7 +102,7 @@ class CreateLinkTokenTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_redirect_url(): void
+	public function test_redirect_uri(): void
 	{
 		$response = $this->getPlaidClient()->createLinkToken(
 			"client_name",
@@ -114,10 +114,10 @@ class CreateLinkTokenTest extends TestCase
 			null,
 			null,
 			null,
-			"http://redirect.url"
+			"http://redirect.uri"
 		);
 
-		$this->assertEquals("http://redirect.url", $response->params->redirect_url);
+		$this->assertEquals("http://redirect.url", $response->params->redirect_uri);
 	}
 
 	public function test_android_package_name(): void
