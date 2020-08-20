@@ -254,7 +254,7 @@ class Plaid
 	 * @param string|null $link_customization_name
 	 * @param AccountFilters|null $account_filters
 	 * @param string|null $access_token
-	 * @param string|null $redirect_url
+	 * @param string|null $redirect_uri
 	 * @param string|null $android_package_name
 	 * @param string|null $payment_id
 	 * @return object
@@ -269,7 +269,7 @@ class Plaid
 		?string $link_customization_name = null,
 		?AccountFilters $account_filters = null,
 		?string $access_token = null,
-		?string $redirect_url = null,
+		?string $redirect_uri = null,
 		?string $android_package_name = null,
 		?string $payment_id = null): object {
 
@@ -299,8 +299,8 @@ class Plaid
 			$params["access_token"] = $access_token;
 		}
 
-		if( $redirect_url ){
-			$params["redirect_url"] = $redirect_url;
+		if( $redirect_uri ){
+			$params["redirect_uri"] = $redirect_uri;
 		}
 
 		if( $android_package_name ){
