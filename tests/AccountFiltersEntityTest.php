@@ -17,7 +17,11 @@ class AccountFiltersEntityTest extends TestCase
 		$accountFilters = new AccountFilters($filters);
 
 		$this->assertEquals(
-			$filters,
+			[
+				"depository" => [
+					"account_subtypes" => ["auth", "identity"]
+				]
+			],
 			$accountFilters->toArray()
 		);
 	}
@@ -45,7 +49,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"depository" => [
-					"auth", "transactions", "identity", "income", "assets"
+					"account_subtypes" => ["auth", "transactions", "identity", "income", "assets"]
 				]
 			],
 			$accountFilters->toArray()
@@ -60,7 +64,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"credit" => [
-					"transactions", "identity", "liabilities"
+					"account_subtypes" => ["transactions", "identity", "liabilities"]
 				]
 			],
 			$accountFilters->toArray()
@@ -75,7 +79,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"investment" => [
-					"investments"
+					"account_subtypes" => ["investments"]
 				]
 			],
 			$accountFilters->toArray()
@@ -90,7 +94,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"loan" => [
-					"transactions", "liabilities"
+					"account_subtypes" => ["transactions", "liabilities"]
 				]
 			],
 			$accountFilters->toArray()
@@ -105,7 +109,7 @@ class AccountFiltersEntityTest extends TestCase
 		$this->assertEquals(
 			[
 				"other" => [
-					"auth", "transactions", "identity", "assets"
+					"account_subtypes" => ["auth", "transactions", "identity", "assets"]
 				]
 			],
 			$accountFilters->toArray()

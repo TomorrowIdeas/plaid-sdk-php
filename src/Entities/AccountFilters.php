@@ -7,7 +7,7 @@ class AccountFilters
 	/**
 	 * Filters to be applied.
 	 *
-	 * @var array<string,array<string>>
+	 * @var array<string,array<string,array<string>>>
 	 */
 	protected $filters = [];
 
@@ -128,7 +128,7 @@ class AccountFilters
 	/**
 	 * Get all filters as array.
 	 *
-	 * @return array<string,array<string>>
+	 * @return array<string,array<string,array<string>>>
 	 */
 	public function toArray(): array
 	{
