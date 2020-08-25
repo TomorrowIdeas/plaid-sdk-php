@@ -199,12 +199,18 @@ class Plaid
 	private function doRequest(RequestInterface $request): object
 	{
 		$response = $this->getHttpClient()->sendRequest($request);
+        $response_contents = \json_decode($response->getBody()->getContents());
 
-		if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
-			throw new PlaidRequestException($response);
-		}
+        if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
+            // Forward item error json to resolve through LINK
+            if( strcmp($response_contents->error_type, "ITEM_ERROR") == 0 ) {
+                return $response_contents;
+            }
 
-		return \json_decode($response->getBody()->getContents());
+            throw new PlaidRequestException($response);
+        }
+
+        return $response_contents;
 	}
 
 	/**
