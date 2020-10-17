@@ -9,6 +9,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Entities\AccountFilters;
+use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
 
 class Plaid
@@ -936,9 +937,10 @@ class Plaid
 	 * @param string $reference
 	 * @param float $amount
 	 * @param string $currency
+	 * @param PaymentSchedule|null $payment_schedule
 	 * @return object
 	 */
-	public function createPayment(string $recipient_id, string $reference, float $amount, string $currency): object
+	public function createPayment(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object
 	{
 		$params = [
 			"recipient_id" => $recipient_id,
@@ -948,6 +950,14 @@ class Plaid
 				"currency" => $currency
 			]
 		];
+
+		if( $payment_schedule ){
+			$params["schedule"] = [
+				"interval" => $payment_schedule->getInterval(),
+				"interval_execution_day" => $payment_schedule->getIntervalExecutionDay(),
+				"start_date" => $payment_schedule->getStartDate()->format("Y-m-d")
+			];
+		}
 
 		return $this->doRequest(
 			$this->buildRequest("post", "payment_initiation/payment/create", $this->clientCredentials($params))

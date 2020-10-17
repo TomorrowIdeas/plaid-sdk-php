@@ -194,7 +194,7 @@ createLinkToken(
 * `createRecipient(string $name, string $iban, RecipientAddress $address): object` [[?]](https://plaid.com/docs/#payment-initiation) **Note:** See the **Entities** section for details about the `RecipientAddress` entity needed for this method.
 * `getRecipient(string $recipient_id): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `listRecipients(): object` [[?]](https://plaid.com/docs/#payment-initiation)
-* `createPayment(string $recipient_id, string $reference, float $amount, string $currency): object` [[?]](https://plaid.com/docs/#payment-initiation)
+* `createPayment(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `createPaymentToken(string $payment_id): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `getPayment(string $payment_id): object` [[?]](https://plaid.com/docs/#payment-initiation)
 * `listPayments(array $options = []): object` [[?]](https://plaid.com/docs/#payment-initiation)
@@ -214,6 +214,21 @@ Example:
 
 ```php
 $address = new TomorrowIdeas\Plaid\Entities\RecipientAddress("123 Elm St.", "Apt 1", "Anytown", "ABC 123", "GB");
+```
+
+### PaymentSchedule
+
+Example:
+
+The `TomorrowIdeas\Plaid\Entities\PaymnentSchedule` entity is used when creating a new payment that will be a recurring charge.
+See `createPayment` method for more information.
+
+```php
+$payment_schedule = new TomorrowIdeas\Plaid\Entities\PaymnentSchedule(
+    PaymentSchedule::INTERVAL_MONTHLY,
+    15,
+    new DateTime("2020-10-01")
+);
 ```
 
 ## Errors
