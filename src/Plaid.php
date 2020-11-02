@@ -1014,4 +1014,21 @@ class Plaid
 			$this->buildRequest("post", "payment_initiation/payment/list", $this->clientCredentials($params))
 		);
 	}
+
+	/**
+	 * Send a refresh request for given item.
+	 *
+	 * @param string $access_token
+	 * @return object
+	 */
+	public function requestTransactionsRefresh(string $access_token): object
+	{
+		$params = [
+			"access_token" => $access_token,
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "transactions/refresh", $this->clientCredentials($params))
+		);
+	}
 }
