@@ -3,6 +3,7 @@
 namespace TomorrowIdeas\Plaid\Tests;
 
 use DateTime;
+use TomorrowIdeas\Plaid\Entities\BacsAccount;
 use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
 
@@ -31,6 +32,36 @@ class PaymentsTest extends TestCase
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("name", $response->params->name);
 		$this->assertEquals("iban", $response->params->iban);
+		$this->assertEquals(
+			(object) [
+				"street" => ["139 The Esplanade"],
+				"city" => "Weymouth",
+				"postal_code" => "DT4 7NR",
+				"country" => "GB"
+			],
+			$response->params->address
+		);
+	}
+
+	public function test_create_recipient_with_bac_entity(): void
+	{
+		$response = $this->getPlaidClient()->payments->createRecipient(
+			"name",
+			new BacsAccount("account", "sort_code"),
+			new RecipientAddress("139 The Esplanade", null, "Weymouth", "DT4 7NR", "GB")
+		);
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/payment_initiation/recipient/create", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("name", $response->params->name);
+		$this->assertEquals((object) [
+			"account" => "account",
+			"sort_code" => "sort_code"
+		], $response->params->bacs);
 		$this->assertEquals(
 			(object) [
 				"street" => ["139 The Esplanade"],

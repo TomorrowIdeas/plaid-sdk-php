@@ -172,4 +172,17 @@ class LinksTest extends TestCase
 			$response->params->payment_initiation
 		);
 	}
+
+	public function test_get_token(): void
+	{
+		$response = $this->getPlaidClient()->links->getToken("link_token");
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/link/token/get", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("link_token", $response->params->link_token);
+	}
 }
