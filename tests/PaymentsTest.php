@@ -7,18 +7,24 @@ use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
 
 /**
- * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers \TomorrowIdeas\Plaid\Plaid
+ * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Payments
  * @covers TomorrowIdeas\Plaid\Entities\RecipientAddress
  * @covers TomorrowIdeas\Plaid\Entities\PaymentSchedule
  */
-class PaymentInitiationTest extends TestCase
+class PaymentsTest extends TestCase
 {
 	public function test_create_recipient(): void
 	{
-		$response = $this->getPlaidClient()->createRecipient("name", "iban", new RecipientAddress("139 The Esplanade", null, "Weymouth", "DT4 7NR", "GB"));
+		$response = $this->getPlaidClient()->payments->createRecipient(
+			"name",
+			"iban",
+			new RecipientAddress("139 The Esplanade", null, "Weymouth", "DT4 7NR", "GB")
+		);
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/recipient/create", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -38,10 +44,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_get_recipient(): void
 	{
-		$response = $this->getPlaidClient()->getRecipient("rcp_1234");
+		$response = $this->getPlaidClient()->payments->getRecipient("rcp_1234");
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/recipient/get", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -51,10 +57,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_list_recipients(): void
 	{
-		$response = $this->getPlaidClient()->listRecipients();
+		$response = $this->getPlaidClient()->payments->listRecipients();
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/recipient/list", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -63,10 +69,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_create_payment(): void
 	{
-		$response = $this->getPlaidClient()->createPayment("rcp_1234", "ref_5678", 250.25, "GBP");
+		$response = $this->getPlaidClient()->payments->createPayment("rcp_1234", "ref_5678", 250.25, "GBP");
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/payment/create", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -81,7 +87,7 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_create_payment_with_schedule(): void
 	{
-		$response = $this->getPlaidClient()->createPayment(
+		$response = $this->getPlaidClient()->payments->createPayment(
 			"rcp_1234",
 			"ref_5678",
 			250.25,
@@ -94,7 +100,7 @@ class PaymentInitiationTest extends TestCase
 		);
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/payment/create", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -117,10 +123,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_create_payment_token(): void
 	{
-		$response = $this->getPlaidClient()->createPaymentToken("pmt_1234");
+		$response = $this->getPlaidClient()->payments->createPaymentToken("pmt_1234");
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/payment/token/create", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -130,10 +136,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_get_payment(): void
 	{
-		$response = $this->getPlaidClient()->getPayment("pmt_1234");
+		$response = $this->getPlaidClient()->payments->getPayment("pmt_1234");
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/payment/get", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -143,10 +149,10 @@ class PaymentInitiationTest extends TestCase
 
 	public function test_list_payments(): void
 	{
-		$response = $this->getPlaidClient()->listPayments();
+		$response = $this->getPlaidClient()->payments->listPayments();
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/payment_initiation/payment/list", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);

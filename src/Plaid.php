@@ -2,1016 +2,153 @@
 
 namespace TomorrowIdeas\Plaid;
 
-use Capsule\Request;
-use DateTime;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Shuttle\Shuttle;
-use TomorrowIdeas\Plaid\Entities\AccountFilters;
-use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
-use TomorrowIdeas\Plaid\Entities\RecipientAddress;
+use TomorrowIdeas\Plaid\Resources\AbstractResource;
+use UnexpectedValueException;
 
+/**
+ * @property \TomorrowIdeas\Plaid\Resources\Accounts $accounts
+ * @property \TomorrowIdeas\Plaid\Resources\Auth $auth
+ * @property \TomorrowIdeas\Plaid\Resources\BankTransfers $bank_transfers
+ * @property \TomorrowIdeas\Plaid\Resources\Categories $categories
+ * @property \TomorrowIdeas\Plaid\Resources\Institutions $institutions
+ * @property \TomorrowIdeas\Plaid\Resources\Investments	$investments
+ * @property \TomorrowIdeas\Plaid\Resources\Items $items
+ * @property \TomorrowIdeas\Plaid\Resources\Liabilities $liabilities
+ * @property \TomorrowIdeas\Plaid\Resources\Links $links
+ * @property \TomorrowIdeas\Plaid\Resources\Payments $payments
+ * @property \TomorrowIdeas\Plaid\Resources\Processors $processors
+ * @property \TomorrowIdeas\Plaid\Resources\Reports $reports
+ * @property \TomorrowIdeas\Plaid\Resources\Sandbox $sandbox
+ * @property \TomorrowIdeas\Plaid\Resources\Transactions $transactions
+ * @property \TomorrowIdeas\Plaid\Resources\Webhooks $webhooks
+ */
 class Plaid
 {
-	/**
-	 * Plaid API host environment.
-	 *
-	 * @var string
-	 */
-	private $environment = "production";
-
-	/**
-	 * Plaid API version.
-	 *
-	 * @var string
-	 */
-	private $version = "2019-05-29";
-
-	/**
-	 * Plaid API environments and matching hostname.
-	 *
-	 * @var array<string,string>
-	 */
-	private $plaidEnvironments = [
-		"production" => "https://production.plaid.com/",
-		"development" => "https://development.plaid.com/",
-		"sandbox" => "https://sandbox.plaid.com/",
-	];
-
-	/**
-	 * Plaid API versions.
-	 *
-	 * @var array<string>
-	 */
-	private $plaidVersions = [
-		"2017-03-08",
-		"2018-05-22",
-		"2019-05-29",
-	];
+	const API_VERSION = "2020-09-14";
 
 	/**
 	 * Plaid client Id.
 	 *
 	 * @var string
 	 */
-	private $client_id;
+	protected $client_id;
 
 	/**
 	 * Plaid client secret.
 	 *
 	 * @var string
 	 */
-	private $secret;
+	protected $client_secret;
 
 	/**
-	 * Plaid public key.
+	 * Plaid API host environment.
 	 *
-	 * @deprecated 1.0
-	 * @var string|null
+	 * @var string
 	 */
-	private $public_key;
+	protected $environment = "production";
 
 	/**
-	 * PSR-18 ClientInterface instance.
+	 * Plaid API environments and matching hostname.
+	 *
+	 * @var array<string,string>
+	 */
+	protected $plaidEnvironments = [
+		"production" => "https://production.plaid.com/",
+		"development" => "https://development.plaid.com/",
+		"sandbox" => "https://sandbox.plaid.com/",
+	];
+
+	/**
+	 * ClientInterface instance.
 	 *
 	 * @var ClientInterface|null
 	 */
-	private $httpClient;
+	protected $httpClient;
 
 	/**
-	 * Plaid client constructor.
+	 * Resource instance cache.
 	 *
+	 * @var array<AbstractResource>
+	 */
+	protected $resource_cache = [];
+
+	/**
 	 * @param string $client_id
-	 * @param string $secret
-	 * @param string|null $public_key
-	 * @param string $environment
-	 * @param string $version
+	 * @param string $client_secret
+	 * @param string $environment Possible values are: production, development, sandbox
 	 */
-	public function __construct(string $client_id, string $secret, ?string $public_key = null, string $environment = "production", string $version = "2019-05-29")
-	{
-		$this->client_id = $client_id;
-		$this->secret = $secret;
-		$this->public_key = $public_key;
-
-		$this->setEnvironment($environment);
-		$this->setVersion($version);
-	}
-
-	/**
-	 * Set the Plaid API environment.
-	 *
-	 * Possible values: "production", "development", "sandbox"
-	 *
-	 * @param string $environment
-	 * @throws PlaidException
-	 * @return void
-	 */
-	public function setEnvironment(string $environment): void
+	public function __construct(
+		string $client_id,
+		string $client_secret,
+		string $environment = "production")
 	{
 		if( !\array_key_exists($environment, $this->plaidEnvironments) ){
-			throw new PlaidException("Unknown or unsupported environment \"{$environment}\".");
+			throw new UnexpectedValueException("Invalid environment. Environment must be one of: production, development, or sandbox.");
 		}
 
+		$this->client_id = $client_id;
+		$this->client_secret = $client_secret;
 		$this->environment = $environment;
 	}
 
 	/**
-	 * Get the current environment.
+	 * Magic getter for resources.
 	 *
-	 * @return string
+	 * @param string $resource
+	 * @return AbstractResource
 	 */
-	public function getEnvironment(): string
+	public function __get(string $resource): AbstractResource
 	{
-		return $this->environment;
-	}
+		if( !isset($this->resource_cache[$resource]) ){
 
-	/**
-	 * Set the Plaid API version to use.
-	 *
-	 * Possible values: "2017-03-08", "2018-05-22", "2019-05-29"
-	 *
-	 * @param string $version
-	 * @throws PlaidException
-	 * @return void
-	 */
-	public function setVersion(string $version): void
-	{
-		if( !\in_array($version, $this->plaidVersions) ){
-			throw new PlaidException("Unknown or unsupported version \"{$version}\".");
+			$resource = \str_replace([" "], "", \ucwords(\str_replace(["_"], " ", $resource)));
+
+			$resource_class = "\\TomorrowIdeas\\Plaid\\Resources\\" . $resource;
+
+			if( !\class_exists($resource_class) ){
+				throw new UnexpectedValueException("Unknown Plaid resource: {$resource}");
+			}
+
+			/**
+			 * @var AbstractResource $resource_instance
+			 */
+			$resource_instance = new $resource_class(
+				$this->getHttpClient(),
+				$this->client_id,
+				$this->client_secret,
+				$this->plaidEnvironments[$this->environment]
+			);
+
+			$this->resource_cache[$resource] = $resource_instance;
 		}
 
-		$this->version = $version;
+		return $this->resource_cache[$resource];
 	}
 
 	/**
-	 * Get the current Plaid version.
+	 * Set a specific ClientInterface instance to be used to make HTTP calls.
 	 *
-	 * @return string
-	 */
-	public function getVersion(): string
-	{
-		return $this->version;
-	}
-
-	/**
-	 * Get the specific environment host name.
-	 *
-	 * @param string $environment
-	 * @return string|null
-	 */
-	private function getHostname(string $environment): ?string
-	{
-		return $this->plaidEnvironments[$environment] ?? null;
-	}
-
-	/**
-	 * Set the HTTP client to use.
-	 *
-	 * @param ClientInterface $clientInterface
+	 * @param ClientInterface $httpClient
 	 * @return void
 	 */
-	public function setHttpClient(ClientInterface $clientInterface): void
+	public function setHttpClient(ClientInterface $httpClient): void
 	{
-		$this->httpClient = $clientInterface;
+		$this->httpClient = $httpClient;
 	}
 
 	/**
-	 * Get the HTTP Client interface.
+	 * Get the ClientInterface instance being used to make HTTP calls.
 	 *
 	 * @return ClientInterface
 	 */
-	private function getHttpClient(): ClientInterface
+	public function getHttpClient(): ClientInterface
 	{
 		if( empty($this->httpClient) ){
 			$this->httpClient = new Shuttle;
 		}
 
 		return $this->httpClient;
-	}
-
-	/**
-	 * Process the request and decode response as JSON.
-	 *
-	 * @param RequestInterface $request
-	 * @throws PlaidRequestException
-	 * @return object
-	 */
-	private function doRequest(RequestInterface $request): object
-	{
-		$response = $this->getHttpClient()->sendRequest($request);
-
-		if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
-			throw new PlaidRequestException($response);
-		}
-
-		return \json_decode($response->getBody()->getContents());
-	}
-
-	/**
-	 * Build a PSR-7 Request instance.
-	 *
-	 * @param string $method
-	 * @param string $path
-	 * @param array<string,mixed> $params
-	 * @return RequestInterface
-	 */
-	private function buildRequest(string $method, string $path, array $params = []): RequestInterface
-	{
-		return new Request(
-			$method,
-			($this->getHostname($this->environment) ?? "") . $path,
-			\json_encode((object) $params),
-			[
-				"Plaid-Version" => $this->version,
-				"Content-Type" => "application/json"
-			]
-		);
-	}
-
-	/**
-	 * Build request body with client credentials.
-	 *
-	 * @param array<string, mixed> $params
-	 * @return array
-	 */
-	private function clientCredentials(array $params = []): array
-	{
-		return \array_merge([
-			"client_id" => $this->client_id,
-			"secret" => $this->secret
-		], $params);
-	}
-
-	/**
-	 * Create a Link Token.
-	 *
-	 * @param string $client_name
-	 * @param string $language Possible values are: en, fr, es, nl
-	 * @param array<string> $country_codes Possible values are: CA, FR, IE, NL, ES, GB, US
-	 * @param string $client_user_id
-	 * @param array<string> $products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
-	 * @param string|null $webhook
-	 * @param string|null $link_customization_name
-	 * @param AccountFilters|null $account_filters
-	 * @param string|null $access_token
-	 * @param string|null $redirect_uri
-	 * @param string|null $android_package_name
-	 * @param string|null $payment_id
-	 * @return object
-	 */
-	public function createLinkToken(
-		string $client_name,
-		string $language,
-		array $country_codes,
-		string $client_user_id,
-		array $products = [],
-		?string $webhook = null,
-		?string $link_customization_name = null,
-		?AccountFilters $account_filters = null,
-		?string $access_token = null,
-		?string $redirect_uri = null,
-		?string $android_package_name = null,
-		?string $payment_id = null): object {
-
-		$params = [
-			"client_name" => $client_name,
-			"language" => $language,
-			"country_codes" => $country_codes,
-			"user" => [
-				"client_user_id" => $client_user_id
-			],
-			"products" => $products
-		];
-
-		if( $webhook ){
-			$params["webhook"] = $webhook;
-		}
-
-		if( $link_customization_name ){
-			$params["link_customization_name"] = $link_customization_name;
-		}
-
-		if( $account_filters ){
-			$params["account_filters"] = $account_filters->toArray();
-		}
-
-		if( $access_token ){
-			$params["access_token"] = $access_token;
-		}
-
-		if( $redirect_uri ){
-			$params["redirect_uri"] = $redirect_uri;
-		}
-
-		if( $android_package_name ){
-			$params["android_package_name"] = $android_package_name;
-		}
-
-		if( $payment_id ){
-			$params["payment_initiation"] = [
-				"payment_id" => $payment_id
-			];
-		}
-
-		return $this->doRequest(
-			$this->buildRequest("post", "link/token/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get all Plaid categories.
-	 *
-	 * @return object
-	 */
-	public function getCategories(): object
-	{
-		return $this->doRequest(
-			$this->buildRequest("post", "categories/get")
-		);
-	}
-
-	/**
-	 * Get Auth request.
-	 *
-	 * @param string $access_token
-	 * @param array<string, string> $options
-	 * @return object
-	 */
-	public function getAuth(string $access_token, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "auth/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get Liabilities request.
-	 *
-	 * @param string $access_token
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getLiabilities(string $access_token, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "liabilities/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get an Item.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function getItem(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Remove an Item.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function removeItem(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/remove", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create a new Item public token.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function createPublicToken(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/public_token/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Exchange an Item public token for an access token.
-	 *
-	 * @param string $public_token
-	 * @return object
-	 */
-	public function exchangeToken(string $public_token): object
-	{
-		$params = [
-			"public_token" => $public_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/public_token/exchange", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Rotate an Item's access token.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function rotateAccessToken(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/access_token/invalidate", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create Stripe token.
-	 *
-	 * @param string $access_token
-	 * @param string $account_id
-	 * @return object
-	 */
-	public function createStripeToken(string $access_token, string $account_id): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"account_id" => $account_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "processor/stripe/bank_account_token/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create Dwolla token.
-	 *
-	 * @param string $access_token
-	 * @param string $account_id
-	 * @return object
-	 */
-	public function createDwollaToken(string $access_token, string $account_id): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"account_id" => $account_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "processor/dwolla/processor_token/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Update an Item webhook.
-	 *
-	 * @param string $access_token
-	 * @param string $webhook
-	 * @return object
-	 */
-	public function updateWebhook(string $access_token, string $webhook): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"webhook" => $webhook
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "item/webhook/update", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get all Accounts.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function getAccounts(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "accounts/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get a specific Insitution.
-	 *
-	 * @param string $institution_id
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInstitution(string $institution_id, array $options = []): object
-	{
-		$params = [
-			"institution_id" => $institution_id,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "institutions/get_by_id", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get all Institutions.
-	 *
-	 * @param integer $count
-	 * @param integer $offset
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInstitutions(int $count, int $offset, array $options = []): object
-	{
-		$params = [
-			"count" => $count,
-			"offset" => $offset,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "institutions/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Find an Institution by a search query.
-	 *
-	 * @param string $query
-	 * @param array<string> $products
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function findInstitution(string $query, array $products, array $options = []): object
-	{
-		$params = [
-			"query" => $query,
-			"products" => $products,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "institutions/search", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get all transactions for a particular Account.
-	 *
-	 * @param string $access_token
-	 * @param DateTime $start_date
-	 * @param DateTime $end_date
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"start_date" => $start_date->format("Y-m-d"),
-			"end_date" => $end_date->format("Y-m-d"),
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "transactions/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get Account balance.
-	 *
-	 * @param string $access_token
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getBalance(string $access_token, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "accounts/balance/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get Account identity information.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function getIdentity(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "identity/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get an Item's income information.
-	 *
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function getIncome(string $access_token): object
-	{
-		$params = [
-			"access_token" => $access_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "income/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create an Asset Report.
-	 *
-	 * @param array<string> $access_tokens
-	 * @param integer $days_requested
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function createAssetReport(array $access_tokens, int $days_requested, array $options = []): object
-	{
-		$params = [
-			'access_tokens' => $access_tokens,
-			'days_requested' => $days_requested,
-			'options' => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Refresh an Asset Report.
-	 *
-	 * @param string $asset_report_token
-	 * @param integer $days_requested
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object
-	{
-		$params = [
-			'asset_report_token' => $asset_report_token,
-			'days_requested' => $days_requested,
-			'options' => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/refresh", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Filter an Asset Report by specifying which Accounts to exclude.
-	 *
-	 * @param string $asset_report_token
-	 * @param array<string> $exclude_accounts
-	 * @return object
-	 */
-	public function filterAssetReport(string $asset_report_token, array $exclude_accounts): object
-	{
-		$params = [
-			'asset_report_token' => $asset_report_token,
-			'account_ids_to_exclude' => $exclude_accounts
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/filter", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get an Asset report.
-	 *
-	 * @param string $asset_report_token
-	 * @param boolean $include_insights
-	 * @return object
-	 */
-	public function getAssetReport(string $asset_report_token, bool $include_insights = false): object
-	{
-		$params = [
-			"asset_report_token" => $asset_report_token,
-			"include_insights" => $include_insights
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get an Asset report in PDF format.
-	 *
-	 * @param string $report_token
-	 * @return ResponseInterface
-	 */
-	public function getAssetReportPdf(string $asset_report_token): ResponseInterface
-	{
-		$params = [
-			"asset_report_token" => $asset_report_token
-		];
-
-		$response = $this->getHttpClient()->sendRequest(
-			$this->buildRequest("post", "asset_report/pdf/get", $this->clientCredentials($params))
-		);
-
-		if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
-			throw new PlaidRequestException($response);
-		}
-
-		return $response;
-	}
-
-	/**
-	 * Remove an Asset Report.
-	 *
-	 * @param string $asset_report_token
-	 * @return object
-	 */
-	public function removeAssetReport(string $asset_report_token): object
-	{
-		$params = [
-			"asset_report_token" => $asset_report_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/remove", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create an Audit Copy of an Asset Report.
-	 *
-	 * @param string $asset_report_token
-	 * @param string $auditor_id
-	 * @return object
-	 */
-	public function createAssetReportAuditCopy(string $asset_report_token, string $auditor_id): object
-	{
-		$params = [
-			"asset_report_token" => $asset_report_token,
-			"auditor_id" => $auditor_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/audit_copy/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Remove an Audit Copy.
-	 *
-	 * @param string $audit_copy_token
-	 * @return object
-	 */
-	public function removeAssetReportAuditCopy(string $audit_copy_token): object
-	{
-		$params = [
-			"audit_copy_token" => $audit_copy_token
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "asset_report/audit_copy/remove", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get investment holdings.
-	 *
-	 * @param string $access_token
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInvestmentHoldings(string $access_token, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "investments/holdings/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get investment transactions.
-	 *
-	 * @param string $access_token
-	 * @param DateTime $start_date
-	 * @param DateTime $end_date
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInvestmentTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"start_date" => $start_date->format("Y-m-d"),
-			"end_date" => $end_date->format("Y-m-d"),
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "investments/transactions/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get public key corresponding to key id inside webhook request.
-	 *
-	 * @param string $key_id
-	 * @return object
-	 */
-	public function getWebhookVerificationKey(string $key_id): object
-	{
-		$params = [
-			'key_id' => $key_id,
-		];
-
-		return $this->doRequest(
-			$this->buildRequest('post', 'webhook_verification_key/get', $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create a recipient request for payment initiation.
-	 *
-	 * @param string $name
-	 * @param string $iban
-	 * @param RecipientAddress $address
-	 * @return object
-	 */
-	public function createRecipient(string $name, string $iban, RecipientAddress $address): object
-	{
-		$params = [
-			"name" => $name,
-			"iban" => $iban,
-			"address" => (object) $address->toArray()
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/recipient/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get a recipient request from a payment inititiation.
-	 *
-	 * @param string $recipient_id
-	 * @return object
-	 */
-	public function getRecipient(string $recipient_id): object
-	{
-		$params = [
-			"recipient_id" => $recipient_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/recipient/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * List out all recipients for payment initiations.
-	 *
-	 * @return object
-	 */
-	public function listRecipients(): object
-	{
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/recipient/list", $this->clientCredentials())
-		);
-	}
-
-	/**
-	 * Create a payment request.
-	 *
-	 * @param string $recipient_id
-	 * @param string $reference
-	 * @param float $amount
-	 * @param string $currency
-	 * @param PaymentSchedule|null $payment_schedule
-	 * @return object
-	 */
-	public function createPayment(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object
-	{
-		$params = [
-			"recipient_id" => $recipient_id,
-			"reference" => $reference,
-			"amount" => [
-				"value" => $amount,
-				"currency" => $currency
-			]
-		];
-
-		if( $payment_schedule ){
-			$params["schedule"] = [
-				"interval" => $payment_schedule->getInterval(),
-				"interval_execution_day" => $payment_schedule->getIntervalExecutionDay(),
-				"start_date" => $payment_schedule->getStartDate()->format("Y-m-d")
-			];
-		}
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/payment/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Create a payment token.
-	 *
-	 * @param string $payment_id
-	 * @return object
-	 */
-	public function createPaymentToken(string $payment_id): object
-	{
-		$params = [
-			"payment_id" => $payment_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/payment/token/create", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * Get payment details.
-	 *
-	 * @param string $payment_id
-	 * @return object
-	 */
-	public function getPayment(string $payment_id): object
-	{
-		$params = [
-			"payment_id" => $payment_id
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/payment/get", $this->clientCredentials($params))
-		);
-	}
-
-	/**
-	 * List all payments.
-	 *
-	 * @param array $options
-	 * @return object
-	 */
-	public function listPayments(array $options = []): object
-	{
-		$params = [
-			"options" => (object) $options
-		];
-
-		return $this->doRequest(
-			$this->buildRequest("post", "payment_initiation/payment/list", $this->clientCredentials($params))
-		);
 	}
 }

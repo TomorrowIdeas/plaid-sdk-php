@@ -4,14 +4,16 @@ use TomorrowIdeas\Plaid\Entities\AccountFilters;
 use TomorrowIdeas\Plaid\Tests\TestCase;
 
 /**
- * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers \TomorrowIdeas\Plaid\Plaid
+ * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Links
  * @covers TomorrowIdeas\Plaid\Entities\AccountFilters
  */
-class CreateLinkTokenTest extends TestCase
+class LinksTest extends TestCase
 {
 	public function test_required_parameters(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -20,7 +22,7 @@ class CreateLinkTokenTest extends TestCase
 		);
 
 		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2019-05-29", $response->version);
+		$this->assertEquals("2020-09-14", $response->version);
 		$this->assertEquals("application/json", $response->content);
 		$this->assertEquals("/link/token/create", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
@@ -34,7 +36,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_webhook(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -48,7 +50,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_link_customization_name(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -66,7 +68,7 @@ class CreateLinkTokenTest extends TestCase
 		$account_filters = new AccountFilters;
 		$account_filters->setDepositoryFilters(["auth", "transactions"]);
 
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -93,7 +95,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_access_token(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -110,7 +112,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_redirect_uri(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -131,7 +133,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_android_package_name(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],
@@ -150,7 +152,7 @@ class CreateLinkTokenTest extends TestCase
 
 	public function test_payment_id(): void
 	{
-		$response = $this->getPlaidClient()->createLinkToken(
+		$response = $this->getPlaidClient()->links->createLinkToken(
 			"client_name",
 			"en",
 			["US"],

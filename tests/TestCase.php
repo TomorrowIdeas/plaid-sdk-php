@@ -12,7 +12,7 @@ use TomorrowIdeas\Plaid\Plaid;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected function getPlaidClient(): Plaid
+    protected function getPlaidClient(string $environment = "production"): Plaid
     {
         $httpClient = new Shuttle([
             'handler' => new MockHandler([
@@ -34,8 +34,8 @@ abstract class TestCase extends PHPUnitTestCase
             ])
         ]);
 
-        $plaid = new Plaid("client_id", "secret", "public_key");
-        $plaid->setHttpClient($httpClient);
+        $plaid = new Plaid("client_id", "secret", $environment);
+		$plaid->setHttpClient($httpClient);
 
         return $plaid;
     }

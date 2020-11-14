@@ -20,6 +20,8 @@ Plaid PHP SDK supporting:
 * Investments
 * Payment Initiation (UK only)
 * Processors (Stripe & Dwolla)
+* Bank Transfers (US only)
+* Sandbox
 
 ## Official Plaid API docs
 
@@ -42,7 +44,7 @@ composer require tomorrow-ideas/plaid-sdk-php
 Instantiate the Plaid client class with your credentials.
 
 ```php
-$client = new \TomorrowIdeas\Plaid\Plaid("your-client-id", "your-secret", "your-public-key");
+$client = new \TomorrowIdeas\Plaid\Plaid("your-client-id", "your-secret", "environment");
 ```
 
 ### Environments
@@ -54,24 +56,6 @@ Possible environments:
 * production
 * development
 * sandbox
-
-```php
-$client->setEnvironment("sandbox");
-```
-
-### API Versions
-
-The Plaid client by default uses API version **2019-05-29**. You can change the version by calling the `setVersion` method.
-
-Possible API versions:
-
-* 2019-05-29
-* 2018-05-22
-* 2017-03-08
-
-```php
-$client->setVersion("2019-05-29");
-```
 
 ### Options
 
@@ -93,21 +77,17 @@ require __DIR__ . "/vendor/autoload.php";
 $plaid = new Plaid(
 	\getenv("PLAID_CLIENT_ID"),
 	\getenv("PLAID_CLIENT_SECRET"),
-	\getevv("PLAID_PUBLIC_KEY")
-);
-
-$plaid->setEnvironment(
 	\getenv("PLAID_ENVIRONMENT")
 );
 
-$item = $plaid->getItem("itm_1234");
+$item = $plaid->items->getItem("itm_1234");
 ```
 
 ## Methods
 
 For a full description of the response payload, please see the [official Plaid API docs](https://plaid.com/docs/).
 
-### Link Tokens
+### Links (Link Tokens)
 
 ```php
 createLinkToken(
