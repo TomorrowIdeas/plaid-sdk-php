@@ -4,10 +4,12 @@ namespace TomorrowIdeas\Plaid\Tests;
 
 use Capsule\Request;
 use Capsule\Response;
+use Capsule\ResponseStatus;
 use Shuttle\Handler\MockHandler;
 use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Plaid;
 use TomorrowIdeas\Plaid\PlaidRequestException;
+use UnexpectedValueException;
 
 /**
  * @covers \TomorrowIdeas\Plaid\Plaid
@@ -141,6 +143,22 @@ class AbstractResourceTest extends TestCase
 		$plaid->setHttpClient($httpClient);
 
 		$this->expectException(PlaidRequestException::class);
+		$plaid->items->getItem("access_token");
+	}
+
+	public function test_invalid_json_when_parsing_response(): void
+	{
+		$httpClient = new Shuttle([
+			'handler' => new MockHandler([
+				new Response(ResponseStatus::OK, "invalid_json")
+			])
+		]);
+
+		$plaid = new Plaid("client_id", "secret");
+		$plaid->setHttpClient($httpClient);
+
+		$this->expectException(UnexpectedValueException::class);
+
 		$plaid->items->getItem("access_token");
 	}
 }

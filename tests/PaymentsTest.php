@@ -43,7 +43,7 @@ class PaymentsTest extends TestCase
 		);
 	}
 
-	public function test_create_recipient_with_bac_entity(): void
+	public function test_create_recipient_with_bacs_account_entity(): void
 	{
 		$response = $this->getPlaidClient()->payments->createRecipient(
 			"name",
@@ -58,10 +58,13 @@ class PaymentsTest extends TestCase
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("name", $response->params->name);
-		$this->assertEquals((object) [
-			"account" => "account",
-			"sort_code" => "sort_code"
-		], $response->params->bacs);
+		$this->assertEquals(
+			(object) [
+				"account" => "account",
+				"sort_code" => "sort_code"
+			],
+			$response->params->bacs
+		);
 		$this->assertEquals(
 			(object) [
 				"street" => ["139 The Esplanade"],

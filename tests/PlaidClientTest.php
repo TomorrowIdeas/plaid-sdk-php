@@ -90,4 +90,12 @@ class PlaidClientTest extends TestCase
 
 		$this->assertInstanceOf(Shuttle::class, $method->invoke($plaid));
 	}
+
+	public function test_getting_unsupported_resource_throws_unexpected_value_exception(): void
+	{
+		$plaid = new Plaid("client_id", "secret");
+
+		$this->expectException(UnexpectedValueException::class);
+		$plaid->resource;
+	}
 }
