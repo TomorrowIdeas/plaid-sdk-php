@@ -34,7 +34,6 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("/processor/auth/get", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
-		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
@@ -48,7 +47,6 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("/processor/balance/get", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
-		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
@@ -62,7 +60,6 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("/processor/identity/get", $response->path);
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
-		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
