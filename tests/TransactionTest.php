@@ -27,7 +27,7 @@ class TransactionTest extends TestCase
 
     public function test_transaction_refresh()
     {
-        $response = $this->getPlaidClient()->requestTransactionsRefresh("access_token");
+        $response = $this->getPlaidClient()->refreshTransactions("access_token");
 
         $this->assertEquals("POST", $response->method);
         $this->assertEquals("2019-05-29", $response->version);

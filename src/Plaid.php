@@ -1021,7 +1021,7 @@ class Plaid
 	 * @param string $access_token
 	 * @return object
 	 */
-	public function requestTransactionsRefresh(string $access_token): object
+	public function refreshTransactions(string $access_token): object
 	{
 		$params = [
 			"access_token" => $access_token,
