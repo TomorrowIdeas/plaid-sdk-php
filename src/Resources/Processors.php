@@ -22,7 +22,7 @@ class Processors extends AbstractResource
 
 		return $this->sendRequest(
 			"post",
-			"processors/token/create",
+			"processor/token/create",
 			$this->paramsWithClientCredentials($params)
 		);
 	}
