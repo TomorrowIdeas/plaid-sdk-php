@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class ItemsTest extends TestCase
 {
-	public function test_get_items()
+	public function test_get_items(): void
 	{
 		$response = $this->getPlaidClient()->items->getItem("access_token");
 
@@ -22,7 +22,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_remove_item()
+	public function test_remove_item(): void
 	{
 		$response = $this->getPlaidClient()->items->removeItem("access_token");
 
@@ -35,7 +35,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_create_public_token()
+	public function test_create_public_token(): void
 	{
 		$response = $this->getPlaidClient()->items->createPublicToken("access_token");
 
@@ -48,7 +48,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_exchange_token()
+	public function test_exchange_token(): void
 	{
 		$response = $this->getPlaidClient()->items->exchangeToken("public_token");
 
@@ -61,7 +61,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("public_token", $response->params->public_token);
 	}
 
-	public function test_rotate_access_token()
+	public function test_rotate_access_token(): void
 	{
 		$response = $this->getPlaidClient()->items->rotateAccessToken("access_token");
 
@@ -74,7 +74,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_update_webhook()
+	public function test_update_webhook(): void
 	{
 		$response = $this->getPlaidClient()->items->updateWebhook("access_token", "webhook_url");
 
@@ -88,7 +88,7 @@ class ItemsTest extends TestCase
 		$this->assertEquals("webhook_url", $response->params->webhook);
 	}
 
-	public function test_get_income()
+	public function test_get_income(): void
 	{
 		$response = $this->getPlaidClient()->items->getIncome("access_token");
 

@@ -11,7 +11,7 @@ use DateTime;
  */
 class InvestmentsTest extends TestCase
 {
-	public function test_get_holdings()
+	public function test_get_holdings(): void
 	{
 		$response = $this->getPlaidClient()->investments->getInvestmentHoldings("access_token", []);
 
@@ -25,7 +25,7 @@ class InvestmentsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_get_transactions()
+	public function test_get_transactions(): void
 	{
 		$response = $this->getPlaidClient()->investments->getInvestmentTransactions("access_token", new DateTime("2019-01-01 12:00:00"), new DateTime("2019-03-31 12:00:00"), []);
 

@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class AccountsTest extends TestCase
 {
-	public function test_get_accounts()
+	public function test_get_accounts(): void
 	{
 		$response = $this->getPlaidClient()->accounts->getAccounts("access_token");
 
@@ -22,7 +22,7 @@ class AccountsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_get_identity()
+	public function test_get_identity(): void
 	{
 		$response = $this->getPlaidClient()->accounts->getIdentity("access_token");
 
@@ -35,7 +35,7 @@ class AccountsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_get_balance()
+	public function test_get_balance(): void
 	{
 		$response = $this->getPlaidClient()->accounts->getBalance("access_token");
 

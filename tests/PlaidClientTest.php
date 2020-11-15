@@ -14,7 +14,7 @@ use UnexpectedValueException;
  */
 class PlaidClientTest extends TestCase
 {
-	public function test_default_environment_is_production()
+	public function test_default_environment_is_production(): void
 	{
 		$plaid = new Plaid("client_id", "secret");
 
@@ -25,13 +25,13 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("production", $reflectionProperty->getValue($plaid));
 	}
 
-	public function test_setting_invalid_environment_throws()
+	public function test_setting_invalid_environment_throws(): void
 	{
 		$this->expectException(UnexpectedValueException::class);
 		$plaid = new Plaid("client_id", "secret", "invalid_environment");
 	}
 
-	public function test_production_host()
+	public function test_production_host(): void
 	{
 		$plaidClient = $this->getPlaidClient("production");
 
@@ -41,7 +41,7 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("production.plaid.com", $response->host);
 	}
 
-	public function test_development_host()
+	public function test_development_host(): void
 	{
 		$plaidClient = $this->getPlaidClient("development");
 		$response = $plaidClient->items->getItem("access_token");
@@ -50,7 +50,7 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("development.plaid.com", $response->host);
 	}
 
-	public function test_sandbox_host()
+	public function test_sandbox_host(): void
 	{
 		$plaidClient = $this->getPlaidClient("sandbox");
 		$response = $plaidClient->items->getItem("access_token");
@@ -59,12 +59,12 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("sandbox.plaid.com", $response->host);
 	}
 
-	public function test_default_plaid_version()
+	public function test_default_plaid_version(): void
 	{
 		$this->assertEquals("2020-09-14", Plaid::API_VERSION);
 	}
 
-	public function test_setting_http_client()
+	public function test_setting_http_client(): void
 	{
 		$httpClient = new Shuttle;
 
@@ -79,7 +79,7 @@ class PlaidClientTest extends TestCase
 		$this->assertSame($httpClient, $method->invoke($plaid));
 	}
 
-	public function test_getting_http_client_creates_default_client_if_none_set()
+	public function test_getting_http_client_creates_default_client_if_none_set(): void
 	{
 		$plaid = new Plaid("client_id", "secret");
 

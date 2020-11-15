@@ -16,7 +16,7 @@ use TomorrowIdeas\Plaid\PlaidRequestException;
  */
 class ReportsTest extends TestCase
 {
-	public function test_create_asset_report()
+	public function test_create_asset_report(): void
 	{
 		$response = $this->getPlaidClient()->reports->createAssetReport(["access_token1", "access_token2"], 30);
 
@@ -31,7 +31,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_refresh_asset_report()
+	public function test_refresh_asset_report(): void
 	{
 		$response = $this->getPlaidClient()->reports->refreshAssetReport('asset_report_token', 30);
 
@@ -46,7 +46,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_filter_asset_report()
+	public function test_filter_asset_report(): void
 	{
 		$response = $this->getPlaidClient()->reports->filterAssetReport('asset_report_token', ['account1', 'account2']);
 
@@ -60,7 +60,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals(['account1', 'account2'], $response->params->account_ids_to_exclude);
 	}
 
-	public function test_get_asset_report()
+	public function test_get_asset_report(): void
 	{
 		$response = $this->getPlaidClient()->reports->getAssetReport('asset_report_token', true);
 
@@ -74,7 +74,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals(true, $response->params->include_insights);
 	}
 
-	public function test_get_asset_report_pdf()
+	public function test_get_asset_report_pdf(): void
 	{
 		$response = $this->getPlaidClient()->reports->getAssetReportPdf('asset_report_token');
 		$response = \json_decode($response->getBody()->getContents());
@@ -88,7 +88,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals("asset_report_token", $response->params->asset_report_token);
 	}
 
-	public function test_get_asset_report_pdf_throws_on_fail()
+	public function test_get_asset_report_pdf_throws_on_fail(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
@@ -103,7 +103,7 @@ class ReportsTest extends TestCase
 		$plaid->reports->getAssetReportPdf('asset_report_token', true);
 	}
 
-	public function test_remove_asset_report()
+	public function test_remove_asset_report(): void
 	{
 		$response = $this->getPlaidClient()->reports->removeAssetReport('asset_report_token');
 
@@ -116,7 +116,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals("asset_report_token", $response->params->asset_report_token);
 	}
 
-	public function test_create_asset_report_audit_copy()
+	public function test_create_asset_report_audit_copy(): void
 	{
 		$response = $this->getPlaidClient()->reports->createAssetReportAuditCopy('asset_report_token', 'auditor_id');
 
@@ -130,7 +130,7 @@ class ReportsTest extends TestCase
 		$this->assertEquals("auditor_id", $response->params->auditor_id);
 	}
 
-	public function test_remove_asset_report_audit_copy()
+	public function test_remove_asset_report_audit_copy(): void
 	{
 		$response = $this->getPlaidClient()->reports->removeAssetReportAuditCopy('audit_copy_token');
 

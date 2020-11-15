@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class AuthTest extends TestCase
 {
-	public function test_get_auth()
+	public function test_get_auth(): void
 	{
 		$response = $this->getPlaidClient()->auth->getAuth("access_token");
 

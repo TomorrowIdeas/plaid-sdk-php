@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class WebhooksTest extends TestCase
 {
-	public function test_get_webhook_key()
+	public function test_get_webhook_key(): void
 	{
 		$response = $this->getPlaidClient()->webhooks->getWebhookVerificationKey("key_id");
 

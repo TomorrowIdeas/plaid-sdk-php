@@ -11,7 +11,7 @@ use DateTime;
  */
 class TransactionsTest extends TestCase
 {
-	public function test_get_transactions()
+	public function test_get_transactions(): void
 	{
 		$response = $this->getPlaidClient()->transactions->getTransactions(
 			"access_token",
@@ -31,7 +31,7 @@ class TransactionsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_refresh_transactions()
+	public function test_refresh_transactions(): void
 	{
 		$response = $this->getPlaidClient()->transactions->refreshTransactions("access_token");
 

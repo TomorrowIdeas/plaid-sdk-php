@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class CategoriesTest extends TestCase
 {
-	public function test_get_identity()
+	public function test_get_identity(): void
 	{
 		$response = $this->getPlaidClient()->categories->getCategories();
 

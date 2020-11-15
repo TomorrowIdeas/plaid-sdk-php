@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class InstitutionsTest extends TestCase
 {
-	public function test_get_institutions()
+	public function test_get_institutions(): void
 	{
 		$response = $this->getPlaidClient()->institutions->getInstitutions(100, 200);
 
@@ -24,7 +24,7 @@ class InstitutionsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_get_institution()
+	public function test_get_institution(): void
 	{
 		$response = $this->getPlaidClient()->institutions->getInstitution("ins_12345");
 
@@ -38,7 +38,7 @@ class InstitutionsTest extends TestCase
 		$this->assertEquals((object) [], $response->params->options);
 	}
 
-	public function test_find_institution()
+	public function test_find_institution(): void
 	{
 		$response = $this->getPlaidClient()->institutions->findInstitution("boeing", ["US"], ["transactions", "mfa"]);
 

@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class LiabilitiesTest extends TestCase
 {
-	public function test_get_liabilities()
+	public function test_get_liabilities(): void
 	{
 		$response = $this->getPlaidClient()->liabilities->getLiabilities("access_token");
 

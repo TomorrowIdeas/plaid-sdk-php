@@ -10,7 +10,7 @@ use TomorrowIdeas\Plaid\PlaidRequestException;
  */
 class PlaidRequestExceptionTest extends TestCase
 {
-	public function test_getting_code_from_exception()
+	public function test_getting_code_from_exception(): void
 	{
 		$response = new Response(
 			404,
@@ -22,7 +22,7 @@ class PlaidRequestExceptionTest extends TestCase
 		$this->assertEquals(404, $plaidRequestException->getCode());
 	}
 
-	public function test_getting_display_message_on_exception()
+	public function test_getting_display_message_on_exception(): void
 	{
 		$response = new Response(
 			404,
@@ -34,7 +34,7 @@ class PlaidRequestExceptionTest extends TestCase
 		$this->assertEquals("Foo not found", $plaidRequestException->getMessage());
 	}
 
-	public function test_getting_fallback_message()
+	public function test_getting_fallback_message(): void
 	{
 		$response = new Response(
 			404,
@@ -46,7 +46,7 @@ class PlaidRequestExceptionTest extends TestCase
 		$this->assertEquals("Not Found", $plaidRequestException->getMessage());
 	}
 
-	public function test_getting_fallback_message_for_unknown_payload()
+	public function test_getting_fallback_message_for_unknown_payload(): void
 	{
 		$response = new Response(
 			404,
@@ -58,7 +58,7 @@ class PlaidRequestExceptionTest extends TestCase
 		$this->assertEquals("Not Found", $plaidRequestException->getMessage());
 	}
 
-	public function test_getting_payload_from_exception()
+	public function test_getting_payload_from_exception(): void
 	{
 		$response = new Response(
 			404,

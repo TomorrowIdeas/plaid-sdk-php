@@ -9,7 +9,7 @@ namespace TomorrowIdeas\Plaid\Tests;
  */
 class ProcessorsTest extends TestCase
 {
-	public function test_create_token()
+	public function test_create_token(): void
 	{
 		$response = $this->getPlaidClient()->processors->createToken("access_token", "account_id", "processor");
 
@@ -24,7 +24,7 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("processor", $response->params->processor);
 	}
 
-	public function get_auth(): void
+	public function test_get_auth(): void
 	{
 		$response = $this->getPlaidClient()->processors->getAuth("processor_token");
 
@@ -38,7 +38,7 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
-	public function get_balance(): void
+	public function test_get_balance(): void
 	{
 		$response = $this->getPlaidClient()->processors->getBalance("processor_token");
 
@@ -52,7 +52,7 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
-	public function get_identity(): void
+	public function test_get_identity(): void
 	{
 		$response = $this->getPlaidClient()->processors->getIdentity("processor_token");
 
@@ -66,7 +66,7 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("processor_token", $response->params->processor_token);
 	}
 
-	public function test_create_stripe_token()
+	public function test_create_stripe_token(): void
 	{
 		$response = $this->getPlaidClient()->processors->createStripeToken("access_token", "account_id");
 
@@ -80,7 +80,7 @@ class ProcessorsTest extends TestCase
 		$this->assertEquals("account_id", $response->params->account_id);
 	}
 
-	public function test_create_dwolla_token()
+	public function test_create_dwolla_token(): void
 	{
 		$response = $this->getPlaidClient()->processors->createDwollaToken("access_token", "account_id");
 

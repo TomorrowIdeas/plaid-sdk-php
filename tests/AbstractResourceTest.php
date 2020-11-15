@@ -17,7 +17,7 @@ use TomorrowIdeas\Plaid\PlaidRequestException;
  */
 class AbstractResourceTest extends TestCase
 {
-	public function test_build_request_with_no_params_sends_empty_object_in_body()
+	public function test_build_request_with_no_params_sends_empty_object_in_body(): void
 	{
 		$itemsResource = $this->getPlaidClient()->items;
 
@@ -34,7 +34,7 @@ class AbstractResourceTest extends TestCase
 		);
 	}
 
-	public function test_request_exception_passes_through_plaid_display_message()
+	public function test_request_exception_passes_through_plaid_display_message(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
@@ -63,7 +63,7 @@ class AbstractResourceTest extends TestCase
 		}
 	}
 
-	public function test_request_exception_passes_through_http_status_code()
+	public function test_request_exception_passes_through_http_status_code(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
@@ -92,7 +92,7 @@ class AbstractResourceTest extends TestCase
 		}
 	}
 
-	public function test_1xx_responses_throw_exception()
+	public function test_1xx_responses_throw_exception(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
@@ -121,7 +121,7 @@ class AbstractResourceTest extends TestCase
 		$plaid->items->getItem("access_token");
 	}
 
-	public function test_3xx_responses_and_above_throw_exception()
+	public function test_3xx_responses_and_above_throw_exception(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
