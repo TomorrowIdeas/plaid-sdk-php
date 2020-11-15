@@ -24,4 +24,17 @@ class TransactionTest extends TestCase
         $this->assertEquals("2019-03-31", $response->params->end_date);
         $this->assertEquals(new \StdClass, $response->params->options);
     }
+
+    public function test_transaction_refresh()
+    {
+        $response = $this->getPlaidClient()->refreshTransactions("access_token");
+
+        $this->assertEquals("POST", $response->method);
+        $this->assertEquals("2019-05-29", $response->version);
+        $this->assertEquals("application/json", $response->content);
+        $this->assertEquals("/transactions/refresh", $response->path);
+        $this->assertEquals("client_id", $response->params->client_id);
+        $this->assertEquals("secret", $response->params->secret);
+        $this->assertEquals("access_token", $response->params->access_token);
+    }
 }
