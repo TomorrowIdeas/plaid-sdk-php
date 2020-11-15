@@ -160,6 +160,7 @@ createLinkToken(
 ### Transactions
 
 * `getTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object` [[?]](https://plaid.com/docs/#transactions)
+* `refreshTransctions(string $access_token): object` [[?]](https://plaid.com/docs/#transactions)
 
 ### Balance
 
