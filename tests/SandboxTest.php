@@ -3,9 +3,9 @@
 namespace TomorrowIdeas\Plaid\Tests;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers \TomorrowIdeas\Plaid\Resources\Sandbox
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Sandbox
  */
 class SandboxTest extends TestCase
 {

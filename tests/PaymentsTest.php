@@ -8,11 +8,12 @@ use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Payments
  * @covers TomorrowIdeas\Plaid\Entities\RecipientAddress
  * @covers TomorrowIdeas\Plaid\Entities\PaymentSchedule
+ * @covers TomorrowIdeas\Plaid\Entities\BacsAccount
  */
 class PaymentsTest extends TestCase
 {

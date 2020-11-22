@@ -8,9 +8,9 @@ use TomorrowIdeas\Plaid\Plaid;
 use UnexpectedValueException;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers \TomorrowIdeas\Plaid\Resources\Items
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Items
  */
 class PlaidClientTest extends TestCase
 {

@@ -4,8 +4,8 @@ use TomorrowIdeas\Plaid\Entities\AccountFilters;
 use TomorrowIdeas\Plaid\Tests\TestCase;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Links
  * @covers TomorrowIdeas\Plaid\Entities\AccountFilters
  */

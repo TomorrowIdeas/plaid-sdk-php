@@ -9,8 +9,8 @@ use TomorrowIdeas\Plaid\Plaid;
 use TomorrowIdeas\Plaid\PlaidRequestException;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Reports
  * @covers TomorrowIdeas\Plaid\PlaidRequestException
  */

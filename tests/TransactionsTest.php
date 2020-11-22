@@ -5,8 +5,8 @@ namespace TomorrowIdeas\Plaid\Tests;
 use DateTime;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Transactions
  */
 class TransactionsTest extends TestCase

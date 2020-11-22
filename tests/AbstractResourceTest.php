@@ -12,10 +12,10 @@ use TomorrowIdeas\Plaid\PlaidRequestException;
 use UnexpectedValueException;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers \TomorrowIdeas\Plaid\Resources\Items
- * @covers \TomorrowIdeas\Plaid\PlaidRequestException
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Items
+ * @covers TomorrowIdeas\Plaid\PlaidRequestException
  */
 class AbstractResourceTest extends TestCase
 {

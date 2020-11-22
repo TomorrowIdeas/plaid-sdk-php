@@ -6,10 +6,10 @@ use DateTime;
 use TomorrowIdeas\Plaid\Entities\AccountHolder;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers \TomorrowIdeas\Plaid\Resources\BankTransfers
- * @covers \TomorrowIdeas\Plaid\Entities\AccountHolder
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\BankTransfers
+ * @covers TomorrowIdeas\Plaid\Entities\AccountHolder
  */
 class BankTransfersTest extends TestCase
 {

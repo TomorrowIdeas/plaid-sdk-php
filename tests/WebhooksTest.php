@@ -3,9 +3,9 @@
 namespace TomorrowIdeas\Plaid\Tests;
 
 /**
- * @covers \TomorrowIdeas\Plaid\Plaid
- * @covers \TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers \TomorrowIdeas\Plaid\Resources\Webhooks
+ * @covers TomorrowIdeas\Plaid\Plaid
+ * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
+ * @covers TomorrowIdeas\Plaid\Resources\Webhooks
  */
 class WebhooksTest extends TestCase
 {
