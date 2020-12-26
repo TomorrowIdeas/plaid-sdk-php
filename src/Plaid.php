@@ -97,6 +97,7 @@ class Plaid
 	 * Magic getter for resources.
 	 *
 	 * @param string $resource
+	 * @throws UnexpectedValueException
 	 * @return AbstractResource
 	 */
 	public function __get(string $resource): AbstractResource
