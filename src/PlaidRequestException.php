@@ -2,10 +2,9 @@
 
 namespace TomorrowIdeas\Plaid;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 
-class PlaidRequestException extends Exception
+class PlaidRequestException extends PlaidException
 {
 	/**
 	 * Get the response payload.
