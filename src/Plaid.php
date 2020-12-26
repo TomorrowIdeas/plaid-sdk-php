@@ -3,6 +3,7 @@
 namespace TomorrowIdeas\Plaid;
 
 use Psr\Http\Client\ClientInterface;
+use ReflectionClass;
 use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Resources\AbstractResource;
 use UnexpectedValueException;
@@ -112,15 +113,17 @@ class Plaid
 				throw new UnexpectedValueException("Unknown Plaid resource: {$resource}");
 			}
 
+			$reflectionClass = new ReflectionClass($resource_class);
+
 			/**
 			 * @var AbstractResource $resource_instance
 			 */
-			$resource_instance = new $resource_class(
+			$resource_instance = $reflectionClass->newInstanceArgs([
 				$this->getHttpClient(),
 				$this->client_id,
 				$this->client_secret,
 				$this->plaidEnvironments[$this->environment]
-			);
+			]);
 
 			$this->resource_cache[$resource] = $resource_instance;
 		}

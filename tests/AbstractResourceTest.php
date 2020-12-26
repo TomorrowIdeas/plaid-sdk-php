@@ -16,6 +16,7 @@ use UnexpectedValueException;
  * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Items
  * @covers TomorrowIdeas\Plaid\PlaidRequestException
+ * @uses TomorrowIdeas\Plaid\PlaidException
  */
 class AbstractResourceTest extends TestCase
 {

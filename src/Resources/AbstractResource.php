@@ -61,7 +61,7 @@ abstract class AbstractResource
 	/**
 	 * Build request body with client credentials.
 	 *
-	 * @param array<string,mixed> $params
+	 * @param array<array-key,mixed> $params
 	 * @return array
 	 */
 	protected function paramsWithClientCredentials(array $params = []): array
@@ -77,7 +77,7 @@ abstract class AbstractResource
 	 *
 	 * @param string $method
 	 * @param string $path
-	 * @param array<string,mixed> $params
+	 * @param array<array-key,mixed> $params
 	 * @return object
 	 */
 	protected function sendRequest(string $method, string $path, array $params = []): object
@@ -90,7 +90,7 @@ abstract class AbstractResource
 			throw new UnexpectedValueException("Invalid JSON response returned by Plaid");
 		}
 
-		return $payload;
+		return (object) $payload;
 	}
 
 	/**
@@ -98,7 +98,7 @@ abstract class AbstractResource
 	 *
 	 * @param string $method
 	 * @param string $path
-	 * @param array<string,mixed> $params
+	 * @param array<array-key,mixed> $params
 	 * @return ResponseInterface
 	 */
 	protected function sendRequestRawResponse(string $method, string $path, array $params = []): ResponseInterface
@@ -119,7 +119,7 @@ abstract class AbstractResource
 	 *
 	 * @param string $method
 	 * @param string $path
-	 * @param array<string,mixed> $params
+	 * @param array<array-key,mixed> $params
 	 * @return RequestInterface
 	 */
 	protected function buildRequest(string $method, string $path, array $params = []): RequestInterface

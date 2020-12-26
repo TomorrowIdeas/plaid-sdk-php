@@ -7,6 +7,7 @@ use TomorrowIdeas\Plaid\PlaidRequestException;
 
 /**
  * @covers TomorrowIdeas\Plaid\PlaidRequestException
+ * @uses TomorrowIdeas\Plaid\PlaidException
  */
 class PlaidRequestExceptionTest extends TestCase
 {
