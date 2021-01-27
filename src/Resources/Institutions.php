@@ -7,19 +7,6 @@ class Institutions extends AbstractResource
 	/**
 	 * Get a specific Insitution.
 	 *
-	 * @deprecated 1.1 Use get() method.
-	 * @param string $institution_id
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInstitution(string $institution_id, array $options = []): object
-	{
-		return $this->get($institution_id, $options);
-	}
-
-	/**
-	 * Get a specific Insitution.
-	 *
 	 * @param string $institution_id
 	 * @param array<string,string> $options
 	 * @return object
@@ -36,20 +23,6 @@ class Institutions extends AbstractResource
 			"institutions/get_by_id",
 			$this->paramsWithClientCredentials($params)
 		);
-	}
-
-	/**
-	 * Get all Institutions.
-	 *
-	 * @deprecated 1.1 Use list() method.
-	 * @param integer $count
-	 * @param integer $offset
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getInstitutions(int $count, int $offset, array $options = []): object
-	{
-		return $this->list($count, $offset, $options);
 	}
 
 	/**
@@ -73,25 +46,6 @@ class Institutions extends AbstractResource
 			"institutions/get",
 			$this->paramsWithClientCredentials($params)
 		);
-	}
-
-	/**
-	 * Find an Institution by a search query.
-	 *
-	 * @deprecated 1.1 Use find() method.
-	 * @param string $query
-	 * @param array<string> $products
-	 * @param array<string> $country_codes Possible values: US, GB, ES, NL, FR, IE, CA
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function findInstitution(
-		string $query,
-		array $country_codes,
-		array $products = [],
-		array $options = []): object
-	{
-		return $this->find($query, $country_codes, $products, $options);
 	}
 
 	/**

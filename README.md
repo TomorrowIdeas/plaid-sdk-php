@@ -80,7 +80,7 @@ $plaid = new Plaid(
 	\getenv("PLAID_ENVIRONMENT")
 );
 
-$item = $plaid->items->getItem("itm_1234");
+$item = $plaid->items->get("itm_1234");
 ```
 
 ## Resources

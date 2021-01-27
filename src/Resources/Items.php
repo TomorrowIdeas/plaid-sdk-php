@@ -8,18 +8,6 @@ class Items extends AbstractResource
 	/**
 	 * Get an Item.
 	 *
-	 * @deprecated 1.1 Use get() method.
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function getItem(string $access_token): object
-	{
-		return $this->get($access_token);
-	}
-
-	/**
-	 * Get an Item.
-	 *
 	 * @param string $access_token
 	 * @return object
 	 */
@@ -34,18 +22,6 @@ class Items extends AbstractResource
 			"item/get",
 			$this->paramsWithClientCredentials($params)
 		);
-	}
-
-	/**
-	 * Remove an Item.
-	 *
-	 * @deprecated 1.1 Use remove() method.
-	 * @param string $access_token
-	 * @return object
-	 */
-	public function removeItem(string $access_token): object
-	{
-		return $this->remove($access_token);
 	}
 
 	/**

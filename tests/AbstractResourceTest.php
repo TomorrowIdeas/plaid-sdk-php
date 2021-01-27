@@ -57,7 +57,7 @@ class AbstractResourceTest extends TestCase
 		$plaid->setHttpClient($httpClient);
 
 		try {
-			$plaid->items->getItem("access_token");
+			$plaid->items->get("access_token");
 		}
 		catch( PlaidRequestException $plaidRequestException ){
 
@@ -86,7 +86,7 @@ class AbstractResourceTest extends TestCase
 		$plaid->setHttpClient($httpClient);
 
 		try {
-			$plaid->items->getItem("access_token");
+			$plaid->items->get("access_token");
 		}
 		catch( PlaidRequestException $plaidRequestException ){
 
@@ -121,7 +121,7 @@ class AbstractResourceTest extends TestCase
 		$plaid->setHttpClient($httpClient);
 
 		$this->expectException(PlaidRequestException::class);
-		$plaid->items->getItem("access_token");
+		$plaid->items->get("access_token");
 	}
 
 	public function test_3xx_responses_and_above_throw_exception(): void
@@ -144,7 +144,7 @@ class AbstractResourceTest extends TestCase
 		$plaid->setHttpClient($httpClient);
 
 		$this->expectException(PlaidRequestException::class);
-		$plaid->items->getItem("access_token");
+		$plaid->items->get("access_token");
 	}
 
 	public function test_invalid_json_when_parsing_response(): void
@@ -160,6 +160,6 @@ class AbstractResourceTest extends TestCase
 
 		$this->expectException(UnexpectedValueException::class);
 
-		$plaid->items->getItem("access_token");
+		$plaid->items->get("access_token");
 	}
 }

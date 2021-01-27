@@ -7,19 +7,6 @@ class Auth extends AbstractResource
 	/**
 	 * Get Auth request.
 	 *
-	 * @deprecated 1.1 Use get() method
-	 * @param string $access_token
-	 * @param array<string,string> $options
-	 * @return object
-	 */
-	public function getAuth(string $access_token, array $options = []): object
-	{
-		return $this->get($access_token, $options);
-	}
-
-	/**
-	 * Get Auth request.
-	 *
 	 * @param string $access_token
 	 * @param array<string,string> $options
 	 * @return object
