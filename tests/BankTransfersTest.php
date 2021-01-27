@@ -176,7 +176,7 @@ class BankTransfersTest extends TestCase
 
 	public function test_get_account_balance(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->getAccountBalance("origination_account_id");
+		$response = $this->getPlaidClient()->bank_transfers->getOriginationAccountBalance("origination_account_id");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

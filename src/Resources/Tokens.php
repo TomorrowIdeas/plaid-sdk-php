@@ -3,8 +3,9 @@
 namespace TomorrowIdeas\Plaid\Resources;
 
 use TomorrowIdeas\Plaid\Entities\AccountFilters;
+use TomorrowIdeas\Plaid\Entities\User;
 
-class Links extends AbstractResource
+class Tokens extends AbstractResource
 {
 	/**
 	 * Create a Link Token.
@@ -42,7 +43,7 @@ class Links extends AbstractResource
 			$client_name,
 			$language,
 			$country_codes,
-			$client_user_id,
+			new User($client_user_id),
 			$products,
 			$webhook,
 			$link_customization_name,
@@ -60,7 +61,7 @@ class Links extends AbstractResource
 	 * @param string $client_name
 	 * @param string $language Possible values are: en, fr, es, nl
 	 * @param array<string> $country_codes Possible values are: CA, FR, IE, NL, ES, GB, US
-	 * @param string $client_user_id
+	 * @param User $user
 	 * @param array<string> $products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
 	 * @param string|null $webhook
 	 * @param string|null $link_customization_name
@@ -75,7 +76,7 @@ class Links extends AbstractResource
 		string $client_name,
 		string $language,
 		array $country_codes,
-		string $client_user_id,
+		User $user,
 		array $products = [],
 		?string $webhook = null,
 		?string $link_customization_name = null,
@@ -89,9 +90,7 @@ class Links extends AbstractResource
 			"client_name" => $client_name,
 			"language" => $language,
 			"country_codes" => $country_codes,
-			"user" => [
-				"client_user_id" => $client_user_id
-			],
+			"user" => $user->toArray(),
 			"products" => $products
 		];
 

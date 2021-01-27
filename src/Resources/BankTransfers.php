@@ -294,7 +294,7 @@ class BankTransfers extends AbstractResource
 	 * @param string|null $origination_account_id
 	 * @return object
 	 */
-	public function getAccountBalance(string $origination_account_id = null): object
+	public function getOriginationAccountBalance(string $origination_account_id = null): object
 	{
 		$params = [];
 

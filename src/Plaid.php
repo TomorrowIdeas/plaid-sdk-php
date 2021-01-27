@@ -17,7 +17,7 @@ use UnexpectedValueException;
  * @property \TomorrowIdeas\Plaid\Resources\Investments	$investments
  * @property \TomorrowIdeas\Plaid\Resources\Items $items
  * @property \TomorrowIdeas\Plaid\Resources\Liabilities $liabilities
- * @property \TomorrowIdeas\Plaid\Resources\Links $links
+ * @property \TomorrowIdeas\Plaid\Resources\Tokens $tokens
  * @property \TomorrowIdeas\Plaid\Resources\Payments $payments
  * @property \TomorrowIdeas\Plaid\Resources\Processors $processors
  * @property \TomorrowIdeas\Plaid\Resources\Reports $reports

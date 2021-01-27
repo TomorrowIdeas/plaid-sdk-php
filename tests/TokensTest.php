@@ -1,23 +1,24 @@
 <?php
 
 use TomorrowIdeas\Plaid\Entities\AccountFilters;
+use TomorrowIdeas\Plaid\Entities\User;
 use TomorrowIdeas\Plaid\Tests\TestCase;
 
 /**
  * @covers TomorrowIdeas\Plaid\Plaid
  * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
- * @covers TomorrowIdeas\Plaid\Resources\Links
+ * @covers TomorrowIdeas\Plaid\Resources\tokens
  * @covers TomorrowIdeas\Plaid\Entities\AccountFilters
  */
-class LinksTest extends TestCase
+class tokensTest extends TestCase
 {
 	public function test_required_parameters(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			["transactions", "auth"]
 		);
 
@@ -36,11 +37,11 @@ class LinksTest extends TestCase
 
 	public function test_webhook(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			"http://webhook.url"
 		);
@@ -50,11 +51,11 @@ class LinksTest extends TestCase
 
 	public function test_link_customization_name(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			"link customization name"
@@ -68,11 +69,11 @@ class LinksTest extends TestCase
 		$account_filters = new AccountFilters;
 		$account_filters->setDepositoryFilters(["auth", "transactions"]);
 
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			null,
@@ -95,11 +96,11 @@ class LinksTest extends TestCase
 
 	public function test_access_token(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			null,
@@ -112,11 +113,11 @@ class LinksTest extends TestCase
 
 	public function test_redirect_uri(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			null,
@@ -133,11 +134,11 @@ class LinksTest extends TestCase
 
 	public function test_android_package_name(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			null,
@@ -152,11 +153,11 @@ class LinksTest extends TestCase
 
 	public function test_payment_id(): void
 	{
-		$response = $this->getPlaidClient()->links->create(
+		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
 			"en",
 			["US"],
-			"usr_12345",
+			new User("usr_12345"),
 			[],
 			null,
 			null,
@@ -175,7 +176,7 @@ class LinksTest extends TestCase
 
 	public function test_get_token(): void
 	{
-		$response = $this->getPlaidClient()->links->get("link_token");
+		$response = $this->getPlaidClient()->tokens->get("link_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

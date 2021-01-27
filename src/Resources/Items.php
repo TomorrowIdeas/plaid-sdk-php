@@ -142,25 +142,4 @@ class Items extends AbstractResource
 			$this->paramsWithClientCredentials($params)
 		);
 	}
-
-	/**
-	 * Update an Item webhook.
-	 *
-	 * @param string $access_token
-	 * @param string $webhook
-	 * @return object
-	 */
-	public function updateWebhook(string $access_token, string $webhook): object
-	{
-		$params = [
-			"access_token" => $access_token,
-			"webhook" => $webhook
-		];
-
-		return $this->sendRequest(
-			"post",
-			"item/webhook/update",
-			$this->paramsWithClientCredentials($params)
-		);
-	}
 }

@@ -13,7 +13,7 @@ class TransactionsTest extends TestCase
 {
 	public function test_get_transactions(): void
 	{
-		$response = $this->getPlaidClient()->transactions->getTransactions(
+		$response = $this->getPlaidClient()->transactions->list(
 			"access_token",
 			new DateTime("2019-01-01 12:00:00"),
 			new DateTime("2019-03-31 12:00:00")
@@ -33,7 +33,7 @@ class TransactionsTest extends TestCase
 
 	public function test_refresh_transactions(): void
 	{
-		$response = $this->getPlaidClient()->transactions->refreshTransactions("access_token");
+		$response = $this->getPlaidClient()->transactions->refresh("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

@@ -74,20 +74,6 @@ class ItemsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
 
-	public function test_update_webhook(): void
-	{
-		$response = $this->getPlaidClient()->items->updateWebhook("access_token", "webhook_url");
-
-		$this->assertEquals("POST", $response->method);
-		$this->assertEquals("2020-09-14", $response->version);
-		$this->assertEquals("application/json", $response->content);
-		$this->assertEquals("/item/webhook/update", $response->path);
-		$this->assertEquals("client_id", $response->params->client_id);
-		$this->assertEquals("secret", $response->params->secret);
-		$this->assertEquals("access_token", $response->params->access_token);
-		$this->assertEquals("webhook_url", $response->params->webhook);
-	}
-
 	public function test_get_income(): void
 	{
 		$response = $this->getPlaidClient()->items->getIncome("access_token");
