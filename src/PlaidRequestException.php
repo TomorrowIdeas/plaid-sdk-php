@@ -2,10 +2,9 @@
 
 namespace TomorrowIdeas\Plaid;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 
-class PlaidRequestException extends Exception
+class PlaidRequestException extends PlaidException
 {
 	/**
 	 * Get the response payload.
@@ -21,12 +20,13 @@ class PlaidRequestException extends Exception
 	 */
 	public function __construct(ResponseInterface $responseInterface)
 	{
-		$this->response = \json_decode($responseInterface->getBody()->getContents());
+		$response = \json_decode($responseInterface->getBody()->getContents());
 
 		$this->code = $responseInterface->getStatusCode();
 
-		if( \is_object($this->response) ){
-			$this->message = $this->response->display_message ?? $responseInterface->getReasonPhrase();
+		if( \is_object($response) ){
+			$this->response = $response;
+			$this->message = (string) ($this->response->display_message ?? $responseInterface->getReasonPhrase());
 		}
 
 		else {
