@@ -104,7 +104,7 @@ class PaymentsTest extends TestCase
 
 	public function test_create_payment(): void
 	{
-		$response = $this->getPlaidClient()->payments->createPayment("rcp_1234", "ref_5678", 250.25, "GBP");
+		$response = $this->getPlaidClient()->payments->create("rcp_1234", "ref_5678", 250.25, "GBP");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -122,7 +122,7 @@ class PaymentsTest extends TestCase
 
 	public function test_create_payment_with_schedule(): void
 	{
-		$response = $this->getPlaidClient()->payments->createPayment(
+		$response = $this->getPlaidClient()->payments->create(
 			"rcp_1234",
 			"ref_5678",
 			250.25,
@@ -158,7 +158,7 @@ class PaymentsTest extends TestCase
 
 	public function test_create_payment_token(): void
 	{
-		$response = $this->getPlaidClient()->payments->createPaymentToken("pmt_1234");
+		$response = $this->getPlaidClient()->payments->createToken("pmt_1234");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -171,7 +171,7 @@ class PaymentsTest extends TestCase
 
 	public function test_get_payment(): void
 	{
-		$response = $this->getPlaidClient()->payments->getPayment("pmt_1234");
+		$response = $this->getPlaidClient()->payments->get("pmt_1234");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -184,7 +184,7 @@ class PaymentsTest extends TestCase
 
 	public function test_list_payments(): void
 	{
-		$response = $this->getPlaidClient()->payments->listPayments();
+		$response = $this->getPlaidClient()->payments->list();
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

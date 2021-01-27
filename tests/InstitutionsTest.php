@@ -11,7 +11,7 @@ class InstitutionsTest extends TestCase
 {
 	public function test_get_institutions(): void
 	{
-		$response = $this->getPlaidClient()->institutions->getInstitutions(100, 200);
+		$response = $this->getPlaidClient()->institutions->list(100, 200);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -26,7 +26,7 @@ class InstitutionsTest extends TestCase
 
 	public function test_get_institution(): void
 	{
-		$response = $this->getPlaidClient()->institutions->getInstitution("ins_12345");
+		$response = $this->getPlaidClient()->institutions->get("ins_12345");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -40,7 +40,7 @@ class InstitutionsTest extends TestCase
 
 	public function test_find_institution(): void
 	{
-		$response = $this->getPlaidClient()->institutions->findInstitution("boeing", ["US"], ["transactions", "mfa"]);
+		$response = $this->getPlaidClient()->institutions->find("boeing", ["US"], ["transactions", "mfa"]);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

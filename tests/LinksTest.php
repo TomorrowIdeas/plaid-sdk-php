@@ -13,7 +13,7 @@ class LinksTest extends TestCase
 {
 	public function test_required_parameters(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -36,7 +36,7 @@ class LinksTest extends TestCase
 
 	public function test_webhook(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -50,7 +50,7 @@ class LinksTest extends TestCase
 
 	public function test_link_customization_name(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -68,7 +68,7 @@ class LinksTest extends TestCase
 		$account_filters = new AccountFilters;
 		$account_filters->setDepositoryFilters(["auth", "transactions"]);
 
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -95,7 +95,7 @@ class LinksTest extends TestCase
 
 	public function test_access_token(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -112,7 +112,7 @@ class LinksTest extends TestCase
 
 	public function test_redirect_uri(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -133,7 +133,7 @@ class LinksTest extends TestCase
 
 	public function test_android_package_name(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -152,7 +152,7 @@ class LinksTest extends TestCase
 
 	public function test_payment_id(): void
 	{
-		$response = $this->getPlaidClient()->links->createLinkToken(
+		$response = $this->getPlaidClient()->links->create(
 			"client_name",
 			"en",
 			["US"],
@@ -175,7 +175,7 @@ class LinksTest extends TestCase
 
 	public function test_get_token(): void
 	{
-		$response = $this->getPlaidClient()->links->getToken("link_token");
+		$response = $this->getPlaidClient()->links->get("link_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

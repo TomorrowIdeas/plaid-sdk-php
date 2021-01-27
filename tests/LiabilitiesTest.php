@@ -11,7 +11,7 @@ class LiabilitiesTest extends TestCase
 {
 	public function test_get_liabilities(): void
 	{
-		$response = $this->getPlaidClient()->liabilities->getLiabilities("access_token");
+		$response = $this->getPlaidClient()->liabilities->list("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

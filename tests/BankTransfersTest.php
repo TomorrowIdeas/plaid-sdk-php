@@ -15,7 +15,7 @@ class BankTransfersTest extends TestCase
 {
 	public function test_create_bank_transfer(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->createBankTransfer(
+		$response = $this->getPlaidClient()->bank_transfers->create(
 			"access_token",
 			"idempotency_key",
 			"type",
@@ -60,7 +60,7 @@ class BankTransfersTest extends TestCase
 
 	public function test_cancel_bank_transfer(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->cancelBankTransfer("bank_transfer_id");
+		$response = $this->getPlaidClient()->bank_transfers->cancel("bank_transfer_id");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -73,7 +73,7 @@ class BankTransfersTest extends TestCase
 
 	public function test_get_bank_transfer(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->getBankTransfer("bank_transfer_id");
+		$response = $this->getPlaidClient()->bank_transfers->get("bank_transfer_id");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -86,7 +86,7 @@ class BankTransfersTest extends TestCase
 
 	public function test_list_bank_transfers(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->listBankTransfers(
+		$response = $this->getPlaidClient()->bank_transfers->list(
 			new DateTime("2019-01-01"),
 			new DateTime("2019-01-31"),
 			100,
@@ -111,7 +111,7 @@ class BankTransfersTest extends TestCase
 
 	public function test_get_event_list(): void
 	{
-		$response = $this->getPlaidClient()->bank_transfers->getEventList(
+		$response = $this->getPlaidClient()->bank_transfers->listEvents(
 			new DateTime("2019-01-01"),
 			new DateTime("2019-01-31"),
 			"bank_transfer_id",

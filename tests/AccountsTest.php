@@ -11,7 +11,7 @@ class AccountsTest extends TestCase
 {
 	public function test_get_accounts(): void
 	{
-		$response = $this->getPlaidClient()->accounts->getAccounts("access_token");
+		$response = $this->getPlaidClient()->accounts->list("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

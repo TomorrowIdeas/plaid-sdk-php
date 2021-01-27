@@ -11,7 +11,7 @@ class ItemsTest extends TestCase
 {
 	public function test_get_items(): void
 	{
-		$response = $this->getPlaidClient()->items->getItem("access_token");
+		$response = $this->getPlaidClient()->items->get("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -24,7 +24,7 @@ class ItemsTest extends TestCase
 
 	public function test_remove_item(): void
 	{
-		$response = $this->getPlaidClient()->items->removeItem("access_token");
+		$response = $this->getPlaidClient()->items->remove("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

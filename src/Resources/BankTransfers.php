@@ -25,7 +25,7 @@ class BankTransfers extends AbstractResource
 	 * @param string $origination_account_id
 	 * @return object
 	 */
-	public function createBankTransfer(
+	public function create(
 		string $access_token,
 		string $idempotency_key,
 		string $type,
@@ -78,7 +78,7 @@ class BankTransfers extends AbstractResource
 	 * @param string $bank_transfer_id
 	 * @return object
 	 */
-	public function cancelBankTransfer(string $bank_transfer_id): object
+	public function cancel(string $bank_transfer_id): object
 	{
 		$params = [
 			"bank_transfer_id" => $bank_transfer_id
@@ -97,7 +97,7 @@ class BankTransfers extends AbstractResource
 	 * @param string $bank_transfer_id
 	 * @return object
 	 */
-	public function getBankTransfer(string $bank_transfer_id): object
+	public function get(string $bank_transfer_id): object
 	{
 		$params = [
 			"bank_transfer_id" => $bank_transfer_id
@@ -121,7 +121,7 @@ class BankTransfers extends AbstractResource
 	 * @param string|null $origination_account_id
 	 * @return object
 	 */
-	public function listBankTransfers(
+	public function list(
 		?DateTime $start_date = null,
 		?DateTime $end_date = null,
 		?int $count = null,
@@ -177,7 +177,7 @@ class BankTransfers extends AbstractResource
 	 * @param string|null $origination_account_id
 	 * @return object
 	 */
-	public function getEventList(
+	public function listEvents(
 		?DateTime $start_date = null,
 		?DateTime $end_date = null,
 		?string $bank_transfer_id = null,

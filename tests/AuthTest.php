@@ -11,7 +11,7 @@ class AuthTest extends TestCase
 {
 	public function test_get_auth(): void
 	{
-		$response = $this->getPlaidClient()->auth->getAuth("access_token");
+		$response = $this->getPlaidClient()->auth->get("access_token");
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

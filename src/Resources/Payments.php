@@ -73,6 +73,7 @@ class Payments extends AbstractResource
 	/**
 	 * Create a payment request.
 	 *
+	 * @deprecated 1.1
 	 * @param string $recipient_id
 	 * @param string $reference
 	 * @param float $amount
@@ -81,6 +82,21 @@ class Payments extends AbstractResource
 	 * @return object
 	 */
 	public function createPayment(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object
+	{
+		return $this->create($recipient_id, $reference, $amount, $currency, $payment_schedule);
+	}
+
+	/**
+	 * Create a payment request.
+	 *
+	 * @param string $recipient_id
+	 * @param string $reference
+	 * @param float $amount
+	 * @param string $currency
+	 * @param PaymentSchedule|null $payment_schedule
+	 * @return object
+	 */
+	public function create(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object
 	{
 		$params = [
 			"recipient_id" => $recipient_id,
@@ -109,10 +125,22 @@ class Payments extends AbstractResource
 	/**
 	 * Create a payment token.
 	 *
+	 * @deprecated 1.1
 	 * @param string $payment_id
 	 * @return object
 	 */
 	public function createPaymentToken(string $payment_id): object
+	{
+		return $this->createToken($payment_id);
+	}
+
+	/**
+	 * Create a payment token.
+	 *
+	 * @param string $payment_id
+	 * @return object
+	 */
+	public function createToken(string $payment_id): object
 	{
 		$params = [
 			"payment_id" => $payment_id
@@ -128,10 +156,22 @@ class Payments extends AbstractResource
 	/**
 	 * Get payment details.
 	 *
+	 * @deprecated 1.1
 	 * @param string $payment_id
 	 * @return object
 	 */
 	public function getPayment(string $payment_id): object
+	{
+		return $this->get($payment_id);
+	}
+
+	/**
+	 * Get payment details.
+	 *
+	 * @param string $payment_id
+	 * @return object
+	 */
+	public function get(string $payment_id): object
 	{
 		$params = [
 			"payment_id" => $payment_id
@@ -147,10 +187,22 @@ class Payments extends AbstractResource
 	/**
 	 * List all payments.
 	 *
+	 * @deprecated 1.1
 	 * @param array $options
 	 * @return object
 	 */
 	public function listPayments(array $options = []): object
+	{
+		return $this->list($options);
+	}
+
+	/**
+	 * List all payments.
+	 *
+	 * @param array $options
+	 * @return object
+	 */
+	public function list(array $options = []): object
 	{
 		$params = [
 			"options" => (object) $options

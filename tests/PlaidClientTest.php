@@ -35,7 +35,7 @@ class PlaidClientTest extends TestCase
 	{
 		$plaidClient = $this->getPlaidClient("production");
 
-		$response = $plaidClient->items->getItem("access_token");
+		$response = $plaidClient->items->get("access_token");
 
 		$this->assertEquals("https", $response->scheme);
 		$this->assertEquals("production.plaid.com", $response->host);
@@ -44,7 +44,7 @@ class PlaidClientTest extends TestCase
 	public function test_development_host(): void
 	{
 		$plaidClient = $this->getPlaidClient("development");
-		$response = $plaidClient->items->getItem("access_token");
+		$response = $plaidClient->items->get("access_token");
 
 		$this->assertEquals("https", $response->scheme);
 		$this->assertEquals("development.plaid.com", $response->host);
@@ -53,7 +53,7 @@ class PlaidClientTest extends TestCase
 	public function test_sandbox_host(): void
 	{
 		$plaidClient = $this->getPlaidClient("sandbox");
-		$response = $plaidClient->items->getItem("access_token");
+		$response = $plaidClient->items->get("access_token");
 
 		$this->assertEquals("https", $response->scheme);
 		$this->assertEquals("sandbox.plaid.com", $response->host);

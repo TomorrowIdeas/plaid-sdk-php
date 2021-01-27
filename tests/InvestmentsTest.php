@@ -13,7 +13,7 @@ class InvestmentsTest extends TestCase
 {
 	public function test_get_holdings(): void
 	{
-		$response = $this->getPlaidClient()->investments->getInvestmentHoldings("access_token", []);
+		$response = $this->getPlaidClient()->investments->listHoldings("access_token", []);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -27,7 +27,7 @@ class InvestmentsTest extends TestCase
 
 	public function test_get_transactions(): void
 	{
-		$response = $this->getPlaidClient()->investments->getInvestmentTransactions("access_token", new DateTime("2019-01-01 12:00:00"), new DateTime("2019-03-31 12:00:00"), []);
+		$response = $this->getPlaidClient()->investments->listTransactions("access_token", new DateTime("2019-01-01 12:00:00"), new DateTime("2019-03-31 12:00:00"), []);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);

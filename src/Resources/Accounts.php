@@ -7,10 +7,22 @@ class Accounts extends AbstractResource
 	/**
 	 * Get all Accounts.
 	 *
+	 * @deprecated 1.1 Use list() method.
 	 * @param string $access_token
 	 * @return object
 	 */
 	public function getAccounts(string $access_token): object
+	{
+		return $this->list($access_token);
+	}
+
+	/**
+	 * Get all Accounts.
+	 *
+	 * @param string $access_token
+	 * @return object
+	 */
+	public function list(string $access_token): object
 	{
 		$params = [
 			"access_token" => $access_token
