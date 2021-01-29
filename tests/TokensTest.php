@@ -10,7 +10,7 @@ use TomorrowIdeas\Plaid\Tests\TestCase;
  * @covers TomorrowIdeas\Plaid\Resources\tokens
  * @covers TomorrowIdeas\Plaid\Entities\AccountFilters
  */
-class tokensTest extends TestCase
+class TokensTest extends TestCase
 {
 	public function test_required_parameters(): void
 	{
