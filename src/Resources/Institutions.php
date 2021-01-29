@@ -8,13 +8,15 @@ class Institutions extends AbstractResource
 	 * Get a specific Insitution.
 	 *
 	 * @param string $institution_id
+	 * @param array<string> $country_codes
 	 * @param array<string,string> $options
 	 * @return object
 	 */
-	public function get(string $institution_id, array $options = []): object
+	public function get(string $institution_id, array $country_codes, array $options = []): object
 	{
 		$params = [
 			"institution_id" => $institution_id,
+			"country_codes" => $country_codes,
 			"options" => (object) $options
 		];
 
@@ -30,14 +32,16 @@ class Institutions extends AbstractResource
 	 *
 	 * @param integer $count
 	 * @param integer $offset
+	 * @param array<string> $country_codes
 	 * @param array<string,string> $options
 	 * @return object
 	 */
-	public function list(int $count, int $offset, array $options = []): object
+	public function list(int $count, int $offset, array $country_codes, array $options = []): object
 	{
 		$params = [
 			"count" => $count,
 			"offset" => $offset,
+			"country_codes" => $country_codes,
 			"options" => (object) $options
 		];
 

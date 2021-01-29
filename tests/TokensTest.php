@@ -9,6 +9,7 @@ use TomorrowIdeas\Plaid\Tests\TestCase;
  * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\tokens
  * @covers TomorrowIdeas\Plaid\Entities\AccountFilters
+ * @covers TomorrowIdeas\Plaid\Entities\User
  */
 class TokensTest extends TestCase
 {
