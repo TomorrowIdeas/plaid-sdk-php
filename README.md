@@ -198,9 +198,9 @@ Reference: https://plaid.com/docs/api/institutions/
 
 Methods:
 
-* `get(string $institution_id, array $options = []): object`
-* `list(int $count, int $offset, array $options = []): object`
-* `find(string $query, array $products, array $options = []): object`
+* `get(string $institution_id, array $country_codes, array $options = []): object`
+* `list(int $count, int $offset, array $country_codes, array $options = []): object`
+* `find(string $query, array $country_codes, array $products = [], array $options = []): object`
 
 Example:
 ```php
