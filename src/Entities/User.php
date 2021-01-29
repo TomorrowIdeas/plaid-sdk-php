@@ -77,12 +77,12 @@ class User
 		return \array_filter(
 			[
 				"client_user_id" => $this->id,
-				"name" => $this->name,
+				"legal_name" => $this->name,
 				"phone_number" => $this->phone_number,
 				"phone_number_verified_time" => $this->phone_number_verified_time,
 				"email_address" => $this->email_address,
 				"ssn" => $this->ssn,
-				"date_of_birht" => $this->date_of_birth
+				"date_of_birth" => $this->date_of_birth
 			],
 			function($value): bool {
 				return $value !== null;
