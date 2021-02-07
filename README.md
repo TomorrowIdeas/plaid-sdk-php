@@ -394,7 +394,7 @@ $response = $plaid->sandbox->fireWebhook($access_token);
 
 ### User
 
-The `TomorrowIdeas\Plaid\Entities\RecipientAddress` entity is used to represent your end user when creating a new link token.
+The `TomorrowIdeas\Plaid\Entities\User` entity is used to represent your end user when creating a new link token.
 
 Example:
 
