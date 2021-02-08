@@ -48,12 +48,14 @@ class Accounts extends AbstractResource
 	 * Get Account identity information.
 	 *
 	 * @param string $access_token
+	 * @param array<string,mixed> $options
 	 * @return object
 	 */
-	public function getIdentity(string $access_token): object
+	public function getIdentity(string $access_token, array $options = []): object
 	{
 		$params = [
-			"access_token" => $access_token
+			"access_token" => $access_token,
+			"options" => (object) $options
 		];
 
 		return $this->sendRequest(
