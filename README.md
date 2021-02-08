@@ -399,7 +399,7 @@ The `TomorrowIdeas\Plaid\Entities\User` entity is used to represent your end use
 Example:
 
 ```php
-$user = new User($user->id, $user->name, $user->phone);
+$token_user = new User($user->id, $user->name, $user->phone);
 ```
 
 ### RecipientAddress
