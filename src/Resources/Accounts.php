@@ -8,12 +8,14 @@ class Accounts extends AbstractResource
 	 * Get all Accounts.
 	 *
 	 * @param string $access_token
+	 * @param array<string,mixed> $options
 	 * @return object
 	 */
-	public function list(string $access_token): object
+	public function list(string $access_token, array $options = []): object
 	{
 		$params = [
-			"access_token" => $access_token
+			"access_token" => $access_token,
+			"options" => (object) $options
 		];
 
 		return $this->sendRequest(

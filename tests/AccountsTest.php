@@ -20,6 +20,7 @@ class AccountsTest extends TestCase
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals((object) [], $response->params->options);
 	}
 
 	public function test_get_identity(): void
