@@ -95,7 +95,7 @@ Reference: https://plaid.com/docs/#accounts
 
 Methods:
 
-* `list(string $access_token): object`
+* `list(string $access_token, array $options = []): object`
 * `getBalance(string $access_token, array $options = []): object`
 * `getIdentity(string $access_token): object`
 
