@@ -78,6 +78,7 @@ abstract class AbstractResource
 	 * @param string $method
 	 * @param string $path
 	 * @param array<array-key,mixed> $params
+	 * @throws UnexpectedValueException
 	 * @return object
 	 */
 	protected function sendRequest(string $method, string $path, array $params = []): object
@@ -99,6 +100,7 @@ abstract class AbstractResource
 	 * @param string $method
 	 * @param string $path
 	 * @param array<array-key,mixed> $params
+	 * @throws PlaidRequestException
 	 * @return ResponseInterface
 	 */
 	protected function sendRequestRawResponse(string $method, string $path, array $params = []): ResponseInterface

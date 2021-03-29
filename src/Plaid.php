@@ -79,6 +79,7 @@ class Plaid
 	 * @param string $client_id
 	 * @param string $client_secret
 	 * @param string $environment Possible values are: production, development, sandbox
+	 * @throws UnexpectedValueException
 	 */
 	public function __construct(
 		string $client_id,

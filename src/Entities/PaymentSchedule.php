@@ -31,6 +31,12 @@ class PaymentSchedule
 	 */
 	protected $start_date;
 
+	/**
+	 * @param string $interval You can use the class constants PaymentSchedule::WEEKLY and PaymentScheduler::MONTHLY.
+	 * @param integer $interval_execution_day
+	 * @param DateTime $start_date
+	 * @throws InvalidArgumentException
+	 */
 	public function __construct(
 		string $interval,
 		int $interval_execution_day,
