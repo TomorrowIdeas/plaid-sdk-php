@@ -23,7 +23,7 @@ class Handler
 		'INVALID_REQUEST' => 'InvalidRequestError',
 		'INVALID_INPUT' => 'InvalidInputError',
 		'INVALID_RESULT' => 'InvalidResultError',
-		'RATE_LIMIT_EXCEEDED' => 'RateLimitError',
+		'RATE_LIMIT_EXCEEDED' => 'RateLimitExceededError',
 		'RECAPTCHA_ERROR' => 'RecaptchaError',
 		'OAUTH_ERROR' => 'OAuthError',
 	];
@@ -48,7 +48,7 @@ class Handler
 
         $errorType = $response->error_type ?? null;
 
-        $message = $response->display_message ?? $response->error_message ?? null;
+        $message = $response->display_message ?? $response->error_message ?? $responseInterface->getReasonPhrase();
 
         $this->handleException($message, $headers, $statusCode, $errorType, $errorCode);
     }
