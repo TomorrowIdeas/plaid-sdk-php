@@ -26,7 +26,7 @@ class PlaidRequestException extends PlaidException
 
 		if( \is_object($response) ){
 			$this->response = $response;
-			$this->message = (string) ($this->response->display_message ?? $responseInterface->getReasonPhrase());
+			$this->message = (string) ($this->response->display_message ?? $this->response->error_message ?? $responseInterface->getReasonPhrase());
 		}
 
 		else {

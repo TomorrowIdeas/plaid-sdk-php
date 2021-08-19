@@ -6,8 +6,9 @@ use Capsule\Request;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use TomorrowIdeas\Plaid\Exceptions\Handler;
 use TomorrowIdeas\Plaid\Plaid;
-use TomorrowIdeas\Plaid\PlaidRequestException;
+use TomorrowIdeas\Plaid\Exceptions\PlaidException;
 use UnexpectedValueException;
 
 abstract class AbstractResource
@@ -100,7 +101,7 @@ abstract class AbstractResource
 	 * @param string $method
 	 * @param string $path
 	 * @param array<array-key,mixed> $params
-	 * @throws PlaidRequestException
+	 * @throws PlaidException
 	 * @return ResponseInterface
 	 */
 	protected function sendRequestRawResponse(string $method, string $path, array $params = []): ResponseInterface
@@ -110,7 +111,7 @@ abstract class AbstractResource
 		);
 
 		if( $response->getStatusCode() < 200 || $response->getStatusCode() >= 300 ){
-			throw new PlaidRequestException($response);
+			new Handler($response);
 		}
 
 		return $response;
