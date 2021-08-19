@@ -7,6 +7,7 @@ use Capsule\Response;
 use Capsule\ResponseStatus;
 use Shuttle\Handler\MockHandler;
 use Shuttle\Shuttle;
+use TomorrowIdeas\Plaid\Exceptions\PlaidException;
 use TomorrowIdeas\Plaid\Plaid;
 use TomorrowIdeas\Plaid\PlaidRequestException;
 use UnexpectedValueException;
@@ -16,17 +17,18 @@ use UnexpectedValueException;
  * @covers TomorrowIdeas\Plaid\Resources\AbstractResource
  * @covers TomorrowIdeas\Plaid\Resources\Items
  * @covers TomorrowIdeas\Plaid\PlaidRequestException
- * @uses TomorrowIdeas\Plaid\PlaidException
+ * @uses   TomorrowIdeas\Plaid\PlaidException
  */
 class AbstractResourceTest extends TestCase
 {
-	public function test_build_request_with_no_params_sends_empty_object_in_body(): void
+	public function test_build_request_with_no_params_sends_empty_object_in_body(
+	): void
 	{
 		$itemsResource = $this->getPlaidClient()->items;
 
 		$reflectionClass = new \ReflectionClass($itemsResource);
 
-        $method = $reflectionClass->getMethod("buildRequest");
+		$method = $reflectionClass->getMethod("buildRequest");
 		$method->setAccessible(true);
 
 		$request = $method->invokeArgs($itemsResource, ["post", "/endpoint"]);
@@ -37,18 +39,20 @@ class AbstractResourceTest extends TestCase
 		);
 	}
 
-	public function test_request_exception_passes_through_plaid_display_message(): void
+	public function test_request_exception_passes_through_plaid_display_message(
+	): void
 	{
+		$this->expectException(PlaidException::class);
+		$this->expectExceptionMessage("DISPLAY MESSAGE");
+
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
-				function(Request $request) {
-
+				function (Request $request) {
 					$requestParams = [
 						"display_message" => "DISPLAY MESSAGE",
 					];
 
 					return new Response(300, \json_encode($requestParams));
-
 				}
 			])
 		]);
@@ -56,28 +60,23 @@ class AbstractResourceTest extends TestCase
 		$plaid = new Plaid("client_id", "secret");
 		$plaid->setHttpClient($httpClient);
 
-		try {
-			$plaid->items->get("access_token");
-		}
-		catch( PlaidRequestException $plaidRequestException ){
-
-			$this->assertEquals("DISPLAY MESSAGE", $plaidRequestException->getMessage());
-
-		}
+		$plaid->items->get("access_token");
 	}
 
-	public function test_request_exception_passes_through_http_status_code(): void
+	public function test_request_exception_passes_through_http_status_code(
+	): void
 	{
+		$this->expectException(PlaidException::class);
+		$this->expectExceptionCode(300);
+
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
-				function(Request $request) {
-
+				function (Request $request) {
 					$requestParams = [
 						"display_message" => "DISPLAY MESSAGE",
 					];
 
 					return new Response(300, \json_encode($requestParams));
-
 				}
 			])
 		]);
@@ -85,34 +84,26 @@ class AbstractResourceTest extends TestCase
 		$plaid = new Plaid("client_id", "secret");
 		$plaid->setHttpClient($httpClient);
 
-		try {
-			$plaid->items->get("access_token");
-		}
-		catch( PlaidRequestException $plaidRequestException ){
-
-			$this->assertEquals(300, $plaidRequestException->getCode());
-
-		}
+		$plaid->items->get("access_token");
 	}
 
 	public function test_1xx_responses_throw_exception(): void
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
-				function(Request $request) {
-
+				function (Request $request) {
 					$requestParams = [
-						"method" => $request->getMethod(),
+						"method"  => $request->getMethod(),
 						"version" => $request->getHeaderLine("Plaid-Version"),
 						"content" => $request->getHeaderLine("Content-Type"),
-						"scheme" => $request->getUri()->getScheme(),
-						"host" => $request->getUri()->getHost(),
-						"path" => $request->getUri()->getPath(),
-						"params" => \json_decode($request->getBody()->getContents()),
+						"scheme"  => $request->getUri()->getScheme(),
+						"host"    => $request->getUri()->getHost(),
+						"path"    => $request->getUri()->getPath(),
+						"params"  => \json_decode($request->getBody()
+							->getContents()),
 					];
 
 					return new Response(100, \json_encode($requestParams));
-
 				}
 			])
 		]);
@@ -120,7 +111,7 @@ class AbstractResourceTest extends TestCase
 		$plaid = new Plaid("client_id", "secret");
 		$plaid->setHttpClient($httpClient);
 
-		$this->expectException(PlaidRequestException::class);
+		$this->expectException(PlaidException::class);
 		$plaid->items->get("access_token");
 	}
 
@@ -128,14 +119,12 @@ class AbstractResourceTest extends TestCase
 	{
 		$httpClient = new Shuttle([
 			'handler' => new MockHandler([
-				function(Request $request) {
-
+				function (Request $request) {
 					$requestParams = [
 						"display_message" => "PLAID_ERROR",
 					];
 
 					return new Response(300, \json_encode($requestParams));
-
 				}
 			])
 		]);
@@ -143,7 +132,7 @@ class AbstractResourceTest extends TestCase
 		$plaid = new Plaid("client_id", "secret");
 		$plaid->setHttpClient($httpClient);
 
-		$this->expectException(PlaidRequestException::class);
+		$this->expectException(PlaidException::class);
 		$plaid->items->get("access_token");
 	}
 
