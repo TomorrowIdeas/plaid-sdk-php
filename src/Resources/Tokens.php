@@ -2,8 +2,9 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
-use TomorrowIdeas\Plaid\Entities\AccountFilters;
 use TomorrowIdeas\Plaid\Entities\User;
+use TomorrowIdeas\Plaid\PlaidRequestException;
+use TomorrowIdeas\Plaid\Entities\AccountFilters;
 
 class Tokens extends AbstractResource
 {
@@ -22,6 +23,7 @@ class Tokens extends AbstractResource
 	 * @param string|null $redirect_uri
 	 * @param string|null $android_package_name
 	 * @param string|null $payment_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function create(
@@ -87,6 +89,7 @@ class Tokens extends AbstractResource
 	 * Get information about a previously created Link token.
 	 *
 	 * @param string $link_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function get(string $link_token): object

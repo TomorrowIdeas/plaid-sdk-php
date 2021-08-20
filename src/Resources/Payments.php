@@ -5,6 +5,7 @@ namespace TomorrowIdeas\Plaid\Resources;
 use TomorrowIdeas\Plaid\Entities\BacsAccount;
 use TomorrowIdeas\Plaid\Entities\PaymentSchedule;
 use TomorrowIdeas\Plaid\Entities\RecipientAddress;
+use TomorrowIdeas\Plaid\PlaidRequestException;
 
 class Payments extends AbstractResource
 {
@@ -14,6 +15,7 @@ class Payments extends AbstractResource
 	 * @param string $name
 	 * @param BacsAccount|string $account
 	 * @param RecipientAddress $address
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createRecipient(string $name, $account, RecipientAddress $address): object
@@ -41,6 +43,7 @@ class Payments extends AbstractResource
 	 * Get a recipient request from a payment inititiation.
 	 *
 	 * @param string $recipient_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getRecipient(string $recipient_id): object
@@ -59,6 +62,7 @@ class Payments extends AbstractResource
 	/**
 	 * List out all recipients for payment initiations.
 	 *
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function listRecipients(): object
@@ -78,6 +82,7 @@ class Payments extends AbstractResource
 	 * @param float $amount
 	 * @param string $currency
 	 * @param PaymentSchedule|null $payment_schedule
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function create(string $recipient_id, string $reference, float $amount, string $currency, PaymentSchedule $payment_schedule = null): object
@@ -110,6 +115,7 @@ class Payments extends AbstractResource
 	 * Create a payment token.
 	 *
 	 * @param string $payment_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createToken(string $payment_id): object
@@ -129,6 +135,7 @@ class Payments extends AbstractResource
 	 * Get payment details.
 	 *
 	 * @param string $payment_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function get(string $payment_id): object
@@ -148,6 +155,7 @@ class Payments extends AbstractResource
 	 * List all payments.
 	 *
 	 * @param array $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function list(array $options = []): object

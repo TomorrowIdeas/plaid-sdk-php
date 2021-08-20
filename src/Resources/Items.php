@@ -2,6 +2,7 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
 
 class Items extends AbstractResource
 {
@@ -9,6 +10,7 @@ class Items extends AbstractResource
 	 * Get an Item.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function get(string $access_token): object
@@ -28,6 +30,7 @@ class Items extends AbstractResource
 	 * Remove an Item.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function remove(string $access_token): object
@@ -47,6 +50,7 @@ class Items extends AbstractResource
 	 * Create a new Item public token.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createPublicToken(string $access_token): object
@@ -66,6 +70,7 @@ class Items extends AbstractResource
 	 * Exchange an Item public token for an access token.
 	 *
 	 * @param string $public_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function exchangeToken(string $public_token): object
@@ -85,6 +90,7 @@ class Items extends AbstractResource
 	 * Rotate an Item's access token.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function rotateAccessToken(string $access_token): object
@@ -104,6 +110,7 @@ class Items extends AbstractResource
 	 * Get an Item's income information.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getIncome(string $access_token): object

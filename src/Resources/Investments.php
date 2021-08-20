@@ -3,6 +3,7 @@
 namespace TomorrowIdeas\Plaid\Resources;
 
 use DateTime;
+use TomorrowIdeas\Plaid\PlaidRequestException;
 
 class Investments extends AbstractResource
 {
@@ -11,6 +12,7 @@ class Investments extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function listHoldings(string $access_token, array $options = []): object
@@ -34,6 +36,7 @@ class Investments extends AbstractResource
 	 * @param DateTime $start_date
 	 * @param DateTime $end_date
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function listTransactions(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object

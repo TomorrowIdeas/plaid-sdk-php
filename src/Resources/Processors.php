@@ -2,6 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 class Processors extends AbstractResource
 {
 	/**
@@ -10,6 +12,7 @@ class Processors extends AbstractResource
 	 * @param string $access_token
 	 * @param string $account_id
 	 * @param string $processor
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createToken(string $access_token, string $account_id, string $processor): object
@@ -31,6 +34,7 @@ class Processors extends AbstractResource
 	 * Get processor auth data.
 	 *
 	 * @param string $processor_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getAuth(string $processor_token): object
@@ -50,6 +54,7 @@ class Processors extends AbstractResource
 	 * Get the balance of accounts from processor.
 	 *
 	 * @param string $processor_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getBalance(string $processor_token): object
@@ -69,6 +74,7 @@ class Processors extends AbstractResource
 	 * Get account holder information from the processor.
 	 *
 	 * @param string $processor_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getIdentity(string $processor_token): object
@@ -89,6 +95,7 @@ class Processors extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param string $account_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createStripeToken(string $access_token, string $account_id): object
@@ -110,6 +117,7 @@ class Processors extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param string $account_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createDwollaToken(string $access_token, string $account_id): object

@@ -2,6 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 class Accounts extends AbstractResource
 {
 	/**
@@ -9,6 +11,7 @@ class Accounts extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param array<string,mixed> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function list(string $access_token, array $options = []): object
@@ -30,6 +33,7 @@ class Accounts extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getBalance(string $access_token, array $options = []): object
@@ -51,6 +55,7 @@ class Accounts extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param array<string,mixed> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getIdentity(string $access_token, array $options = []): object

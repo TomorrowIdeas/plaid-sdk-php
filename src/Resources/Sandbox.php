@@ -2,6 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 class Sandbox extends AbstractResource
 {
 	/**
@@ -10,6 +12,7 @@ class Sandbox extends AbstractResource
 	 * @param string $institution_id
 	 * @param array $initial_products
 	 * @param array $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createPublicToken(
@@ -34,6 +37,7 @@ class Sandbox extends AbstractResource
 	 * Reset an Item's login status.
 	 *
 	 * @param string $access_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function resetLogin(string $access_token): object
@@ -55,6 +59,7 @@ class Sandbox extends AbstractResource
 	 * @param string $access_token
 	 * @param string $account_id
 	 * @param string $verification_status
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function setVerificationStatus(
@@ -80,6 +85,7 @@ class Sandbox extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param string $webhook_code
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function fireWebhook(
@@ -105,6 +111,7 @@ class Sandbox extends AbstractResource
 	 * @param string $event_type
 	 * @param string|null $ach_return_code
 	 * @param string|null $failure_description
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function simulateBankTransfer(

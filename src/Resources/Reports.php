@@ -3,6 +3,7 @@
 namespace TomorrowIdeas\Plaid\Resources;
 
 use Psr\Http\Message\ResponseInterface;
+use TomorrowIdeas\Plaid\PlaidRequestException;
 
 class Reports extends AbstractResource
 {
@@ -12,6 +13,7 @@ class Reports extends AbstractResource
 	 * @param array<string> $access_tokens
 	 * @param integer $days_requested
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createAssetReport(array $access_tokens, int $days_requested, array $options = []): object
@@ -35,6 +37,7 @@ class Reports extends AbstractResource
 	 * @param string $asset_report_token
 	 * @param integer $days_requested
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function refreshAssetReport(string $asset_report_token, int $days_requested, array $options = []): object
@@ -57,6 +60,7 @@ class Reports extends AbstractResource
 	 *
 	 * @param string $asset_report_token
 	 * @param array<string> $exclude_accounts
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function filterAssetReport(string $asset_report_token, array $exclude_accounts): object
@@ -78,6 +82,7 @@ class Reports extends AbstractResource
 	 *
 	 * @param string $asset_report_token
 	 * @param boolean $include_insights
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function getAssetReport(string $asset_report_token, bool $include_insights = false): object
@@ -98,6 +103,7 @@ class Reports extends AbstractResource
 	 * Get an Asset report in PDF format.
 	 *
 	 * @param string $report_token
+	 * @throws PlaidRequestException
 	 * @return ResponseInterface
 	 */
 	public function getAssetReportPdf(string $asset_report_token): ResponseInterface
@@ -117,6 +123,7 @@ class Reports extends AbstractResource
 	 * Remove an Asset Report.
 	 *
 	 * @param string $asset_report_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function removeAssetReport(string $asset_report_token): object
@@ -137,6 +144,7 @@ class Reports extends AbstractResource
 	 *
 	 * @param string $asset_report_token
 	 * @param string $auditor_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function createAssetReportAuditCopy(string $asset_report_token, string $auditor_id): object
@@ -157,6 +165,7 @@ class Reports extends AbstractResource
 	 * Remove an Audit Copy.
 	 *
 	 * @param string $audit_copy_token
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function removeAssetReportAuditCopy(string $audit_copy_token): object

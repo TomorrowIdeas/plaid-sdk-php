@@ -4,6 +4,7 @@ namespace TomorrowIdeas\Plaid\Resources;
 
 use DateTime;
 use TomorrowIdeas\Plaid\Entities\AccountHolder;
+use TomorrowIdeas\Plaid\PlaidRequestException;
 
 class BankTransfers extends AbstractResource
 {
@@ -23,6 +24,7 @@ class BankTransfers extends AbstractResource
 	 * @param string $custom_tag
 	 * @param array $metadata
 	 * @param string $origination_account_id
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function create(

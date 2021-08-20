@@ -78,6 +78,7 @@ abstract class AbstractResource
 	 * @param string $method
 	 * @param string $path
 	 * @param array<array-key,mixed> $params
+	 * @throws PlaidRequestException
 	 * @throws UnexpectedValueException
 	 * @return object
 	 */

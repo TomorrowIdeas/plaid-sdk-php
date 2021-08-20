@@ -2,6 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 class Liabilities extends AbstractResource
 {
 	/**
@@ -9,6 +11,7 @@ class Liabilities extends AbstractResource
 	 *
 	 * @param string $access_token
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function list(string $access_token, array $options = []): object

@@ -2,6 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Resources;
 
+use TomorrowIdeas\Plaid\PlaidRequestException;
+
 class Institutions extends AbstractResource
 {
 	/**
@@ -10,6 +12,7 @@ class Institutions extends AbstractResource
 	 * @param string $institution_id
 	 * @param array<string> $country_codes
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function get(string $institution_id, array $country_codes, array $options = []): object
@@ -34,6 +37,7 @@ class Institutions extends AbstractResource
 	 * @param integer $offset
 	 * @param array<string> $country_codes
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function list(int $count, int $offset, array $country_codes, array $options = []): object
@@ -59,6 +63,7 @@ class Institutions extends AbstractResource
 	 * @param array<string> $products
 	 * @param array<string> $country_codes Possible values: US, GB, ES, NL, FR, IE, CA
 	 * @param array<string,string> $options
+	 * @throws PlaidRequestException
 	 * @return object
 	 */
 	public function find(
