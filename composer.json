@@ -11,7 +11,7 @@
         "php": ">=7.3|^8.0",
         "ext-json": "*",
         "ext-curl": "*",
-        "nimbly/shuttle": "^0.4"
+        "nimbly/shuttle": "^0.5"
     },
     "autoload": {
         "psr-4": {
