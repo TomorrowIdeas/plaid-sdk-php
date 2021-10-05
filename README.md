@@ -192,7 +192,7 @@ $categories = $plaid->categories->list();
 
 ### Institutions
 
-Resource: `insitutions`
+Resource: `institutions`
 
 Reference: https://plaid.com/docs/api/institutions/
 
