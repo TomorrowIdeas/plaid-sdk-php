@@ -12,7 +12,7 @@ class Reports extends AbstractResource
 	 *
 	 * @param array<string> $access_tokens
 	 * @param integer $days_requested
-	 * @param array<string,string> $options
+	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
@@ -36,7 +36,7 @@ class Reports extends AbstractResource
 	 *
 	 * @param string $asset_report_token
 	 * @param integer $days_requested
-	 * @param array<string,string> $options
+	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
 	 */

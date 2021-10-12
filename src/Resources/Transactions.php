@@ -13,7 +13,7 @@ class Transactions extends AbstractResource
 	 * @param string $access_token
 	 * @param DateTime $start_date
 	 * @param DateTime $end_date
-	 * @param array<string,string> $options
+	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
 	 */

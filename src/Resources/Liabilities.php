@@ -10,7 +10,7 @@ class Liabilities extends AbstractResource
 	 * Get Liabilities request.
 	 *
 	 * @param string $access_token
-	 * @param array<string,string> $options
+	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
