@@ -175,6 +175,27 @@ class TokensTest extends TestCase
 		);
 	}
 
+	public function test_institution_id(): void
+	{
+		$response = $this->getPlaidClient()->tokens->create(
+			"client_name",
+			"en",
+			["US"],
+			new User("usr_12345"),
+			[],
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			"institution_id"
+		);
+
+		$this->assertEquals("institution_id", $response->params->institution_id);
+	}
+
 	public function test_get_token(): void
 	{
 		$response = $this->getPlaidClient()->tokens->get("link_token");
