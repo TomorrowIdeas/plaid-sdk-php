@@ -13,17 +13,20 @@ class Payments extends AbstractResource
 	 * Create a recipient request for payment initiation.
 	 *
 	 * @param string $name
-	 * @param BacsAccount|string $account
-	 * @param RecipientAddress $address
+	 * @param BacsAccount|string $account Bacs account or IBAN.
+	 * @param RecipientAddress|null $address
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
-	public function createRecipient(string $name, $account, RecipientAddress $address): object
+	public function createRecipient(string $name, $account, ?RecipientAddress $address = null): object
 	{
 		$params = [
-			"name" => $name,
-			"address" => (object) $address->toArray()
+			"name" => $name
 		];
+
+		if( $address ) {
+			$params["address"] = (object) $address->toArray();
+		}
 
 		if( \is_string($account) ){
 			$params["iban"] = $account;

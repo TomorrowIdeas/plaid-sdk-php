@@ -44,6 +44,24 @@ class PaymentsTest extends TestCase
 		);
 	}
 
+	public function test_create_recipient_with_no_address(): void
+	{
+		$response = $this->getPlaidClient()->payments->createRecipient(
+			"name",
+			"iban"
+		);
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/payment_initiation/recipient/create", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("name", $response->params->name);
+		$this->assertEquals("iban", $response->params->iban);
+		$this->assertFalse(isset($response->params->address));
+	}
+
 	public function test_create_recipient_with_bacs_account_entity(): void
 	{
 		$response = $this->getPlaidClient()->payments->createRecipient(
