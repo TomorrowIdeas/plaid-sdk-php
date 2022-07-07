@@ -47,8 +47,8 @@ class TransactionsTest extends TestCase
 	public function test_sync_transactions_minimal(): void
 	{
 		$response = $this->getPlaidClient()->transactions->sync(
-            "access_token"
-        );
+			"access_token"
+		);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -63,9 +63,9 @@ class TransactionsTest extends TestCase
 	public function test_sync_transactions_cursor_only(): void
 	{
 		$response = $this->getPlaidClient()->transactions->sync(
-            "access_token",
-            "last_cursor_123",
-        );
+			"access_token",
+			"last_cursor_123",
+		);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -81,11 +81,11 @@ class TransactionsTest extends TestCase
 	public function test_sync_transactions_all_params(): void
 	{
 		$response = $this->getPlaidClient()->transactions->sync(
-            "access_token",
-            "last_cursor_123",
-            100,
-            ["include_personal_finance_category" => true],
-        );
+			"access_token",
+			"last_cursor_123",
+			100,
+			["include_personal_finance_category" => true],
+		);
 
 		$this->assertEquals("POST", $response->method);
 		$this->assertEquals("2020-09-14", $response->version);
@@ -97,5 +97,24 @@ class TransactionsTest extends TestCase
 		$this->assertEquals("last_cursor_123", $response->params->cursor);
 		$this->assertEquals(100, $response->params->count);
 		$this->assertEquals((object) ["include_personal_finance_category" => true], $response->params->options);
+	}
+
+	public function test_recurring_transactions(): void
+	{
+		$response = $this->getPlaidClient()->transactions->recurring(
+			"access_token",
+			["acct_123", "acct_456"],
+			["option1" => "value1"],
+		);
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/transactions/recurring/get", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals(["acct_123", "acct_456"], $response->params->account_ids);
+		$this->assertEquals((object) ["option1" => "value1"], $response->params->options);
 	}
 }

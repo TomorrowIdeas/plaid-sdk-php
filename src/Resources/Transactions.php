@@ -71,7 +71,7 @@ class Transactions extends AbstractResource
 	{
 		$params = [
 			"access_token" => $access_token,
-			"options" => (object) $options,
+			"options" => (object) $options
 		];
 
 		if( $cursor ) {
@@ -85,6 +85,31 @@ class Transactions extends AbstractResource
 		return $this->sendRequest(
 			"post",
 			"transactions/sync",
+			$this->paramsWithClientCredentials($params)
+		);
+	}
+
+	/**
+	 * Get all recurring transactions (deposit and debit.)
+	 *
+	 * @see https://plaid.com/docs/api/products/transactions/#transactionsrecurringget
+	 *
+	 * @param string $access_token
+	 * @param array<string> $account_ids
+	 * @param array<string,mixed> $options
+	 * @return object
+	 */
+	public function recurring(string $access_token, array $account_ids, array $options = []): object
+	{
+		$params = [
+			"access_token" => $access_token,
+			"account_ids" => $account_ids,
+			"options" => (object) $options
+		];
+
+		return $this->sendRequest(
+			"post",
+			"transactions/recurring/get",
 			$this->paramsWithClientCredentials($params)
 		);
 	}
