@@ -52,4 +52,40 @@ class Transactions extends AbstractResource
 			$this->paramsWithClientCredentials($params)
 		);
 	}
+
+	/**
+	 * Get transactions for a Plaid Item since the last sync.
+	 * @see https://plaid.com/docs/api/products/transactions/#transactionssync
+	 *
+	 * @param string $access_token
+	 * @param string $cursor The "cursor" (or page identifier) provided from the
+	 *               last sync request. Do not provide cursor for the first-ever
+	 *               sync request for an item.
+	 * @param int $count Number of transactions per response (or page size)
+	 * @param array<string,mixed> $options
+	 * @throws PlaidRequestException
+	 * @return object
+	 */
+	public function sync(string $access_token, ?string $cursor = null, ?int $count = null, array $options = []): object
+	{
+		$params = [
+			"access_token" => $access_token,
+			"options" => (object) $options,
+		];
+
+		if ($cursor) {
+			$params["cursor"] = $cursor;
+		}
+
+		if ($count) {
+			$params["count"] = $count;
+		}
+
+		return $this->sendRequest(
+			"post",
+			"transactions/sync",
+			$this->paramsWithClientCredentials($params)
+		);
+	}
+
 }

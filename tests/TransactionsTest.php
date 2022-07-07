@@ -43,4 +43,59 @@ class TransactionsTest extends TestCase
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("access_token", $response->params->access_token);
 	}
+
+	public function test_sync_transactions_minimal(): void
+	{
+		$response = $this->getPlaidClient()->transactions->sync(
+            "access_token"
+        );
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/transactions/sync", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals((object) [], $response->params->options);
+	}
+
+	public function test_sync_transactions_cursor_only(): void
+	{
+		$response = $this->getPlaidClient()->transactions->sync(
+            "access_token",
+            "last_cursor_123",
+        );
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/transactions/sync", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals("last_cursor_123", $response->params->cursor);
+		$this->assertEquals((object) [], $response->params->options);
+	}
+
+	public function test_sync_transactions_all_params(): void
+	{
+		$response = $this->getPlaidClient()->transactions->sync(
+            "access_token",
+            "last_cursor_123",
+            100,
+            ['include_personal_finance_category' => true],
+        );
+
+		$this->assertEquals("POST", $response->method);
+		$this->assertEquals("2020-09-14", $response->version);
+		$this->assertEquals("application/json", $response->content);
+		$this->assertEquals("/transactions/sync", $response->path);
+		$this->assertEquals("client_id", $response->params->client_id);
+		$this->assertEquals("secret", $response->params->secret);
+		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals("last_cursor_123", $response->params->cursor);
+		$this->assertEquals(100, $response->params->count);
+		$this->assertEquals((object) ['include_personal_finance_category' => true], $response->params->options);
+	}
 }
