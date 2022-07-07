@@ -312,6 +312,7 @@ Methods:
 
 * `list(string $access_token, DateTime $start_date, DateTime $end_date, array $options = []): object`
 * `refresh(string $access_token): object`
+* `sync(string $access_token, ?string $cursor = null, ?int $count = null, array $options = []): object`
 
 Example:
 ```php

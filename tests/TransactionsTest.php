@@ -84,7 +84,7 @@ class TransactionsTest extends TestCase
             "access_token",
             "last_cursor_123",
             100,
-            ['include_personal_finance_category' => true],
+            ["include_personal_finance_category" => true],
         );
 
 		$this->assertEquals("POST", $response->method);
@@ -96,6 +96,6 @@ class TransactionsTest extends TestCase
 		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("last_cursor_123", $response->params->cursor);
 		$this->assertEquals(100, $response->params->count);
-		$this->assertEquals((object) ['include_personal_finance_category' => true], $response->params->options);
+		$this->assertEquals((object) ["include_personal_finance_category" => true], $response->params->options);
 	}
 }
