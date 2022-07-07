@@ -66,10 +66,11 @@ class Transactions extends AbstractResource
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
-	public function sync(string $access_token, ?string $cursor = null, ?int $count = null, ?array $options = null): object
+	public function sync(string $access_token, ?string $cursor = null, ?int $count = null, array $options = []): object
 	{
 		$params = [
 			"access_token" => $access_token,
+			"options" => (object) $options,
 		];
 
 		if ($cursor) {
@@ -78,10 +79,6 @@ class Transactions extends AbstractResource
 
 		if ($count) {
 			$params["count"] = $count;
-		}
-
-		if ($options) {
-			$params["options"] = (object) $options;
 		}
 
 		return $this->sendRequest(

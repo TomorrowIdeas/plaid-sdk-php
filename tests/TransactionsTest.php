@@ -57,6 +57,7 @@ class TransactionsTest extends TestCase
 		$this->assertEquals("client_id", $response->params->client_id);
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("access_token", $response->params->access_token);
+		$this->assertEquals((object) [], $response->params->options);
 	}
 
 	public function test_sync_transactions_cursor_only(): void
@@ -74,6 +75,7 @@ class TransactionsTest extends TestCase
 		$this->assertEquals("secret", $response->params->secret);
 		$this->assertEquals("access_token", $response->params->access_token);
 		$this->assertEquals("last_cursor_123", $response->params->cursor);
+		$this->assertEquals((object) [], $response->params->options);
 	}
 
 	public function test_sync_transactions_all_params(): void
