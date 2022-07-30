@@ -25,7 +25,7 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("production", $reflectionProperty->getValue($plaid));
 	}
 
-	public function test_setting_invalid_environment_throws(): void
+	public function test_setting_invalid_environment_throws_unexpected_value_exception(): void
 	{
 		$this->expectException(UnexpectedValueException::class);
 		$plaid = new Plaid("client_id", "secret", "invalid_environment");
@@ -64,31 +64,31 @@ class PlaidClientTest extends TestCase
 		$this->assertEquals("2020-09-14", Plaid::API_VERSION);
 	}
 
+	public function test_create_http_client_if_none_passed(): void
+	{
+
+		$plaid = new Plaid("client_id", "secret");
+
+		$reflection = new \ReflectionClass($plaid);
+
+		$property = $reflection->getProperty("httpClient");
+		$property->setAccessible(true);
+
+		$this->assertInstanceOf(Shuttle::class, $property->getValue($plaid));
+	}
+
 	public function test_setting_http_client(): void
 	{
 		$httpClient = new Shuttle;
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		$reflection = new \ReflectionClass($plaid);
 
-		$method = $reflection->getMethod('getHttpClient');
-		$method->setAccessible(true);
+		$property = $reflection->getProperty("httpClient");
+		$property->setAccessible(true);
 
-		$this->assertSame($httpClient, $method->invoke($plaid));
-	}
-
-	public function test_getting_http_client_creates_default_client_if_none_set(): void
-	{
-		$plaid = new Plaid("client_id", "secret");
-
-		$reflection = new \ReflectionClass($plaid);
-
-		$method = $reflection->getMethod('getHttpClient');
-		$method->setAccessible(true);
-
-		$this->assertInstanceOf(Shuttle::class, $method->invoke($plaid));
+		$this->assertSame($httpClient, $property->getValue($plaid));
 	}
 
 	public function test_getting_unsupported_resource_throws_unexpected_value_exception(): void

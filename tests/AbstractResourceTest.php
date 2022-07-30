@@ -40,7 +40,7 @@ class AbstractResourceTest extends TestCase
 	public function test_request_exception_passes_through_plaid_display_message(): void
 	{
 		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+			"handler" => new MockHandler([
 				function(Request $request) {
 
 					$requestParams = [
@@ -53,16 +53,14 @@ class AbstractResourceTest extends TestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		try {
+
 			$plaid->items->get("access_token");
 		}
 		catch( PlaidRequestException $plaidRequestException ){
-
 			$this->assertEquals("DISPLAY MESSAGE", $plaidRequestException->getMessage());
-
 		}
 	}
 
@@ -82,23 +80,21 @@ class AbstractResourceTest extends TestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		try {
+
 			$plaid->items->get("access_token");
 		}
 		catch( PlaidRequestException $plaidRequestException ){
-
 			$this->assertEquals(300, $plaidRequestException->getCode());
-
 		}
 	}
 
 	public function test_1xx_responses_throw_exception(): void
 	{
 		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+			"handler" => new MockHandler([
 				function(Request $request) {
 
 					$requestParams = [
@@ -117,8 +113,7 @@ class AbstractResourceTest extends TestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		$this->expectException(PlaidRequestException::class);
 		$plaid->items->get("access_token");
@@ -127,7 +122,7 @@ class AbstractResourceTest extends TestCase
 	public function test_3xx_responses_and_above_throw_exception(): void
 	{
 		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+			"handler" => new MockHandler([
 				function(Request $request) {
 
 					$requestParams = [
@@ -140,8 +135,7 @@ class AbstractResourceTest extends TestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		$this->expectException(PlaidRequestException::class);
 		$plaid->items->get("access_token");
@@ -150,13 +144,12 @@ class AbstractResourceTest extends TestCase
 	public function test_invalid_json_when_parsing_response(): void
 	{
 		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+			"handler" => new MockHandler([
 				new Response(ResponseStatus::OK, "invalid_json")
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		$this->expectException(UnexpectedValueException::class);
 

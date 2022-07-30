@@ -20,10 +20,10 @@ class BankTransfers extends AbstractResource
 	 * @param string $currency_code
 	 * @param AccountHolder $account_holder
 	 * @param string $description
-	 * @param string $ach_class
-	 * @param string $custom_tag
+	 * @param string|null $ach_class Possible values: ccd, ppd, tel, web
+	 * @param string|null $custom_tag
 	 * @param array $metadata
-	 * @param string $origination_account_id
+	 * @param string|null $origination_account_id
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
@@ -50,8 +50,8 @@ class BankTransfers extends AbstractResource
 			"network" => $network,
 			"amount" => $amount,
 			"iso_currency_code" => $currency_code,
-			"description" => \substr($description, 0, 8),
-			"user" => $account_holder->toArray(),
+			"description" => \substr($description, 0, 10),
+			"user" => $account_holder,
 			"metadata" => $metadata ? (object) $metadata : null
 		];
 

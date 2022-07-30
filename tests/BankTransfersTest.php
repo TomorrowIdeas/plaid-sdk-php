@@ -47,11 +47,11 @@ class BankTransfersTest extends TestCase
 		$this->assertEquals(
 			(object) [
 				"legal_name" => "Test Name",
-				"email" => "test@example.com"
+				"email_address" => "test@example.com"
 			],
 			$response->params->user
 		);
-		$this->assertEquals("descript", $response->params->description);
+		$this->assertEquals("descriptio", $response->params->description);
 		$this->assertEquals("ach_class", $response->params->ach_class);
 		$this->assertEquals("custom_tag", $response->params->custom_tag);
 		$this->assertEquals((object) ["meta1" => "value1"], $response->params->metadata);

@@ -9,7 +9,7 @@ use TomorrowIdeas\Plaid\Entities\RecipientAddress;
  */
 class RecipientAddressEntityTest extends TestCase
 {
-	public function test_to_array_with_single_street(): void
+	public function test_json_serialize_with_single_street(): void
 	{
 		$address = new RecipientAddress("123 Elm St", null, "Anytown", "ABC 123", "US");
 
@@ -20,11 +20,11 @@ class RecipientAddressEntityTest extends TestCase
 				"postal_code" => "ABC 123",
 				"country" => "US"
 			],
-			$address->toArray()
+			$address->jsonSerialize()
 		);
 	}
 
-	public function test_to_array_with_additional_street(): void
+	public function test_json_serialize_with_additional_street(): void
 	{
 		$address = new RecipientAddress("123 Elm St", "Apt A", "Anytown", "ABC 123", "US");
 
@@ -35,7 +35,7 @@ class RecipientAddressEntityTest extends TestCase
 				"postal_code" => "ABC 123",
 				"country" => "US"
 			],
-			$address->toArray()
+			$address->jsonSerialize()
 		);
 	}
 }

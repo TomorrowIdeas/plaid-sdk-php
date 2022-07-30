@@ -7,11 +7,11 @@ use Psr\Http\Message\ResponseInterface;
 class PlaidRequestException extends PlaidException
 {
 	/**
-	 * Get the response payload.
+	 * The response message from Plaid.
 	 *
 	 * @var object|null
 	 */
-	protected $response;
+	protected ?object $response = null;
 
 	/**
 	 * PlaidRequestException constructor.

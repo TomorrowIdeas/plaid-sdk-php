@@ -25,14 +25,14 @@ class Payments extends AbstractResource
 		];
 
 		if( $address ) {
-			$params["address"] = (object) $address->toArray();
+			$params["address"] = $address;
 		}
 
 		if( \is_string($account) ){
 			$params["iban"] = $account;
 		}
 		else {
-			$params["bacs"] = $account->toArray();
+			$params["bacs"] = $account;
 		}
 
 		return $this->sendRequest(

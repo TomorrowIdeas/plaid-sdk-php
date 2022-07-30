@@ -8,7 +8,7 @@
     ],
     "type": "library",
     "require": {
-        "php": ">=7.3|>=8.0",
+        "php": ">=8.0",
         "ext-json": "*",
         "ext-curl": "*",
         "nimbly/shuttle": "^0.4"

@@ -2,32 +2,18 @@
 
 namespace TomorrowIdeas\Plaid\Entities;
 
-class BacsAccount
+use JsonSerializable;
+
+class BacsAccount implements JsonSerializable
 {
-	/**
-	 * Account number.
-	 *
-	 * @var string
-	 */
-	protected $account;
-
-	/**
-	 * Sort code.
-	 *
-	 * @var string
-	 */
-	protected $sort_code;
-
 	public function __construct(
-		string $account,
-		string $sort_code
+		protected string $account,
+		protected string $sort_code
 	)
 	{
-		$this->account = $account;
-		$this->sort_code = $sort_code;
 	}
 
-	public function toArray(): array
+	public function jsonSerialize(): mixed
 	{
 		return [
 			"account" => $this->account,

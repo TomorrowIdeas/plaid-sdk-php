@@ -2,19 +2,20 @@
 
 namespace TomorrowIdeas\Plaid\Entities;
 
-class AccountFilters
+use JsonSerializable;
+
+class AccountFilters implements JsonSerializable
 {
 	/**
 	 * Filters to be applied.
 	 *
 	 * @var array<string,array<string,array<string>>>
 	 */
-	protected $filters = [];
+	protected array $filters = [];
 
 
 	/**
-	 * AccountFilters constructor.
-	 *
+	 * @see https://plaid.com/docs/api/tokens/#link-token-create-request-account-filters
 	 * @param array<string,array<string>> $filters
 	 */
 	public function __construct(array $filters = [])
@@ -130,7 +131,7 @@ class AccountFilters
 	 *
 	 * @return array<string,array<string,array<string>>>
 	 */
-	public function toArray(): array
+	public function jsonSerialize(): mixed
 	{
 		return $this->filters;
 	}

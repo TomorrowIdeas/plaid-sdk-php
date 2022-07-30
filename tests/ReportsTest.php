@@ -96,8 +96,7 @@ class ReportsTest extends TestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret");
-		$plaid->setHttpClient($httpClient);
+		$plaid = new Plaid("client_id", "secret", "production", $httpClient);
 
 		$this->expectException(PlaidRequestException::class);
 		$plaid->reports->getAssetReportPdf('asset_report_token', true);

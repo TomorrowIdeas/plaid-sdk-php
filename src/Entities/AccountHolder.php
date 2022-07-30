@@ -2,36 +2,26 @@
 
 namespace TomorrowIdeas\Plaid\Entities;
 
-class AccountHolder
+use JsonSerializable;
+
+class AccountHolder implements JsonSerializable
 {
 	/**
-	 * Legal name of account holder.
-	 *
-	 * @var string
+	 * @param string $legal_name Legal name of account holder or business name.
+	 * @param string|null $email Email address of account holder.
 	 */
-	protected $legal_name;
-
-	/**
-	 * Email address of account holder.
-	 *
-	 * @var string|null
-	 */
-	protected $email;
-
 	public function __construct(
-		string $legal_name,
-		string $email = null
+		protected string $legal_name,
+		protected ?string $email = null
 	)
 	{
-		$this->legal_name = $legal_name;
-		$this->email = $email;
 	}
 
-	public function toArray(): array
+	public function jsonSerialize(): mixed
 	{
 		return [
 			"legal_name" => $this->legal_name,
-			"email" => $this->email
+			"email_address" => $this->email
 		];
 	}
 }

@@ -10,7 +10,7 @@ class Institutions extends AbstractResource
 	 * Get a specific Insitution.
 	 *
 	 * @param string $institution_id
-	 * @param array<string> $country_codes
+	 * @param array<string> $country_codes Possible values: US, GB, ES, NL, FR, IE, CA
 	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
@@ -35,7 +35,7 @@ class Institutions extends AbstractResource
 	 *
 	 * @param integer $count
 	 * @param integer $offset
-	 * @param array<string> $country_codes
+	 * @param array<string> $country_codes Possible values: US, GB, ES, NL, FR, IE, CA
 	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object
@@ -60,8 +60,8 @@ class Institutions extends AbstractResource
 	 * Find an Institution by a search query.
 	 *
 	 * @param string $query
-	 * @param array<string> $products
 	 * @param array<string> $country_codes Possible values: US, GB, ES, NL, FR, IE, CA
+	 * @param array<string> $products
 	 * @param array<string,mixed> $options
 	 * @throws PlaidRequestException
 	 * @return object

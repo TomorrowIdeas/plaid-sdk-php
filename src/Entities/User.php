@@ -2,91 +2,49 @@
 
 namespace TomorrowIdeas\Plaid\Entities;
 
-class User
+use DateTime;
+use JsonSerializable;
+
+class User implements JsonSerializable
 {
 	/**
-	 * User ID
-	 *
-	 * @var string
+	 * @see https://plaid.com/docs/api/tokens/#link-token-create-request-user
+	 * @param string $id Your unique identifier for the user.
+	 * @param string|null $name User's legal full name.
+	 * @param string|null $phone_number User's phone number in E-164 format.
+	 * @param DateTime|null $phone_number_verified_time Timestamp when phone number was verified.
+	 * @param string|null $email_address User's email address.
+	 * @param DateTime|null $email_address_verified_time Timestamp when email address was verified.
+	 * @param string|null $ssn User's social security number.
+	 * @param DateTime|null $date_of_birth User's date of birth.
 	 */
-	protected $id;
-
-	/**
-	 * User legal full name
-	 *
-	 * @var string|null
-	 */
-	protected $name;
-
-	/**
-	 * User phone number
-	 *
-	 * @var string|null
-	 */
-	protected $phone_number;
-
-	/**
-	 * User phone number verified timestamp.
-	 *
-	 * @var string|null
-	 */
-	protected $phone_number_verified_time;
-
-	/**
-	 * User email address
-	 *
-	 * @var string|null
-	 */
-	protected $email_address;
-
-	/**
-	 * User social security number
-	 *
-	 * @var string|null
-	 */
-	protected $ssn;
-
-	/**
-	 * User date of birth
-	 *
-	 * @var string|null
-	 */
-	protected $date_of_birth;
-
 	public function __construct(
-		string $id,
-		?string $name = null,
-		?string $phone_number = null,
-		?string $phone_number_verified_time = null,
-		?string $email_address = null,
-		?string $ssn = null,
-		?string $date_of_birth = null
+		protected string $id,
+		protected ?string $name = null,
+		protected ?string $phone_number = null,
+		protected ?DateTime $phone_number_verified_time = null,
+		protected ?string $email_address = null,
+		protected ?DateTime $email_address_verified_time = null,
+		protected ?string $ssn = null,
+		protected ?DateTime $date_of_birth = null
 	)
 	{
-		$this->id = $id;
-		$this->name = $name;
-		$this->phone_number = $phone_number;
-		$this->phone_number_verified_time = $phone_number_verified_time;
-		$this->email_address = $email_address;
-		$this->ssn = $ssn;
-		$this->date_of_birth = $date_of_birth;
 	}
 
-	public function toArray(): array
+	public function jsonSerialize(): mixed
 	{
 		return \array_filter(
 			[
 				"client_user_id" => $this->id,
 				"legal_name" => $this->name,
 				"phone_number" => $this->phone_number,
-				"phone_number_verified_time" => $this->phone_number_verified_time,
+				"phone_number_verified_time" => $this->phone_number_verified_time?->format("c"),
 				"email_address" => $this->email_address,
+				"email_address_verified_time" => $this->email_address_verified_time?->format("c"),
 				"ssn" => $this->ssn,
-				"date_of_birth" => $this->date_of_birth
+				"date_of_birth" => $this->date_of_birth?->format("Y-m-d")
 			],
-			function($value): bool {
-				return $value !== null;
-			}
+			fn($item) => $item !== null
 		);
 	}
 }

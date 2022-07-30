@@ -1,6 +1,7 @@
 <?php
 
 use TomorrowIdeas\Plaid\Entities\AccountFilters;
+use TomorrowIdeas\Plaid\Entities\PaymentInitiation;
 use TomorrowIdeas\Plaid\Entities\User;
 use TomorrowIdeas\Plaid\Tests\TestCase;
 
@@ -152,7 +153,7 @@ class TokensTest extends TestCase
 		$this->assertEquals("android_package_name", $response->params->android_package_name);
 	}
 
-	public function test_payment_id(): void
+	public function test_payment_initiation(): void
 	{
 		$response = $this->getPlaidClient()->tokens->create(
 			"client_name",
@@ -166,11 +167,11 @@ class TokensTest extends TestCase
 			null,
 			null,
 			null,
-			"pmt_12345"
+			new PaymentInitiation("pmt_12345", "cnst_45678")
 		);
 
 		$this->assertEquals(
-			(object) ["payment_id" => "pmt_12345"],
+			(object) ["payment_id" => "pmt_12345", "consent_id" => "cnst_45678"],
 			$response->params->payment_initiation
 		);
 	}

@@ -22,7 +22,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["auth", "identity"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -37,7 +37,7 @@ class AccountFiltersEntityTest extends TestCase
 		$reflectionMethod->invokeArgs($accountFilters, ["loan", []]);
 
 		$this->assertEmpty(
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -52,7 +52,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["auth", "transactions", "identity", "income", "assets"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -67,7 +67,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["transactions", "identity", "liabilities"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -82,7 +82,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["investments"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -97,7 +97,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["transactions", "liabilities"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 
@@ -112,7 +112,7 @@ class AccountFiltersEntityTest extends TestCase
 					"account_subtypes" => ["auth", "transactions", "identity", "assets"]
 				]
 			],
-			$accountFilters->toArray()
+			$accountFilters->jsonSerialize()
 		);
 	}
 }

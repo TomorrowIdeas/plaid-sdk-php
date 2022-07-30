@@ -17,7 +17,7 @@ class BacsAccountEntityTest extends TestCase
 				"account" => "account",
 				"sort_code" => "sort_code"
 			],
-			$bacsAccount->toArray()
+			$bacsAccount->jsonSerialize()
 		);
 	}
 }

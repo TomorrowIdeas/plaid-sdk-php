@@ -14,7 +14,7 @@ abstract class TestCase extends PHPUnitTestCase
 	protected function getPlaidClient(string $environment = "production"): Plaid
 	{
 		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+			"handler" => new MockHandler([
 				function(Request $request) {
 
 					$requestParams = [
@@ -33,9 +33,6 @@ abstract class TestCase extends PHPUnitTestCase
 			])
 		]);
 
-		$plaid = new Plaid("client_id", "secret", $environment);
-		$plaid->setHttpClient($httpClient);
-
-		return $plaid;
+		return new Plaid("client_id", "secret", $environment, $httpClient);
 	}
 }

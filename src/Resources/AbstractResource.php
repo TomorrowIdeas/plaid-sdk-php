@@ -13,49 +13,17 @@ use UnexpectedValueException;
 abstract class AbstractResource
 {
 	/**
-	 * ClientInterface instance.
-	 *
-	 * @var ClientInterface
-	 */
-	protected $httpClient;
-
-	/**
-	 * Plaid client Id.
-	 *
-	 * @var string
-	 */
-	private $client_id;
-
-	/**
-	 * Plaid client secret.
-	 *
-	 * @var string
-	 */
-	private $client_secret;
-
-	/**
-	 * Plaid hostname to use.
-	 *
-	 * @var string
-	 */
-	private $hostname;
-
-	/**
-	 * @param ClientInterface $httpClient
-	 * @param string $client_id
-	 * @param string $client_secret
-	 * @param string $hostname
+	 * @param ClientInterface $httpClient PSR-6 ClientInterface instance.
+	 * @param string $client_id Plaid client Id.
+	 * @param string $client_secret Plaid client secret.
+	 * @param string $hostname Plaid hostname to use.
 	 */
 	public function __construct(
-		ClientInterface $httpClient,
-		string $client_id,
-		string $client_secret,
-		string $hostname)
+		protected ClientInterface $httpClient,
+		protected string $client_id,
+		protected string $client_secret,
+		protected string $hostname)
 	{
-		$this->httpClient = $httpClient;
-		$this->client_id = $client_id;
-		$this->client_secret = $client_secret;
-		$this->hostname = $hostname;
 	}
 
 	/**
