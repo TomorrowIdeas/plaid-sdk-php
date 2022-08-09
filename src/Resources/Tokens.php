@@ -24,7 +24,7 @@ class Tokens extends AbstractResource
 	 * @param string|null $android_package_name
 	 * @param string|null $payment_id
 	 * @param string|null $institution_id
-	 * @param array<string> $auth
+	 * @param array|null $auth
 	 * @return object
 	 * @throws PlaidRequestException
 	 */
