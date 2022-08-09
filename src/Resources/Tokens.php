@@ -24,23 +24,26 @@ class Tokens extends AbstractResource
 	 * @param string|null $android_package_name
 	 * @param string|null $payment_id
 	 * @param string|null $institution_id
-	 * @throws PlaidRequestException
+	 * @param array|null $auth
 	 * @return object
+	 * @throws PlaidRequestException
 	 */
 	public function create(
-		string $client_name,
-		string $language,
-		array $country_codes,
-		User $user,
-		array $products = [],
-		?string $webhook = null,
-		?string $link_customization_name = null,
+		string          $client_name,
+		string          $language,
+		array           $country_codes,
+		User            $user,
+		array           $products = [],
+		?string         $webhook = null,
+		?string         $link_customization_name = null,
 		?AccountFilters $account_filters = null,
-		?string $access_token = null,
-		?string $redirect_uri = null,
-		?string $android_package_name = null,
-		?string $payment_id = null,
-		?string $institution_id = null): object {
+		?string         $access_token = null,
+		?string         $redirect_uri = null,
+		?string         $android_package_name = null,
+		?string         $payment_id = null,
+		?string         $institution_id = null,
+		?array          $auth = null): object
+	{
 
 		$params = [
 			"client_name" => $client_name,
@@ -50,38 +53,42 @@ class Tokens extends AbstractResource
 			"products" => $products
 		];
 
-		if( $webhook ){
+		if ($webhook) {
 			$params["webhook"] = $webhook;
 		}
 
-		if( $link_customization_name ){
+		if ($link_customization_name) {
 			$params["link_customization_name"] = $link_customization_name;
 		}
 
-		if( $account_filters ){
+		if ($account_filters) {
 			$params["account_filters"] = $account_filters->toArray();
 		}
 
-		if( $access_token ){
+		if ($access_token) {
 			$params["access_token"] = $access_token;
 		}
 
-		if( $redirect_uri ){
+		if ($redirect_uri) {
 			$params["redirect_uri"] = $redirect_uri;
 		}
 
-		if( $android_package_name ){
+		if ($android_package_name) {
 			$params["android_package_name"] = $android_package_name;
 		}
 
-		if( $payment_id ){
+		if ($payment_id) {
 			$params["payment_initiation"] = [
 				"payment_id" => $payment_id
 			];
 		}
 
-		if( $institution_id ){
+		if ($institution_id) {
 			$params["institution_id"] = $institution_id;
+		}
+
+		if ($auth) {
+			$params["auth"] = $auth;
 		}
 
 		return $this->sendRequest(
@@ -95,8 +102,8 @@ class Tokens extends AbstractResource
 	 * Get information about a previously created Link token.
 	 *
 	 * @param string $link_token
-	 * @throws PlaidRequestException
 	 * @return object
+	 * @throws PlaidRequestException
 	 */
 	public function get(string $link_token): object
 	{
