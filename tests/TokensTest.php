@@ -196,6 +196,40 @@ class TokensTest extends TestCase
 		$this->assertEquals("institution_id", $response->params->institution_id);
 	}
 
+
+	public function test_auth(): void
+	{
+		$response = $this->getPlaidClient()->tokens->create(
+			"client_name",
+			"en",
+			["US"],
+			new User("usr_12345"),
+			[],
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			[
+				"auth_type_select_enabled" => true,
+				"automated_microdeposits_enabled" => true,
+			]
+		);
+
+		$this->assertEquals(
+			\json_decode(
+				\json_encode([
+					"auth_type_select_enabled" => true,
+					"automated_microdeposits_enabled" => true,
+				])
+			),
+			$response->params->auth
+		);
+	}
+
 	public function test_get_token(): void
 	{
 		$response = $this->getPlaidClient()->tokens->get("link_token");
