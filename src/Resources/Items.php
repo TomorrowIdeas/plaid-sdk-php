@@ -125,4 +125,38 @@ class Items extends AbstractResource
 			$this->paramsWithClientCredentials($params)
 		);
 	}
+
+	/**
+	 * Get an Item's income information.
+	 *
+	 * @param array $params for user and employer
+	 * @return object with precheck_id and confidence
+	 */
+	public function getIncomePrecheck(array $params = []): object
+	{
+		/*$params = [
+			"access_token" => $access_token
+		];*/
+
+		return $this->doRequest(
+			$this->buildRequest("post", "income/verification/precheck", $this->clientCredentials($params))
+		);
+	}
+
+	/**
+	 * Get an Item's income information.
+	 *
+	 * @param string $access_token
+	 * @return object
+	 */
+	public function getIncomePaystubs(string $access_token): object
+	{
+		$params = [
+			"access_token" => $access_token
+		];
+
+		return $this->doRequest(
+			$this->buildRequest("post", "income/verification/paystubs/get", $this->clientCredentials($params))
+		);
+	}
 }
