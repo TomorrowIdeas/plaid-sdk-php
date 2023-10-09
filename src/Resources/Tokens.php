@@ -25,6 +25,8 @@ class Tokens extends AbstractResource
 	 * @param string|null $payment_id
 	 * @param string|null $institution_id
 	 * @param array|null $auth
+     * @param string|null $precheck_id
+	 * @param int|null $income_insight_days
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
@@ -42,7 +44,9 @@ class Tokens extends AbstractResource
 		?string $android_package_name = null,
 		?string $payment_id = null,
 		?string $institution_id = null,
-		?array $auth = null): object {
+		?array $auth = null,
+	    ?string $precheck_id = null,
+	    ?int $income_insight_days = null): object {
 
 		$params = [
 			"client_name" => $client_name,
@@ -88,6 +92,19 @@ class Tokens extends AbstractResource
 
 		if ($auth) {
 			$params["auth"] = $auth;
+		}
+
+		if( $precheck_id ){
+			$params["income_verification"] = [
+				"precheck_id" => $precheck_id
+			];
+		}
+
+		if(in_array("assets", $products) && ($income_insight_days !== null)){
+			$params["asset_report"] = [
+				"bank_income_insights_enabled" => $income_insight_days > 0,
+				"days_requested" => $income_insight_days
+			];
 		}
 
 		return $this->sendRequest(
