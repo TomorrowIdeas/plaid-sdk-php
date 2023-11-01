@@ -2,8 +2,8 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
+use Nimbly\Shuttle\Shuttle;
 use ReflectionClass;
-use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Plaid;
 use UnexpectedValueException;
 

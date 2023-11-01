@@ -2,4 +2,5 @@ build/
 vendor/
 .vscode/
 composer.lock
+.idea
 .phpunit.result.cache

@@ -2,7 +2,7 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
-use Capsule\Response;
+use Nimbly\Capsule\Response;
 use TomorrowIdeas\Plaid\PlaidRequestException;
 
 /**

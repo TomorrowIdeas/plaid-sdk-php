@@ -2,9 +2,9 @@
 
 namespace TomorrowIdeas\Plaid\Tests;
 
-use Capsule\Response;
-use Shuttle\Handler\MockHandler;
-use Shuttle\Shuttle;
+use Nimbly\Capsule\Response;
+use Nimbly\Shuttle\Handler\MockHandler;
+use Nimbly\Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Plaid;
 use TomorrowIdeas\Plaid\PlaidRequestException;
 
@@ -90,11 +90,11 @@ class ReportsTest extends TestCase
 
 	public function test_get_asset_report_pdf_throws_on_fail(): void
 	{
-		$httpClient = new Shuttle([
-			'handler' => new MockHandler([
+		$httpClient = new Shuttle(
+			new MockHandler([
 				new Response(400, "Bad Request")
 			])
-		]);
+		);
 
 		$plaid = new Plaid("client_id", "secret");
 		$plaid->setHttpClient($httpClient);
