@@ -2,9 +2,9 @@
 
 namespace TomorrowIdeas\Plaid;
 
+use Nimbly\Shuttle\Shuttle;
 use Psr\Http\Client\ClientInterface;
 use ReflectionClass;
-use Shuttle\Shuttle;
 use TomorrowIdeas\Plaid\Resources\AbstractResource;
 use UnexpectedValueException;
 

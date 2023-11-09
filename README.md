@@ -440,3 +440,9 @@ $payment_schedule = new TomorrowIdeas\Plaid\Entities\PaymnentSchedule(
 ## Errors
 
 All unsuccessfull (non 2xx) responses will throw a `PlaidRequestException`. The full response object is available via the `getResponse()` method.
+
+## Contributing
+
+### Testing
+
+```./vendor/bin/phpunit tests```
