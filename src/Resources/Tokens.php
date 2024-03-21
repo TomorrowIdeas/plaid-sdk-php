@@ -43,7 +43,7 @@ class Tokens extends AbstractResource
 		string $language,
 		array $country_codes,
 		User $user,
-		array $products = [],
+		?array $products = [],
 		?string $webhook = null,
 		?string $link_customization_name = null,
 		?AccountFilters $account_filters = null,
@@ -68,7 +68,7 @@ class Tokens extends AbstractResource
 		//all defined params show here, including ones left null
 		//so, filter out the nulls
 		$params = array_filter(get_defined_vars(), function ($var) {
-			return !is_null($var);
+			return !empty($var);
 		});
 
 		//perform any data transformation
