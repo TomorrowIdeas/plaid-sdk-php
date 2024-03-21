@@ -16,24 +16,34 @@ class Tokens extends AbstractResource
 	 * @param array<string> $country_codes Possible values are: CA, FR, IE, NL, ES, GB, US
 	 * @param User $user
 	 * @param array<string> $products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
+	 * @param array<string> $required_if_supported_products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
+	 * @param array<string> $optional_products Possible values are: transactions, auth, identity, income, assets, investments, liabilities, payment_initiation
 	 * @param string|null $webhook
 	 * @param string|null $link_customization_name
 	 * @param AccountFilters|null $account_filters
 	 * @param string|null $access_token
 	 * @param string|null $redirect_uri
 	 * @param string|null $android_package_name
+	 * @param array|null $institution_data
 	 * @param string|null $payment_id
 	 * @param string|null $institution_id
 	 * @param array|null $auth
-	 * @throws PlaidRequestException
+	 * @param array|null $transfer
+	 * @param array|null $update
+	 * @param array|null $identity_verification
+	 * @param array|null $statements
+	 * @param array|null $investments
+	 * @param array|null $transactions
+	 * @param array|null $identity
 	 * @return object
+	 *@throws PlaidRequestException
 	 */
 	public function create(
 		string $client_name,
 		string $language,
 		array $country_codes,
 		User $user,
-		array $products = [],
+		?array $products = [],
 		?string $webhook = null,
 		?string $link_customization_name = null,
 		?AccountFilters $account_filters = null,
@@ -42,54 +52,40 @@ class Tokens extends AbstractResource
 		?string $android_package_name = null,
 		?string $payment_id = null,
 		?string $institution_id = null,
-		?array $auth = null): object {
+		?array $auth = null,
+		array $required_if_supported_products = [],
+		array $optional_products = [],
+		?array $institution_data = null,
+		?array $transfer = null,
+		?array $update = null,
+		?array $identity_verification = null,
+		?array $statements = null,
+		?array $investments = null,
+		?array $transactions = null,
+		?array $identity = null
+	): object {
 
-		$params = [
-			"client_name" => $client_name,
-			"language" => $language,
-			"country_codes" => $country_codes,
-			"user" => $user->toArray(),
-			"products" => $products
-		];
+		//all defined params show here, including ones left null
+		//so, filter out the nulls
+		$params = array_filter(get_defined_vars(), function ($var) {
+			return !empty($var);
+		});
 
-		if( $webhook ){
-			$params["webhook"] = $webhook;
+		//perform any data transformation
+		$params["user"] = $params["user"]->toArray();
+
+		if( isset($params["account_filters"]) ){
+			$params["account_filters"] = $params["account_filters"]->toArray();
 		}
 
-		if( $link_customization_name ){
-			$params["link_customization_name"] = $link_customization_name;
-		}
-
-		if( $account_filters ){
-			$params["account_filters"] = $account_filters->toArray();
-		}
-
-		if( $access_token ){
-			$params["access_token"] = $access_token;
-		}
-
-		if( $redirect_uri ){
-			$params["redirect_uri"] = $redirect_uri;
-		}
-
-		if( $android_package_name ){
-			$params["android_package_name"] = $android_package_name;
-		}
-
-		if( $payment_id ){
+		if( isset($params["payment_id"]) ){
 			$params["payment_initiation"] = [
-				"payment_id" => $payment_id
+				"payment_id" => $params["payment_id"]
 			];
+			unset($params["payment_id"]);
 		}
 
-		if( $institution_id ){
-			$params["institution_id"] = $institution_id;
-		}
-
-		if ($auth) {
-			$params["auth"] = $auth;
-		}
-
+		//pass to plaid
 		return $this->sendRequest(
 			"post",
 			"link/token/create",
